@@ -14,28 +14,24 @@
 // ------------------------------------------------------------------------------------
 
 params ["_u","_pos",["_fov",1],["_dist",0],["_range",1],["_role",""],["_noRG",false],["_veh",""]];
-private ["_height","_size","_showVeh","_showDis","_showRole","_showGrp","_grp","_name",
-		 "_hd","_team","_nameColor","_alpha","_modDist"];
-
+private ["_nameColor"];
 		 
 // ------------------------------------------------------------------------------------
 // Initial setup.
 // ------------------------------------------------------------------------------------
 
 // If the unit is dead, shorten the range. Set name.
-if (alive _u) then 
-{ 
-	_name = name _u;
-}
-else
-{
-	_name = if (name _u isEqualTo "Error: No unit") then { "" }
-											 else { name _u };
-	_range = (_range * 0.5);
+private _name = name _u;
+
+if (!alive _u) then {
+    if (_name isEqualTo "Error: No unit") then 
+	{ _name = ""; };
+
+    _range = _range * 0.5;
 };
 
 // Determine the stance of the unit, adjust tag height accordingly.
-_height = call
+private _height = call
 {
 	if ( stance _u isEqualTo "STAND" ) exitWith {WH_NT_FONT_HEIGHT_STANDING};
 	if ( stance _u isEqualTo "PRONE" ) exitWith { WH_NT_FONT_HEIGHT_PRONE  };
@@ -44,15 +40,15 @@ _height = call
 };
 
 // Check which tags to show. Default to false if nil.
-_showVeh = if (!isNil "WH_NT_SHOW_VEHICLEINFO") then [{WH_NT_SHOW_VEHICLEINFO},{false}];
-_showDis = if (!isNil "WH_NT_SHOW_DISTANCE") 	then [{WH_NT_SHOW_DISTANCE},{false}];
-_showRole= if (!isNil "WH_NT_SHOW_ROLE") 		then [{WH_NT_SHOW_ROLE},{false}];
-_showGrp = if (!isNil "WH_NT_SHOW_GROUP") 		then [{WH_NT_SHOW_GROUP},{false}];
+private _showVeh = if (!isNil "WH_NT_SHOW_VEHICLEINFO") then [{WH_NT_SHOW_VEHICLEINFO},{false}];
+private _showDis = if (!isNil "WH_NT_SHOW_DISTANCE") 	then [{WH_NT_SHOW_DISTANCE},{false}];
+private _showRole= if (!isNil "WH_NT_SHOW_ROLE") 		then [{WH_NT_SHOW_ROLE},{false}];
+private _showGrp = if (!isNil "WH_NT_SHOW_GROUP") 		then [{WH_NT_SHOW_GROUP},{false}];
 
 if (_noRG) then { _showGrp = false; _showRole = false };
 
 // Only show group if it's not the same group as the player.
-_grp = if (_showGrp && {group _u != group player && {(!isNull (group _u)) && {!(_noRG)}}}) then 
+private _grp = if (_showGrp && {group _u != group player && {(!isNull (group _u)) && {!(_noRG)}}}) then 
 { groupID (group _u) } else { "" };
 
 // Only show distance for units further than 3m away.
@@ -65,19 +61,15 @@ if (_showDis && {_dist >= 3}) then
 // ------------------------------------------------------------------------------------
 
 // Define the default color of the nametag...
-_color = WH_NT_FONT_COLOR_OTHER;
+private _color = WH_NT_FONT_COLOR_OTHER;
+private _nameColor = WH_NT_FONT_COLOR_DEFAULT;
 
 // ...For normal people...
-if (_role isEqualTo "") then 							
+if (_role isEqualTo "" && {_showRole}) then 							
 {
-	_nameColor = WH_NT_FONT_COLOR_DEFAULT;
-	// Set the role name, while you're at it.
-	if (_showRole) then
-	{
-		_role = (_u getVariable ["f_var_assignGear_friendly",""]);
-		if ( _role isEqualTo "" ) then
-		{	_role = getText (configFile >> "CfgVehicles" >> typeOf _u >> "displayname")	};
-	};
+	_role = (_u getVariable ["f_var_assignGear_friendly",""]);
+	if ( _role isEqualTo "" ) then
+	{	_role = getText (configFile >> "CfgVehicles" >> typeOf _u >> "displayname")	};
 }
 // ...and for vehicle crew.
 else {	_nameColor = WH_NT_FONT_COLOR_CREW	};
@@ -85,7 +77,7 @@ else {	_nameColor = WH_NT_FONT_COLOR_CREW	};
 // For units in the same group as the player, set their color according to color team.
 if(_u in units player) then 
 { 
-	_team = assignedTeam _u;
+	private _team = assignedTeam _u;
 	_nameColor = switch (_team) do 
 	{
 		case "RED": 	{	WH_NT_FONT_COLOR_GROUPR	};
@@ -117,7 +109,7 @@ if (WH_NT_FONT_COLORBLIND) then { _nameColor = WH_NT_FONT_COLOR_OTHER };
 // Change alpha of tag depending on distance and time of day.
 // ------------------------------------------------------------------------------------
 
-_alpha =
+private _alpha =
 if (vehicle player isEqualTo player) then 
 { 
 	if ( _u isEqualTo cursorTarget || {_u isEqualTo (effectiveCommander cursorTarget)} ) then 
@@ -143,8 +135,8 @@ _nameColor =
 // ------------------------------------------------------------------------------------
 
 // Setup the 3D object spread based on the distance and FOV.
-_hdt = WH_NT_FONT_SPREAD_TOP * _dist / _fov;
-_hdb = WH_NT_FONT_SPREAD_BOT * _dist / _fov;
+private _hdt = WH_NT_FONT_SPREAD_TOP * _dist / _fov;
+private _hdb = WH_NT_FONT_SPREAD_BOT * _dist / _fov;
 
 
 // ------------------------------------------------------------------------------------
@@ -154,9 +146,9 @@ _hdb = WH_NT_FONT_SPREAD_BOT * _dist / _fov;
 if (_fov > 1.67) then { _fov = 1.67 };
 
 // Setup the sizes based on the default size * the multiplier * the FOV.
-_sizeV = WH_NT_FONT_SIZE_VEH * _fov * WH_NT_FONT_SIZE_MULTI;
-_sizeM = WH_NT_FONT_SIZE_MAIN* _fov * WH_NT_FONT_SIZE_MULTI;
-_sizeS = WH_NT_FONT_SIZE_SEC * _fov * WH_NT_FONT_SIZE_MULTI;
+private _sizeV = WH_NT_FONT_SIZE_VEH * _fov * WH_NT_FONT_SIZE_MULTI;
+private _sizeM = WH_NT_FONT_SIZE_MAIN* _fov * WH_NT_FONT_SIZE_MULTI;
+private _sizeS = WH_NT_FONT_SIZE_SEC * _fov * WH_NT_FONT_SIZE_MULTI;
 
 
 // ------------------------------------------------------------------------------------

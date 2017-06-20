@@ -31,13 +31,13 @@ WH_NT_DRAWDISTANCE_ALL  = 10; 		// Distance within which all nametags will be dr
 WH_NT_DRAWDISTANCE_FOV  = true;		// Amps drawdists, fades, and size depending on zoom.	(true)
 
 // Text Configuration: Typeface				   Try "EtelkaNarrowMediumPro" for an Arma 2 throwback.
-WH_NT_FONT_FACE_MAIN = "PuristaBold";		// Font for unit and vehicle names.	("PuristaSemiBold")
-WH_NT_FONT_FACE_SEC  = "PuristaMedium";		// Font for unit groups and roles. 	("PuristaMedium")
+WH_NT_FONT_FACE_MAIN ="RobotoCondensedBold";// Font for unit and vehicle names. ("RobotoCondensedBold")
+WH_NT_FONT_FACE_SEC  = "RobotoCondensed";	// Font for unit groups and roles. 	("RobotoCondensed")
 WH_NT_FONT_SHADOW = 2;						// Shadow to outline all text.		(2)
 
 // Text Configuration: Size
 WH_NT_FONT_SIZE_MAIN = 0.036; 		// Font size (modifier) used for names. 	(0.036)
-WH_NT_FONT_SIZE_VEH =  0.040; 		// Size used for vehicle names.				(0.040)
+WH_NT_FONT_SIZE_VEH =  0.041; 		// Size used for vehicle names.				(0.041)
 WH_NT_FONT_SIZE_SEC =  0.031; 		// Size used for groups and roles.			(0.031)
 
 // Text Configuration: Spacing
