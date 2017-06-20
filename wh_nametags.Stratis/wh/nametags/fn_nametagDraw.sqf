@@ -117,11 +117,21 @@ if (WH_NT_FONT_COLORBLIND) then { _nameColor = WH_NT_FONT_COLOR_OTHER };
 // Change alpha of tag depending on distance and time of day.
 // ------------------------------------------------------------------------------------
 
-_alpha = 
-if ( _u isEqualTo cursorTarget || {_u isEqualTo (effectiveCommander cursorTarget)} ) then 
-{ linearConversion[(((WH_NT_DRAWDISTANCE_ONE)*(_fov))/2),(WH_NT_DRAWDISTANCE_ONE*_fov),((_dist / _range)/_fov),1,0,true]; }
-else
-{ linearConversion[WH_NT_DRAWDISTANCE_ALL/2,WH_NT_DRAWDISTANCE_ALL,(_dist / _range),1,0,true];};
+_alpha =
+if (vehicle player isEqualTo player) then 
+{ 
+	if ( _u isEqualTo cursorTarget || {_u isEqualTo (effectiveCommander cursorTarget)} ) then 
+	{ linearConversion[(((WH_NT_DRAWDISTANCE_ONE)*(_fov))/2),(WH_NT_DRAWDISTANCE_ONE*_fov),((_dist / _range)/_fov),1,0,true]; }
+	else
+	{ linearConversion[WH_NT_DRAWDISTANCE_ALL/2,WH_NT_DRAWDISTANCE_ALL,(_dist / _range),1,0,true];};
+}
+else 
+{
+	if ( _u isEqualTo cursorObject || {_u isEqualTo (effectiveCommander cursorObject)} ) then 
+	{ linearConversion[(((WH_NT_DRAWDISTANCE_ONE)*(_fov))/2),(WH_NT_DRAWDISTANCE_ONE*_fov),((_dist / _range)/_fov),1,0,true]; }
+	else
+	{ linearConversion[WH_NT_DRAWDISTANCE_ALL/2,WH_NT_DRAWDISTANCE_ALL,(_dist / _range),1,0,true];};
+};
 
 _color = [_color select 0, _color select 1, _color select 2, ((_color select 3) * (_alpha))];
 _nameColor = 

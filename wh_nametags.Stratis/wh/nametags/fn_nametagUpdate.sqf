@@ -46,11 +46,22 @@ if(WH_NT_NAMETAGS_ON) then
 	{ _ents = (_ppos) nearEntities [["CAManBase","LandVehicle","Helicopter","Plane","Ship_F"], (WH_NT_DRAWDISTANCE_ALL*_range)]; };
 
 	// Even if disabled, make sure cursortarget is in the entity array.
-	if 
-	(
-		!(cursorTarget in _ents) && 
-		{(_ppos distance cursorTarget) <= (((WH_NT_DRAWDISTANCE_ONE) * _range) * _fov)}
-	) then {_ents append [cursorTarget]};
+	if (vehicle player isEqualTo player) then
+	{
+		if 
+		(
+			!(cursorTarget in _ents) && 
+			{(_ppos distance cursorTarget) <= (((WH_NT_DRAWDISTANCE_ONE) * _range) * _fov)}
+		) then {_ents append [cursorTarget]};
+	}
+	else
+	{
+		if 
+		(
+			!(cursorObject in _ents) && 
+			{(_ppos distance cursorObject) <= (((WH_NT_DRAWDISTANCE_ONE) * _range) * _fov)}
+		) then {_ents append [cursorObject]};
+	};
 	
 	// Loop through all the entities collected.
 	{

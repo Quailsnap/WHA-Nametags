@@ -37,7 +37,9 @@
 	- Improve performance significantly.
 	- Find a less hacky fix for vibrating vehicle tags.
 	- Check if dead player nametags work and for how long.
-	- Find a way to change default font spacing between lines (ie: role on top, name in middle)
+	- Find a better way to change default font spacing between lines (ie: role on top, name in middle)
 	   depending on what font and font size is chosen.
+	- Find a better way to switch between cursorObject and cursorTarget depending on whether or not the    
+	   player is currently in a vehicle.
 	
  ===================================================================
