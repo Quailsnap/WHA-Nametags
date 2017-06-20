@@ -7,6 +7,7 @@
 	Special Thanks To:
 	- Wolfenswan, ferstaberinde, headswe of F3 Framework, for code I built off of.
 	- Dsylexci and Zedx64 of Shacktac, for feature inspiration and some code solutions.
+	- Dedmen, commy2, and Quiksilver for advice in the Arma 3 Discord.
 
 	Features:
 	- All features configurable by missionmaker.

@@ -22,16 +22,17 @@ private _role;
 private _vehS;
 private _angle;
 private _noRG;
+private _unit = player;
 
 // Find player camera's position. Allows this script to work with 3PP.
 private _ppos = if (cameraView isEqualTo "EXTERNAL")
-then { positionCameraToWorld[0,0,0] } else { getPosATL player };
+then { positionCameraToWorld[0,0,0] } else { getPosATL _unit };
 
 // If in normal vision, ranges reduce from darkness. Nightvision helps to counter this, but not perfectly. (FROM SHACKTAC NAMETAGS)
 private _range = 
 if ( WH_NT_NIGHT && {!(sunOrMoon isEqualTo 1)}) then 
 {
-	if (currentVisionMode player isEqualTo 0) then
+	if (currentVisionMode _unit isEqualTo 0) then
 	{	linearConversion [0, 1, sunOrMoon, 0.25,1,true];	}
 	else
 	{	linearConversion [0, 1, sunOrMoon, 0.75,1,true];	};
@@ -51,7 +52,7 @@ if !(WH_NT_DRAWCURSORONLY) then
 { _ents = (_ppos) nearEntities [["CAManBase","LandVehicle","Helicopter","Plane","Ship_F"], (WH_NT_DRAWDISTANCE_ALL*_range)]; };
 
 // Even if disabled, make sure cursortarget is in the entity array.
-if (vehicle player isEqualTo player) then
+if (isNull objectParent _unit) then
 {
 	if 
 	(
@@ -73,10 +74,10 @@ else
 	// Filter entities.
 	if 
 	(	// Only other entities...
-		_x != player &&
+		_x != _unit &&
 		// ...and only if they're on the same side, or in the same group.
-		{(side _x isEqualTo side player) || {(group _x isEqualTo group player) || {(side _x isEqualTo civilian)}}}
-		 //&& !(player iskindof "VirtualMan_F")}
+		{(side _x isEqualTo side _unit) || {(group _x isEqualTo group _unit) || {(side _x isEqualTo civilian)}}}
+		 //&& !(_unit iskindof "VirtualMan_F")}
 	)
 	then
 	{
@@ -85,7 +86,7 @@ else
 		{
 			_pos  = getPosATLVisual _x;
 			_dist = _pos distance _ppos;
-			[_x,_pos,_fov,_dist,_range] call wh_nt_fnc_nametagDraw;
+			[_x,_unit,_pos,_fov,_dist,_range] call wh_nt_fnc_nametagDraw;
 		}
 		
 		// Otherwise (if it's a vehicle)...
@@ -96,7 +97,7 @@ else
 				_veh = _x;
 				_i = 1;
 				
-				_noRG = if ( _veh isEqualTo vehicle player && {((speed (vehicle player)) > 30)})
+				_noRG = if ( _veh isEqualTo vehicle _unit && {((speed (vehicle _unit)) > 30)})
 				then { true } else { false };
 				
 				// ...For every crew in the vehicle that's not the player...
@@ -115,7 +116,7 @@ else
 					_dist = _pos distance _ppos;
 
 					// Only display the driver, commander, and members of the players group unless the player is up close.
-					if (effectiveCommander _veh isEqualTo _x || {group _x isEqualTo group player || {_dist <= WH_NT_DRAWDISTANCE_ALL}}) then
+					if (effectiveCommander _veh isEqualTo _x || {group _x isEqualTo group _unit || {_dist <= WH_NT_DRAWDISTANCE_ALL}}) then
 					{	
 						// If the unit is the commander, calculate the available and taken seats, and get the vehicle name.
 						if (effectiveCommander _veh isEqualTo _x) then 
@@ -127,13 +128,13 @@ else
 							if (_maxSlots > 0) then 
 							{	_vehS = _vehS + format[" [%1/%2]",(_maxSlots-_freeSlots),_maxSlots];	};
 						
-							[_x,_pos,_fov,_dist,_range,_role,_noRG,_vehS] call wh_nt_fnc_nametagDraw; 
+							[_x,_unit,_pos,_fov,_dist,_range,_role,_noRG,_vehS] call wh_nt_fnc_nametagDraw; 
 						}
 						else
 						{
 							if (_pos distance (getPosATLVisual (effectiveCommander _veh)) > 0.2) then
 							{
-								[_x,_pos,_fov,_dist,_range,_role,_noRG] call wh_nt_fnc_nametagDraw;
+								[_x,_unit,_pos,_fov,_dist,_range,_role,_noRG] call wh_nt_fnc_nametagDraw;
 							}
 							else
 							{
@@ -150,7 +151,7 @@ else
 									_i = _i + 1;
 								};
 
-								[_x,_pos,_fov,_dist,_range,_role,_noRG] call wh_nt_fnc_nametagDraw;
+								[_x,_unit,_pos,_fov,_dist,_range,_role,_noRG] call wh_nt_fnc_nametagDraw;
 							};
 						};
 					};
