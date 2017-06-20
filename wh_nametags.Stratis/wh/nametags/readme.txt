@@ -1,6 +1,6 @@
  ===================================================================
 
-	WHALE'S NAMETAGS (V0.6F Beta) 
+	WHALE'S NAMETAGS (V0.6G Beta) 
  	SCRIPT FOR ARMA 3
 	Contact @ /u/Whalen207 | Whale #5963
 
