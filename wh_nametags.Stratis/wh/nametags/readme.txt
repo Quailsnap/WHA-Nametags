@@ -42,5 +42,7 @@
 	   depending on what font and font size is chosen.
 	- Find a better way to switch between cursorObject and cursorTarget depending on whether or not the    
 	   player is currently in a vehicle.
-	
+	- Find some way to optimize variable initialization and declaration in both Update and Draw: Just ten 
+	   variables initializing into strings can add 0.4ms!! Namely: _vehicleName in draw
+	   
  ===================================================================
