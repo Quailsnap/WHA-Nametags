@@ -1,6 +1,6 @@
  ===================================================================
 
-	WHALE'S NAMETAGS (V0.6G Beta) 
+	WHALE'S NAMETAGS (V0.6H Beta) 
  	SCRIPT FOR ARMA 3
 	Contact @ /u/Whalen207 | Whale #5963
 
@@ -13,7 +13,6 @@
 	- All features configurable by missionmaker.
 	- Some features configurable by clients using CBA.
 	- Full multiplayer support.
-	- Performance comparable to ACE nametags.
 	- Can display player name, group, distance, and role.
 	- Custom roles can be set using setVariable, designed for use with F3.
 	- Can display vehicle information including available seats.
@@ -33,16 +32,23 @@
 	- Put this code in the 'description.ext' function header (CfgFunctions):
 		#include "wh\nametags\wh_nametagFunctions.hpp"
 
+	Known Issues:
+	- A. Nametags are feature-heavy and, in worst case scenarios, can eat up a few frames.
+	- B. Units below and above the player will display odd, scrunched-up nametags.
+	- C. Font spacing is dynamic but may vary slightly, irritating perfectionists.
+	
 	TODO:
 	- Caching for cursortarget (in fn_nametagDraw). Cursor fades.
-	- Improve performance significantly.
+	- (A) Improve performance significantly.
 	- Find a less hacky fix for vibrating vehicle tags.
 	- Check if dead player nametags work and for how long.
-	- Find a better way to change default font spacing between lines (ie: role on top, name in middle)
+	- (C) Find a better way to change default font spacing between lines (ie: role on top, name in middle)
 	   depending on what font and font size is chosen.
 	- Find a better way to switch between cursorObject and cursorTarget depending on whether or not the    
 	   player is currently in a vehicle.
 	- Find some way to optimize variable initialization and declaration in both Update and Draw: Just ten 
 	   variables initializing into strings can add 0.4ms!! Namely: _vehicleName in draw
-	   
+	- Font spacing is determined purely vertically (3d nametags attached to varying points on the tgt, points that only differ by z-axis) and do not take into account, for instance, a player looking down at a 45deg angle at a friendly. Gotta find a way to take the angles into account and space the role /
+	name / group tags out horizontally as well as vertically.
+	
  ===================================================================

@@ -14,20 +14,12 @@
 if !(WH_NT_NAMETAGS_ON) exitWith {};
 
 // Establish initial variables.
-private _targetPosition;
-private _distance;
-private _vehicle;
-private _i;
-private _role;
-private _vehicleName;
-private _angle;
-private _noRoleOrGroup;
 private _unit = player;
 
 // Find player camera's position. Allows this script to work with 3PP.
-//private _playerPosition = if (cameraView isEqualTo "EXTERNAL")
-//then { positionCameraToWorld[0,0,0] } else { getPosVisual _unit };
-private _playerPosition = positionCameraToWorld[0,0,0];
+private _playerPosition = if (cameraView isEqualTo "EXTERNAL")
+then { positionCameraToWorld[0,0,0] } else { getPosVisual _unit };
+//private _playerPosition = positionCameraToWorld[0,0,0];
 
 // If in normal vision, ranges reduce from darkness. Nightvision helps to counter this, but not perfectly. (FROM SHACKTAC NAMETAGS)
 private _range = 
@@ -69,8 +61,8 @@ else
 	// If the entity is a man, draw a nametag for it.
 	if((typeof _x) iskindof "Man") then
 	{
-		_targetPosition = getPosVisual _x;
-		_distance = _targetPosition distance _playerPosition;
+		private _targetPosition = getPosVisual _x;
+		private _distance = _targetPosition distance _playerPosition;
 		[_unit,_x,_targetPosition,_fov,_distance,_range] call wh_nt_fnc_nametagDraw;
 	}
 	
@@ -79,13 +71,13 @@ else
 	{
 		if ( WH_NT_SHOW_INVEHICLE ) then
 		{
-			_vehicle = _x;
-			_i = 1;
-			_noRoleOrGroup = ( _vehicle isEqualTo vehicle _unit && {((speed (vehicle _unit)) > 30)});
+			private _vehicle = _x;
+			private _i = 1;
+			private _noRoleOrGroup = ( _vehicle isEqualTo vehicle _unit && {((speed (vehicle _unit)) > 30)});
 			
 			// ...For every crew in the vehicle that's not the player...
 			{
-				_role = call
+				private _role = call
 				{
 					if ( commander _vehicle isEqualTo _x ) exitWith {"Commander"};
 					if ( gunner	   _vehicle isEqualTo _x ) exitWith {"Gunner"};
@@ -94,13 +86,13 @@ else
 					if ( driver	   _vehicle isEqualTo _x && {(_vehicle isKindOf "helicopter") || {(_vehicle isKindOf "plane")}} ) exitWith {"Pilot"};
 					""
 				};
-				
-				_targetPosition  = getPosVisual _x;
-				_distance = _targetPosition distance _playerPosition;
 
+				private _targetPosition = getPosVisual _x;
+				private _distance = _targetPosition distance _playerPosition;
+				
 				// Only display the driver, commander, and members of the players group unless the player is up close.
 				if (effectiveCommander _vehicle isEqualTo _x || {group _x isEqualTo group _unit || {_distance <= WH_NT_DRAWDISTANCE_ALL}}) then
-				{	
+				{
 					// If the unit is the commander, pass the vehicle he's driving.
 					if (effectiveCommander _vehicle isEqualTo _x) then 
 					{
@@ -108,7 +100,7 @@ else
 					}
 					else
 					{
-						if (_targetPosition distance (getPosVisual (effectiveCommander _vehicle)) > 0.2) then
+						if (driver _vehicle isEqualTo _x || {_targetPosition distance (getPosVisual (driver _vehicle)) > 0.2}) then
 						{
 							[_unit,_x,_targetPosition,_fov,_distance,_range,_role,_noRoleOrGroup] call wh_nt_fnc_nametagDraw;
 						}
@@ -118,13 +110,15 @@ else
 							if(_x isEqualTo gunner _vehicle) then
 							{
 								_targetPosition = [_vehicle modeltoworld (_vehicle selectionPosition "gunnerview") select 0,_vehicle modeltoworld (_vehicle selectionPosition "gunnerview") select 1,(getPosVisual _x) select 2];
+								_distance = _targetPosition distance _playerPosition;
 							}
 							else
 							// Otherwise, display the tag above the vehicle.
 							{
-								_angle = (getdir _vehicle)+180;
-								_targetPosition = [((_targetPosition select 0) + sin(_angle)*(0.6*_i)) , (_targetPosition select 1) + cos(_angle)*(0.6*_i),_targetPosition select 2 + WH_NT_FONT_HEIGHT_VEHICLE];
+								private _angle = (getdir _vehicle)+180;
+								_targetPosition = [((_targetPosition select 0) + sin(_angle)*(0.6*_i)) , ((_targetPosition select 1) + cos(_angle)*(0.6*_i)),((_targetPosition select 2) + (WH_NT_FONT_HEIGHT_VEHICLE*_i))];
 								_i = _i + 1;
+								_distance = _targetPosition distance _playerPosition;
 							};
 
 							[_unit,_x,_targetPosition,_fov,_distance,_range,_role,_noRoleOrGroup] call wh_nt_fnc_nametagDraw;

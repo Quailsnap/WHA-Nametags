@@ -50,7 +50,7 @@ private _height = call
 {
 	if ( stance _target isEqualTo "STAND" ) exitWith {WH_NT_FONT_HEIGHT_STANDING};
 	if ( stance _target isEqualTo "PRONE" ) exitWith { WH_NT_FONT_HEIGHT_PRONE  };
-	if (!(vehicle _target isEqualTo _target)   ) exitWith { WH_NT_FONT_HEIGHT_VEH  };
+	if (!(vehicle _target isEqualTo _target)   ) exitWith { WH_NT_FONT_HEIGHT_VEHICLE  };
 	WH_NT_FONT_HEIGHT_CROUCHING
 };
 
@@ -202,7 +202,7 @@ if (_showVehicleInfo && {!(isNull _vehicle)}) then
 // Vehicle tag, if necessary, hovering above vehicle. Only present for commander.
 if (_showVehicleInfo && {!(_vehicleName isEqualTo "")}) then
 {
-	drawIcon3D ["", _color, [(_position select 0),(_position select 1),((_position select 2) + WH_NT_FONT_HEIGHT_VEH * 3)],
+	drawIcon3D ["", _color, [(_position select 0),(_position select 1),((_position select 2) + WH_NT_FONT_HEIGHT_VEHICLE * 3)],
 	0, 0, 0, _vehicleName,WH_NT_FONT_SHADOW,_sizeV,WH_NT_FONT_FACE_MAIN];
 };
 

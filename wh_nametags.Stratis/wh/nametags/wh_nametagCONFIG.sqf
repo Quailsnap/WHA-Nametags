@@ -57,7 +57,7 @@ WH_NT_FONT_COLOR_OTHER  = [0.90,0.90,0.90,0.85];  // Everything but names.	([0.9
 WH_NT_FONT_HEIGHT_STANDING =  1.35;	// Font height above feet when standing.	(1.35)
 WH_NT_FONT_HEIGHT_CROUCHING = 0.75;	// ...When crouching.						(0.75)
 WH_NT_FONT_HEIGHT_PRONE =     0.25;	// ...When prone.							(0.25)
-WH_NT_FONT_HEIGHT_VEH   = 	  0.50;	// Font height for vehicle info.			(0.50)
+WH_NT_FONT_HEIGHT_VEHICLE   = 	  0.50;	// Font height for vehicle info.			(0.50)
 
 // Colorblind Mode
 WH_NT_FONT_COLORBLIND = false;		// Will remove colors and instead describe.	(false)
