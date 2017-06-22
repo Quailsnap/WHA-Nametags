@@ -62,8 +62,7 @@ else
 	if((typeof _x) iskindof "Man") then
 	{
 		private _targetPosition = getPosVisual _x;
-		private _distance = _targetPosition distance _playerPosition;
-		[_unit,_x,_targetPosition,_fov,_distance,_range] call wh_nt_fnc_nametagDraw;
+		[_unit,_x,_playerPosition,_targetPosition,_fov,_range] call wh_nt_fnc_nametagDraw;
 	}
 	
 	// Otherwise (if it's a vehicle)...
@@ -73,6 +72,9 @@ else
 		{
 			private _vehicle = _x;
 			private _i = 1;
+			
+			// If the player's in the vehicle and it's moving fast, the position of the player fluctuates
+			// rapidly, causing tags to vibrate -- unless we turn them off.
 			private _noRoleOrGroup = ( _vehicle isEqualTo vehicle _unit && {((speed (vehicle _unit)) > 30)});
 			
 			// ...For every crew in the vehicle that's not the player...
@@ -86,9 +88,9 @@ else
 					if ( driver	   _vehicle isEqualTo _x && {(_vehicle isKindOf "helicopter") || {(_vehicle isKindOf "plane")}} ) exitWith {"Pilot"};
 					""
 				};
-
+				
+				// The target's position is his real position.
 				private _targetPosition = getPosVisual _x;
-				private _distance = _targetPosition distance _playerPosition;
 				
 				// Only display the driver, commander, and members of the players group unless the player is up close.
 				if (effectiveCommander _vehicle isEqualTo _x || {group _x isEqualTo group _unit || {_distance <= WH_NT_DRAWDISTANCE_ALL}}) then
@@ -96,13 +98,13 @@ else
 					// If the unit is the commander, pass the vehicle he's driving.
 					if (effectiveCommander _vehicle isEqualTo _x) then 
 					{
-						[_unit,_x,_targetPosition,_fov,_distance,_range,_role,_noRoleOrGroup,_vehicle] call wh_nt_fnc_nametagDraw; 
+						[_unit,_x,_playerPosition,_targetPosition,_fov,_range,_role,_noRoleOrGroup,_vehicle] call wh_nt_fnc_nametagDraw; 
 					}
 					else
 					{
 						if (driver _vehicle isEqualTo _x || {_targetPosition distance (getPosVisual (driver _vehicle)) > 0.2}) then
 						{
-							[_unit,_x,_targetPosition,_fov,_distance,_range,_role,_noRoleOrGroup] call wh_nt_fnc_nametagDraw;
+							[_unit,_x,_playerPosition,_targetPosition,_fov,_range,_role,_noRoleOrGroup] call wh_nt_fnc_nametagDraw;
 						}
 						else
 						{
@@ -110,18 +112,16 @@ else
 							if(_x isEqualTo gunner _vehicle) then
 							{
 								_targetPosition = [_vehicle modeltoworld (_vehicle selectionPosition "gunnerview") select 0,_vehicle modeltoworld (_vehicle selectionPosition "gunnerview") select 1,(getPosVisual _x) select 2];
-								_distance = _targetPosition distance _playerPosition;
 							}
 							else
 							// Otherwise, display the tag above the vehicle.
 							{
-								private _angle = (getdir _vehicle)+180;
+								private _angle = (getDirVisual _vehicle)+180;
 								_targetPosition = [((_targetPosition select 0) + sin(_angle)*(0.6*_i)) , ((_targetPosition select 1) + cos(_angle)*(0.6*_i)),((_targetPosition select 2) + (WH_NT_FONT_HEIGHT_VEHICLE*_i))];
 								_i = _i + 1;
-								_distance = _targetPosition distance _playerPosition;
 							};
 
-							[_unit,_x,_targetPosition,_fov,_distance,_range,_role,_noRoleOrGroup] call wh_nt_fnc_nametagDraw;
+							[_unit,_x,_playerPosition,_targetPosition,_fov,_range,_role,_noRoleOrGroup] call wh_nt_fnc_nametagDraw;
 						};
 					};
 				};

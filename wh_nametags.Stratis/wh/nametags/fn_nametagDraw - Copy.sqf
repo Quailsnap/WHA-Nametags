@@ -1,10 +1,10 @@
 /// ====================================================================================
 //
 //	fn_nametagDraw.sqf - Initializes values for WH nametags (heavily based on F3 and ST)
-//		[_unit,_target,_playerPosition,_targetPosition,_fov,_range,_role,_noRoleOrGroup,_vehicle] call
+//		[_unit,_target,_targetPosition,_fov,_distance,_range,_role,_noRoleOrGroup,_vehicle] call
 //		wh_nt_fnc_nametagDraw;
 //	OR
-//		[_unit,_target,_playerPosition,_targetposition] call wh_nt_fnc_nametagDraw;
+//		[_unit,_target,_position] call wh_nt_fnc_nametagDraw;
 //
 //	@ /u/Whalen207 | Whale #5963
 //
@@ -14,12 +14,12 @@
 // Declare variables.
 // ------------------------------------------------------------------------------------
 
-params ["_unit","_target","_playerPosition","_targetPosition",["_fov",1],["_range",1],["_role",""],["_noRoleOrGroup",false],["_vehicle",null]];
+params ["_unit","_target","_position",["_fov",1],["_distance",0],["_range",1],["_role",""],["_noRoleOrGroup",false],["_vehicle",null]];
 // _unit (Object CAManBase): The player.
 // _target (Object CAManBase): Soldier the nametag will be rendered on.
-// _playerPosition (posAGL): Position of the player.
-// _targetPosition (posAGL): Position the nametag will be rendered on.
+// _position (posAGL): Position the nametag will be rendered on.
 // _fov (Number, max 1.7): Player's current zoom level.
+// _distance (Number): Distance from player (unit) to soldier (target).
 // _range (Number, max 1): Range modifier depending on day/night cycles.
 // _role (String): Target's role to be displayed at bottom.
 // _noRoleOrGroup (Bool): Special value used to remove role and groups if the vehicle the
@@ -34,9 +34,6 @@ params ["_unit","_target","_playerPosition","_targetPosition",["_fov",1],["_rang
 
 // Set name.
 private _name = name _target;
-
-// Distance
-private _distance = _playerPosition distance _targetPosition;
 
 // If the unit is dead, shorten the range. 
 if (!alive _target) then 
@@ -156,21 +153,12 @@ _nameColor =
 
 
 // ------------------------------------------------------------------------------------
-// Determine the distance needed between tags depending on how close the player is.
+// Determine the distance needed between tags depending on how close the player is. (TBD)
 // ------------------------------------------------------------------------------------
 
 // Setup the 3D object spread based on the distance and FOV.
 private _spacingTop    = WH_NT_FONT_SPREAD_TOP * _distance / _fov;
 private _spacingBottom = WH_NT_FONT_SPREAD_BOT * _distance / _fov;
-
-
-// ------------------------------------------------------------------------------------
-// Use space magic to realign the tags with the player's view.
-// IE: If the player is above the target, normally the nametags (which are stacked -
-// - vertically) would appear scrunched inside one another.
-// This alleviates this by realigning them horizontally. (TO BE FINISHED)
-// ------------------------------------------------------------------------------------
-
 
 
 // ------------------------------------------------------------------------------------
@@ -190,7 +178,7 @@ private _sizeSecondary 	= WH_NT_FONT_SIZE_SEC * _fov * WH_NT_FONT_SIZE_MULTI;
 // Get vehicle info, if present.
 // ------------------------------------------------------------------------------------
 
-private _vehicleName = "";
+_vehicleName = "";
 
 if (_showVehicleInfo && {!(isNull _vehicle)}) then
 {
@@ -214,24 +202,24 @@ if (_showVehicleInfo && {!(isNull _vehicle)}) then
 // Vehicle tag, if necessary, hovering above vehicle. Only present for commander.
 if (_showVehicleInfo && {!(_vehicleName isEqualTo "")}) then
 {
-	drawIcon3D ["", _color, [(_targetPosition select 0),(_targetPosition select 1),((_targetPosition select 2) + WH_NT_FONT_HEIGHT_VEHICLE * 3)],
+	drawIcon3D ["", _color, [(_position select 0),(_position select 1),((_position select 2) + WH_NT_FONT_HEIGHT_VEHICLE * 3)],
 	0, 0, 0, _vehicleName,WH_NT_FONT_SHADOW,_sizeVehicle,WH_NT_FONT_FACE_MAIN];
 };
 
 // Role tag (top).
 if (_showRole && {!(_role isEqualTo "")}) then
 {
-	drawIcon3D ["", _color, [_targetPosition select 0,_targetPosition select 1,(_targetPosition select 2) + _height + _spacingTop],
+	drawIcon3D ["", _color, [_position select 0,_position select 1,(_position select 2) + _height + _spacingTop],
 	0, 0, 0, _role,WH_NT_FONT_SHADOW,_sizeSecondary,WH_NT_FONT_FACE_SEC];
 };
 
 // Name tag (middle).
-drawIcon3D ["", _nameColor, [_targetPosition select 0,_targetPosition select 1,(_targetPosition select 2) + _height],
+drawIcon3D ["", _nameColor, [_position select 0,_position select 1,(_position select 2) + _height],
 0, 0, 0, _name,WH_NT_FONT_SHADOW,_sizeMain,WH_NT_FONT_FACE_MAIN];
 
 // Group tag (bottom).
 if (_showGroup && {!(_group isEqualTo "")}) then
 {
-	drawIcon3D ["", _color, [_targetPosition select 0,_targetPosition select 1,(_targetPosition select 2) + _height - _spacingBottom],
+	drawIcon3D ["", _color, [_position select 0,_position select 1,(_position select 2) + _height - _spacingBottom],
 	0, 0, 0, _group,WH_NT_FONT_SHADOW,_sizeSecondary,WH_NT_FONT_FACE_SEC];
 };

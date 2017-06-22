@@ -64,3 +64,4 @@ WH_NT_FONT_SIZE_MULTI = 1;
 
 WH_NT_EVENTHANDLER = addMissionEventHandler 
 ["Draw3D", { call wh_nt_fnc_nametagUpdate }];
+//["WH_NT_EVENTHANDLER","onEachFrame",{call wh_nt_fnc_nametagUpdate}] call BIS_fnc_addStackedEventHandler;
