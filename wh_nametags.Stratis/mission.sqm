@@ -5,17 +5,17 @@ class EditorData
 	angleGridStep=0.2617994;
 	scaleGridStep=1;
 	autoGroupingDist=10;
-	toggles=1;
+	toggles=129;
 	class ItemIDProvider
 	{
-		nextID=59;
+		nextID=64;
 	};
 	class Camera
 	{
-		pos[]={1662.5702,33.78286,5718.4473};
-		dir[]={-0.6506837,-0.57950395,-0.49093127};
-		up[]={-0.46271572,0.8148784,-0.34911376};
-		aside[]={-0.6023531,-2.3107277e-006,0.79835534};
+		pos[]={1844.5588,167.4119,5669.9194};
+		dir[]={0.86188912,-0.49721989,-0.10086615};
+		up[]={0.49401596,0.86753172,-0.057812553};
+		aside[]={-0.11624238,-1.4416728e-006,-0.99332321};
 	};
 };
 binarizationWanted=0;
@@ -93,8 +93,8 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={1637.308,0.59678036,5691.8179};
-						angles[]={0,5.0922947,0};
+						position[]={1638.6344,0.8935293,5691.0186};
+						angles[]={0,5.0099463,0};
 					};
 					side="West";
 					flags=7;
@@ -104,6 +104,7 @@ class Mission
 					};
 					id=1;
 					type="B_Soldier_lite_F";
+					atlOffset=2.3841858e-007;
 					class CustomAttributes
 					{
 						class Attribute0
@@ -152,6 +153,7 @@ class Mission
 			{
 			};
 			id=0;
+			atlOffset=2.3841858e-007;
 		};
 		class Item1
 		{

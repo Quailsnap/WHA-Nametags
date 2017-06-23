@@ -24,6 +24,14 @@ sleep 0.2;
 
 
 // ------------------------------------------------------------------------------------
+// Setting up CBA_Settings box.
+// ------------------------------------------------------------------------------------
+
+// Checks if CBA is present, adds settings if so.
+#include "wh_nametagCba.sqf"
+
+
+// ------------------------------------------------------------------------------------
 // Final steps of preparation.
 // ------------------------------------------------------------------------------------
 
@@ -34,8 +42,7 @@ sleep 0.2;
 } forEach allPlayers;
 
 // Determine proper text spacing depending on font size.
-WH_NT_FONT_SPREAD_TOP = WH_NT_FONT_SPREAD_COEF * WH_NT_FONT_SIZE_SEC * 0.5185; //0.5185;
-WH_NT_FONT_SPREAD_BOT = WH_NT_FONT_SPREAD_COEF * WH_NT_FONT_SIZE_SEC * 0.6666; //0.6666;
+call wh_nt_fnc_nametagSetFontSpread;
 					  
 // Wait for player to get in-game.
 waitUntil {!isNull (findDisplay 46)};
@@ -43,19 +50,8 @@ waitUntil {!isNull (findDisplay 46)};
 // Global variable that will be flipped on and off using the disableKey.
 WH_NT_NAMETAGS_ON = true; 	
 
-// Setting up our disableKey.
+// Setting up our disableKey (Default 'U')
 #include "wh_nametagDisableKey.sqf"
-
-
-// ------------------------------------------------------------------------------------
-// Setting up CBA_Settings box.
-// ------------------------------------------------------------------------------------
-
-// Establishing variables for use in settings. Do not delete this.
-WH_NT_FONT_SIZE_MULTI = 1;
-
-// Checks if CBA is present, adds settings if so.
-#include "wh_nametagCba.sqf"
 
 
 // ------------------------------------------------------------------------------------
