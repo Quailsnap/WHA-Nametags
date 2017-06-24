@@ -9,7 +9,7 @@
 // ====================================================================================
 
 // ------------------------------------------------------------------------------------
-// Setup inital variables.
+//	Setup inital variables.
 // ------------------------------------------------------------------------------------
 
 private _spacingMultiplier = WH_NT_FONT_SPREAD_MULTI * WH_NT_FONT_SIZE_MULTI * WH_NT_FONT_SIZE_SEC;
@@ -18,7 +18,7 @@ private _bottomCoefficient = 0.65; // (1.0645)
 
 
 // ------------------------------------------------------------------------------------
-// Update global font spread.
+//	Update global font spread.
 // ------------------------------------------------------------------------------------
 
 // Top and bottom are separate to avoid a wonky appearance.

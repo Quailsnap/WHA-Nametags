@@ -1,3 +1,14 @@
+// ====================================================================================
+//
+//	wh_nametagDisableKey.sqf - Sets up a key that can be used to flip the nametag
+//							   system on and off with a press.
+//
+// ====================================================================================
+
+// ------------------------------------------------------------------------------------
+//	Setup the Action Key, default 'U'.
+// ------------------------------------------------------------------------------------
+
 if (!isNil "WH_NT_ACTIONKEY") then
 {
 	WH_NT_ACTIONKEY_KEY = (actionKeys WH_NT_ACTIONKEY) select 0;// This key, a global variable.

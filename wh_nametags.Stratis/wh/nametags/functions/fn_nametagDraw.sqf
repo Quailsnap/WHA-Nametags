@@ -14,7 +14,8 @@
 // ------------------------------------------------------------------------------------
 // Declare variables.
 // ------------------------------------------------------------------------------------
-params [["_target",cursorTarget],["_targetPosition",getPosVisual _target],["_unit",player],["_unitPosition",getPosVisual _unit],["_fov",1],["_range",1],["_role",""],["_vehicle",null]];
+params [["_target",cursorTarget],["_targetPosition",getPosVisual _target],["_unit",player],
+["_unitPosition",getPosVisual _unit],["_fov",1],["_range",1],["_role",""],["_vehicle",null]];
 
 // _target (Object CAManBase): Soldier the nametag will be rendered on.
 // _targetPosition (posAGL): Position the nametag will be rendered on.
@@ -27,7 +28,7 @@ params [["_target",cursorTarget],["_targetPosition",getPosVisual _target],["_uni
 
 
 // ------------------------------------------------------------------------------------
-// Initial setup.
+//	Initial setup.
 // ------------------------------------------------------------------------------------
 
 // Set name.
@@ -39,7 +40,7 @@ if (!alive _target) then
 	_range = _range * 0.5;
 	
 	// After a while, dead units names change to an Error. This fixes that.
-    if (_name isEqualTo "Error: No unit") then 
+	if (_name isEqualTo "Error: No unit") then 
 	{ _name = ""; };
 };
 
@@ -64,8 +65,11 @@ then { groupID (group _target) } else { "" };
 
 
 // ------------------------------------------------------------------------------------
-// Set and manage distance to target.
+//	Set and manage distance to target.
 // ------------------------------------------------------------------------------------
+
+// Adjust target's position depending on height.
+_targetPosition set [2,(_targetPosition select 2)+_height];
 
 // Set distance.
 private _distance = _unitPosition distance _targetPosition;
@@ -76,7 +80,7 @@ if (_showDistance && {_distance >= 3}) then
 
 
 // ------------------------------------------------------------------------------------
-// Find transparency of tag depending on distance and time of day.
+//	Find transparency of tag depending on distance and time of day.
 // ------------------------------------------------------------------------------------
 
 // Get the transparency using some stupidly complex function.
@@ -102,7 +106,7 @@ else
 
 
 // ------------------------------------------------------------------------------------
-// Find and set nametag color.
+//	Find and set nametag color.
 // ------------------------------------------------------------------------------------
 
 // Define the default color of the nametag...
@@ -158,22 +162,22 @@ _nameColor =
 
 
 // ------------------------------------------------------------------------------------
-// Use space magic to realign the tags with the player's view.
-// IE: If the player is above the target, normally the nametags (which are stacked -
-// - vertically) would appear scrunched inside one another.
-// This alleviates this by realigning them horizontally.
+//	Use space magic to realign the tags with the player's view.
+//	IE: If the player is above the target, normally the nametags (which are stacked -
+//	- vertically) would appear scrunched inside one another.
+//	This alleviates this by realigning them horizontally.
+//
+//	Special thanks to cptnnick for this idea, code, implementation, everything!
 // ------------------------------------------------------------------------------------
 
-_targetPosition set [2,(_targetPosition select 2)+_height];
+private _vectorDiff = (vectorNormalized (((vectorDir player) vectorCrossProduct (vectorUp player)) vectorCrossProduct (_targetPosition vectorDiff _unitPosition)));
 
-private _vectorDiff = (vectorNormalized ((_targetPosition vectorDiff _unitPosition) vectorCrossProduct ((vectorDir player) vectorCrossProduct (vectorUp player))));
-
-private _targetPositionTop = _targetPosition vectorAdd ((_vectorDiff vectorMultiply (WH_NT_FONT_SPREAD_TOP * _distance / _fov)) vectorMultiply -1);
-private _targetPositionBottom = _targetPosition vectorAdd (_vectorDiff vectorMultiply (WH_NT_FONT_SPREAD_BOTTOM * _distance / _fov));
+private _targetPositionTop = _targetPosition vectorAdd (_vectorDiff vectorMultiply (WH_NT_FONT_SPREAD_TOP * _distance / _fov));
+private _targetPositionBottom = _targetPosition vectorAdd ((_vectorDiff vectorMultiply (WH_NT_FONT_SPREAD_BOTTOM * _distance / _fov)) vectorMultiply -1);
 
 
 // ------------------------------------------------------------------------------------
-// Determine font size based on fov.
+//	Determine font size based on fov.
 // ------------------------------------------------------------------------------------
 
 // If font size zooming is disabled, set the FOV multi to 1.
@@ -189,7 +193,7 @@ private _sizeSecondary 	= WH_NT_FONT_SIZE_SEC * _fov * WH_NT_FONT_SIZE_MULTI;
 
 
 // ------------------------------------------------------------------------------------
-// Get vehicle info, if present.
+//	Get vehicle info, if present.
 // ------------------------------------------------------------------------------------
 
 private _vehicleName = "";
@@ -198,8 +202,10 @@ if (_showVehicleInfo && {!(isNull _vehicle)}) then
 {
 	// Get the vehicle's friendly name from configs.
 	_vehicleName = format ["%1",getText (configFile >> "CfgVehicles" >> typeOf _vehicle >> "displayname")];
+	
 	// Get the maximum number of (passenger) seats from configs.
 	private _maxSlots = getNumber(configfile >> "CfgVehicles" >> typeof _vehicle >> "transportSoldier") + (count allTurrets [_vehicle, true] - count allTurrets _vehicle);
+	
 	// Get the number of empty seats.
 	private _freeSlots = _vehicle emptyPositions "cargo";
 
@@ -210,7 +216,7 @@ if (_showVehicleInfo && {!(isNull _vehicle)}) then
 
 
 // ------------------------------------------------------------------------------------
-// Render the nametag.
+//	Render the nametags.
 // ------------------------------------------------------------------------------------
 
 // Vehicle tag, if necessary, hovering above vehicle. Only present for commander.
