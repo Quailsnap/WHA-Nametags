@@ -170,7 +170,8 @@ _nameColor =
 //	Special thanks to cptnnick for this idea, code, implementation, everything!
 // ------------------------------------------------------------------------------------
 
-private _vectorDiff = (vectorNormalized (((vectorDir player) vectorCrossProduct (vectorUp player)) vectorCrossProduct (_targetPosition vectorDiff _unitPosition)));
+private _vectorDir = _unitPosition vectorFromTo (positionCameraToWorld[0,0,1]);
+private _vectorDiff = (vectorNormalized (((_vectorDir) vectorCrossProduct (vectorUp player)) vectorCrossProduct (_targetPosition vectorDiff _unitPosition)));
 
 private _targetPositionTop = _targetPosition vectorAdd (_vectorDiff vectorMultiply (WH_NT_FONT_SPREAD_TOP * _distance / _fov));
 private _targetPositionBottom = _targetPosition vectorAdd ((_vectorDiff vectorMultiply (WH_NT_FONT_SPREAD_BOTTOM * _distance / _fov)) vectorMultiply -1);
