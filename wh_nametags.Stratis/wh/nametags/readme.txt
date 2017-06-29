@@ -1,6 +1,6 @@
  ===================================================================
 
-	WHALE'S NAMETAGS (V0.7C Beta) 
+	WHALE'S NAMETAGS (V0.8A Beta) 
 	SCRIPT FOR ARMA 3
 	Contact @ /u/Whalen207 | Whale #5963
 
@@ -9,13 +9,14 @@ Special Thanks To:
 - Dsylexci and Zedx64 of Shacktac, for feature inspiration and some code solutions.
 - Dedmen, commy2, and Quiksilver for advice in the Arma 3 Discord.
 - Cptnnick for wonderful advice on vector math that helped me immensely.
+- eraser1 of COALITION for some optimization advice.
 
 Features:
-- All features configurable by missionmaker.
+- Most features configurable by missionmaker.
 - Many features configurable by clients using CBA.
-- Full multiplayer support.
+- Does not render nametags if offscreen or out of sight.
 - Can display player name, group, distance, and role.
-- Custom roles can be set using setVariable, designed for use with F3.
+- Custom roles can be set using setVariable.
 - Can display vehicle information including available seats.
 - Nametags can be toggled on or off with a button press.
 - Nametags are rendered in 3D, but appear 2D and follow players.

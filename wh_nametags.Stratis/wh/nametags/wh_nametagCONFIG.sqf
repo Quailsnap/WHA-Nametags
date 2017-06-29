@@ -17,8 +17,13 @@
 // Main Values																	(Default values)
 WH_NT_DRAWCURSORONLY = false;	// Only draw nametags on mouse cursor. 			(Default: false)
 								// Can save FPS in crowded areas.
-WH_NT_ACTIONKEY = "TeamSwitch"; // Key that can be pressed to toggle tags.		("TeamSwitch")
+								
+WH_NT_ACTIONKEY = "timeInc"; 	// Key that can be pressed to toggle tags.		("timeInc")
+								// Default is "timeInc", which is normally
+								// the (=) key. Other keys available here:
+								// https://community.bistudio.com/wiki/inputAction/actions/bindings
 								// Don't want any key? Comment out the line.
+								
 WH_NT_NIGHT = true;				// Whether night will affect tag visibility.	(true)
 
 // Information Shown
@@ -34,7 +39,7 @@ WH_NT_DRAWDISTANCE_ONE  = 20; 		// Distance to draw nametags when pointing at a 
 									// May be increased SIGNIFICANTLY if FOV is enabled.
 WH_NT_DRAWDISTANCE_ALL  = 10; 		// Distance within which all nametags will be drawn.	(10)
 									// Increasing this will cost performance.
-WH_NT_DRAWDISTANCE_FOV  = true;		// Amps drawdists, fades, and size depending on zoom.	(true)
+									// Due to a bug this will seem ~3m shorter in third person.
 
 // Text Configuration: Typeface				   Try "EtelkaNarrowMediumPro" for an Arma 2 throwback.
 WH_NT_FONT_FACE_MAIN ="RobotoCondensedBold";// Font for unit and vehicle names. ("RobotoCondensedBold")
@@ -61,6 +66,8 @@ WH_NT_FONT_COLOR_CREW   = [0.95,0.80,0.10,0.85];  // Vehicle crew.			([0.95,0.80
 WH_NT_FONT_COLOR_OTHER  = [0.90,0.90,0.90,0.85];  // Everything but names.	([0.90,0.90,0.90,0.85])
 
 // Text Configuration: Position		// Font height difference from torso when...
+WH_NT_FONT_HEIGHT_ONHEAD = false;	// Attaches nametags to head (like ACE) (false)
+									// ignoring most of below values.
 WH_NT_FONT_HEIGHT_STANDING =  1.30;	// ...Standing.							(1.30)
 WH_NT_FONT_HEIGHT_CROUCHING = 0.75;	// ...Crouching.						(0.75)
 WH_NT_FONT_HEIGHT_PRONE =     0.30;	// ...Prone.							(0.30)

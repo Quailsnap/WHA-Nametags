@@ -14,7 +14,8 @@ class WH_NT
 		file = "wh\nametags\functions";
 		class nametagUpdate {};
 		class nametagDraw {};
-		class nametagSetFontSpread{};
+		class nametagSetFontSpread {};
+		class getHeight {};
 		class getZoom {};
 	};
 };

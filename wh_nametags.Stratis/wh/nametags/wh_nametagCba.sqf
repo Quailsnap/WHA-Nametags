@@ -10,7 +10,7 @@ if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
 	[
 		"WH_NT_NAMETAGS_ON",		// Internal setting name and value set.
 		"CHECKBOX", 				// Setting type.
-		"WH Nametag System", 				// Name shown in menu.
+		"WH Nametag System", 		// Name shown in menu.
 		"WH Nametags", 				// Category shown in menu.
 		true 						// Setting type-specific data.
 	] call CBA_Settings_fnc_init;
@@ -41,6 +41,19 @@ if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
 		] 							// Setting type-specific data.
 	] call CBA_Settings_fnc_init;
 
+	// Setting for changing typeface color.
+	[
+		"WH_NT_FONT_COLOR_DEFAULT",	// Internal setting name and value set.
+		"LIST", 					// Setting type.
+		"Font Color (Main)", 		// Name shown in menu.
+		"WH Nametags", 				// Category shown in menu.
+		[
+			[[0.68,0.90,0.36,0.85],[0.77, 0.51, 0.08, 0.85],[0.15,0.70,0.90,0.85],[0.90,0.10,0.10,0.85]],
+			["WH Green *","ACE Rust","TMTM Blue","COAL Crimson"],
+			0
+		] 							// Setting type-specific data.
+	] call CBA_Settings_fnc_init;
+	
 	// Setting to dynamically alter font size.
 	[
 		"WH_NT_FONT_SIZE_MULTI",	// Internal setting name and value set.
@@ -89,11 +102,35 @@ if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
 	] call CBA_Settings_fnc_init;
 	};
 
+	// Option to not show role and group tags.
+	[
+		"WH_NT_SHOW_ROLEANDGROUP",	// Internal setting name and value set.
+		"CHECKBOX", 				// Setting type.
+		"Show Role and Group",			// Name shown in menu.
+		"WH Nametags", 				// Category shown in menu.
+		true, 						// Setting type-specific data.
+		nil, 						// Nil or 0 for changeable, 1 to reset to default, 2 to lock.
+		{ 	
+			if WH_NT_SHOW_ROLEANDGROUP 
+			then { WH_NT_SHOW_ROLE = true; WH_NT_SHOW_GROUP = true; } 
+			else { WH_NT_SHOW_ROLE = false; WH_NT_SHOW_GROUP = false; };
+		}
+	] call CBA_Settings_fnc_init;
+	
 	// Colorblind mode.
 	[
 		"WH_NT_FONT_COLORBLIND",	// Internal setting name and value set.
 		"CHECKBOX", 				// Setting type.
 		"Colorblind Mode",			// Name shown in menu.
+		"WH Nametags", 				// Category shown in menu.
+		false 						// Setting type-specific data.
+	] call CBA_Settings_fnc_init;
+	
+	// Attach nametags to player heads, like ACE.
+	[
+		"WH_NT_FONT_HEIGHT_ONHEAD",	// Internal setting name and value set.
+		"CHECKBOX", 				// Setting type.
+		"Show Above Head",			// Name shown in menu.
 		"WH Nametags", 				// Category shown in menu.
 		false 						// Setting type-specific data.
 	] call CBA_Settings_fnc_init;

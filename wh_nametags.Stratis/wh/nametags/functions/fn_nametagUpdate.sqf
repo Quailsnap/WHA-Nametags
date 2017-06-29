@@ -16,122 +16,169 @@
 if !(WH_NT_NAMETAGS_ON) exitWith {};
 
 // Save the player's variable.
-private _unit = player;
+private _player = player;
 
-// Find player camera's position.
-private _unitPosition = positionCameraToWorld[0,0,0];
+// Find player camera's position and the direction their head is facing.
+private _cameraPositionAGL = positionCameraToWorld[0,0,0];
+private _cameraPositionASL = AGLtoASL _cameraPositionAGL;
 
-// If in normal vision, ranges reduce from darkness. Nightvision helps to counter this, 
-// but not perfectly. (FROM SHACKTAC NAMETAGS)
-private _range =
-if ( !(sunOrMoon isEqualTo 1) && {WH_NT_NIGHT} ) then
-{ linearConversion [0, 1, sunOrMoon, 0.25+0.5*(currentVisionMode _unit),1,true]; } else { 1 };
+// Get zoom, which will be used to adjust spacing and size of text.
+private _zoom = call wh_nt_fnc_getZoom;
 
-// Get FOV, which will be used to adjust spacing and size of text.
-private _fov = if ( WH_NT_DRAWDISTANCE_FOV ) then {	(call wh_nt_fnc_getZoom) } else { 1 };
-
+// Initialize other variables to be used in main loop.
+private _targetPositionAGL;
+private _targetPositionASL;
+private _height;
 
 // ------------------------------------------------------------------------------------
 // Collecting nearby entities.
 // ------------------------------------------------------------------------------------
 
 // Establish _entities array.
-private _entities = call 
-{
-	if !(WH_NT_DRAWCURSORONLY) exitWith {_unitPosition nearEntities [["CAManBase","LandVehicle","Helicopter","Plane","Ship_F"], (WH_NT_DRAWDISTANCE_ALL*_range)]};
-	if  (isNull objectParent _unit && {(_unitPosition distance cursorTarget) <= (WH_NT_DRAWDISTANCE_ONE*_range*_fov)}) exitWith {[cursorTarget]};
-	if !(isNull objectParent _unit && {(_unitPosition distance cursorObject) <= (WH_NT_DRAWDISTANCE_ONE*_range*_fov)}) exitWith {[cursorObject]};
-	[]
-};
+private _entities = 
+if !(WH_NT_DRAWCURSORONLY) then
+{ _cameraPositionAGL nearEntities [["CAManBase","LandVehicle","Helicopter","Plane","Ship_F"], (WH_NT_DRAWDISTANCE_ALL*WH_NT_VAR_NIGHT)] }
+else { [] };
 
 // Make sure cursorTarget is in the entity array.
 // Use cursorObject if the player is in a vehicle.
-if (isNull objectParent _unit) then
+if (WH_NT_VAR_PLAYER_INVEHICLE) then
 {
-	if ((_unitPosition distance cursorTarget) <= (((WH_NT_DRAWDISTANCE_ONE) * _range) * _fov))
+	if ((_player distance cursorTarget) <= (((WH_NT_DRAWDISTANCE_ONE) * WH_NT_VAR_NIGHT) * _zoom))
 	then { _entities pushBackUnique cursorTarget; };
 }
 else
 {
-	if ((_unitPosition distance cursorObject) <= (((WH_NT_DRAWDISTANCE_ONE) * _range) * _fov))
+	if ((_player distance cursorObject) <= (((WH_NT_DRAWDISTANCE_ONE) * WH_NT_VAR_NIGHT) * _zoom))
 	then { _entities pushBackUnique cursorObject; };
 };
 
 // Sort entities. Keep only the ones that are on the unit's side, or in their group,
 // and only if they are not the unit itself.
-_entities = _entities select {((side _x isEqualTo side _unit) || {(group _x isEqualTo group _unit)
-|| {(side _x isEqualTo civilian)}}) && {_x != _unit} };
+_entities = _entities select 
+{
+	(
+		(side _x isEqualTo side player) || 
+		{(_targetGroup isEqualTo group player)}
+	) 
+	&& {_x != player}
+};
 
 
 // ------------------------------------------------------------------------------------
 // Loop through entities collected, sorting them to see what tags need rendering.
 // ------------------------------------------------------------------------------------
-
 {
 // For every entity that's not the player...
 // ...and only if they're on the same side, or in the same group as the player...
-
-	// If the entity is a man, draw a nametag for it.
-	if((typeof _x) iskindof "Man") then 
-	{ [_x,_x modelToWorldVisual[0,0,0],_unit,_unitPosition,_fov,_range] call wh_nt_fnc_nametagDraw; } 
+	
+	// If the entity is a man...
+	if( _x isKindOf "Man" ) then 
+	{
+		_targetPositionASL = if !WH_NT_FONT_HEIGHT_ONHEAD
+		then { getPosASLVisual _x } 
+		else { eyePos _x };
+		
+		_height = if !WH_NT_FONT_HEIGHT_ONHEAD
+		then { _x call wh_nt_fnc_getHeight }
+		else { 0.35 };
+		
+		_targetPositionASL set [2,(_targetPositionASL select 2)+(_height)];
+		_targetPositionAGL = ASLToAGL _targetPositionASL;
+		
+		// And if that man can be seen...
+		if
+		(
+			!(worldToScreen _targetPositionAGL isEqualTo []) &&
+			{ lineIntersectsSurfaces [_cameraPositionASL, _targetPositionASL, _player, _x] isEqualTo [] }
+		)
+		// Draw a nametag for him.
+		then 
+		{
+			[_player,_cameraPositionAGL,(group _x == group player),_x,_targetPositionAGL,_zoom,""]
+			call wh_nt_fnc_nametagDraw;
+		};
+	}
 	else 
 	{
 		// Otherwise (if the entity is a vehicle)...
-		if ( WH_NT_SHOW_INVEHICLE ) then 
+		if (WH_NT_SHOW_INVEHICLE) then 
 		{
 			private _vehicle = _x;
 			private _i = 1;
 
 			// ...For every crew in the vehicle that's not the player...
 			{
-				// Get the crew's role, if present.
-				private _role = call
-				{
-					if ( commander _vehicle isEqualTo _x ) exitWith {"Commander"};
-					if ( gunner	   _vehicle isEqualTo _x ) exitWith {"Gunner"};
-					if ( !(driver  _vehicle isEqualTo _x)) exitWith {""};
-					if ( driver	   _vehicle isEqualTo _x && {!(_vehicle isKindOf "helicopter") && {!(_vehicle isKindOf "plane")}} ) exitWith {"Driver"};
-					if ( driver	   _vehicle isEqualTo _x && { (_vehicle isKindOf "helicopter") || { (_vehicle isKindOf "plane")}} ) exitWith {"Pilot"};
-					""
-				};
-
 				// The target's position is his real position.
-				private _targetPosition = ASLToAGL (getPosASLVisual _x);
-
-				// Only display the driver, commander, and members of the players group unless the player is up close.
-				if (effectiveCommander _vehicle isEqualTo _x || {group _x isEqualTo group _unit || {(_unitPosition distance _targetPosition) <= WH_NT_DRAWDISTANCE_ALL}}) then
+				_targetPositionAGL = if !WH_NT_FONT_HEIGHT_ONHEAD
+				then { ASLtoAGL getPosASLVisual _x } 
+				else { ASLtoAGL eyePos _x };
+				
+				_height = if !WH_NT_FONT_HEIGHT_ONHEAD
+				then { _x call wh_nt_fnc_getHeight }
+				else { 0.35 };
+		
+				_targetPositionAGL set [2,(_targetPositionAGL select 2)+(_height)];
+				
+				// ...If they are on-screen...
+				if ( !(worldToScreen _targetPositionAGL isEqualTo []) ) then
 				{
-					// If the unit is the commander, pass the vehicle he's driving.
-					if (effectiveCommander _vehicle isEqualTo _x) then 
+					// Check if the player and target are in the same group.
+					private _sameGroup = (group _x == group player);
+					
+					// Get the crew's role, if present.
+					private _role = call
 					{
-						[_x,_targetPosition,_unit,_unitPosition,_fov,_range,_role,_vehicle] call wh_nt_fnc_nametagDraw; 
-					}
-					else
+						if ( commander _vehicle isEqualTo _x ) exitWith {"Commander"};
+						if ( gunner	   _vehicle isEqualTo _x ) exitWith {"Gunner"};
+						if ( !(driver  _vehicle isEqualTo _x)) exitWith {""};
+						if ( driver	   _vehicle isEqualTo _x && {!(_vehicle isKindOf "helicopter") && {!(_vehicle isKindOf "plane")}} ) exitWith {"Driver"};
+						if ( driver	   _vehicle isEqualTo _x && { (_vehicle isKindOf "helicopter") || { (_vehicle isKindOf "plane")}} ) exitWith {"Pilot"};
+						""
+					};
+
+					// Only display the driver, commander, and members of the players group unless the player is up close.
+					if (effectiveCommander _vehicle isEqualTo _x || {_sameGroup} || {(player distance _x) <= WH_NT_DRAWDISTANCE_ALL}) then
 					{
-						// If the unit is the driver, or far enough from the driver that the tags will not 
-						// overlap each other, draw the tags on them normally.
-						if (driver _vehicle isEqualTo _x || {_targetPosition distance (ASLToAGL getPosASLVisual(driver _vehicle)) > 0.2}) then
-						{
-							[_x,_targetPosition,_unit,_unitPosition,_fov,_range,_role] call wh_nt_fnc_nametagDraw;
-						}
+						// If the unit is the commander, pass the vehicle he's driving.
+						if (effectiveCommander _vehicle isEqualTo _x) then 
+						{ [_player,_cameraPositionAGL,_sameGroup,_x,_targetPositionAGL,_zoom,_role,_vehicle] call wh_nt_fnc_nametagDraw; }
 						else
 						{
-							// If the unit is in a gunner slot and not the commander, display the tag at the gun's position.
-							if(_x isEqualTo gunner _vehicle) then
+							// If the unit is the driver, or far enough from the driver that the tags will not overlap each other, draw the tags on them normally.
+							if (driver _vehicle isEqualTo _x || {_targetPositionAGL distance (ASLToAGL getPosASLVisual(driver _vehicle)) > 0.2}) then
 							{
-								_targetPosition = [_vehicle modeltoworld (_vehicle selectionPosition "gunnerview") select 0,_vehicle modeltoworld (_vehicle selectionPosition "gunnerview") select 1,(_targetPosition) select 2];
+								if (driver _vehicle isEqualTo _x || {gunner _vehicle isEqualTo _x}) then
+								{
+									[_player,_cameraPositionAGL,_sameGroup,_x,_targetPositionAGL,_zoom,_role] call wh_nt_fnc_nametagDraw;
+								}
+								else
+								{
+									if (lineIntersectsSurfaces [_cameraPositionASL, AGLtoASL _targetPositionAGL, _player, _x] isEqualTo []) then
+									{
+										[_player,_cameraPositionAGL,_sameGroup,_x,_targetPositionAGL,_zoom,_role] call wh_nt_fnc_nametagDraw;
+									};
+								};
 							}
 							else
-							// Otherwise, display the tag above the vehicle.
 							{
-								_targetPosition set [2,(_targetPosition select 2)+(WH_NT_FONT_HEIGHT_VEHICLE*_i)];
-								_i = _i + 1;
+								// If the unit is in a gunner slot and not the commander, display the tag at the gun's position.
+								if(_x isEqualTo gunner _vehicle) then
+								{
+									_targetPositionAGL = [_vehicle modeltoworld (_vehicle selectionPosition "gunnerview") select 0,_vehicle modeltoworld (_vehicle selectionPosition "gunnerview") select 1,(_targetPositionAGL) select 2];
+								};
+								//else
+								// Otherwise, display the tag above the vehicle.
+								//{
+								//	_targetPositionAGL set [2,(_targetPositionAGL select 2)+(WH_NT_FONT_HEIGHT_VEHICLE*_i)];
+								//	_i = _i + 1;
+								//};
+								[_player,_cameraPositionAGL,_sameGroup,_x,_targetPositionAGL,_zoom,_role] call wh_nt_fnc_nametagDraw;
 							};
-							[_x,_targetPosition,_unit,_unitPosition,_fov,_range,_role] call wh_nt_fnc_nametagDraw;
 						};
 					};
 				};
-			} forEach (crew _vehicle select {!(_x isEqualTo _unit)});
+			} forEach (crew _vehicle select {!(_x isEqualTo _player)});
 		};
 	};
 } count _entities;

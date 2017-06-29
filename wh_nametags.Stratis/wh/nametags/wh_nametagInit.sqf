@@ -2,6 +2,9 @@
 //
 //	wh_nametagInit.sqf - Initializes values for WH nametags.
 //
+//	> [] execVM "wh\nametags\wh_nametagInit.sqf"; <
+//	@ /u/Whalen207 | Whale #5963
+//
 // ====================================================================================
 
 // ------------------------------------------------------------------------------------
@@ -52,6 +55,13 @@ WH_NT_NAMETAGS_ON = true;
 
 // Setting up our disableKey (Default 'U')
 #include "wh_nametagDisableKey.sqf"
+
+
+// ------------------------------------------------------------------------------------
+//	Initiate a slow loop that will routinely check common values.
+// ------------------------------------------------------------------------------------
+
+#include "wh_nametagCheck.sqf"
 
 
 // ------------------------------------------------------------------------------------
