@@ -1,2 +1,2 @@
 Mission above is for use in previewing the (WIP) nametags system.
-Another, better readme is inside the mission>WH>nametags
+The system itself, complete with a far better readme, is available inside mission > wh.
