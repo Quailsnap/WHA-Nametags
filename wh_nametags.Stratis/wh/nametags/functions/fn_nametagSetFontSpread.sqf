@@ -13,6 +13,8 @@
 // ------------------------------------------------------------------------------------
 
 private _spacingMultiplier = WH_NT_FONT_SPREAD_MULTI * WH_NT_FONT_SIZE_MULTI * WH_NT_FONT_SIZE_SEC;
+
+//	Coefficients are used. Should be changed if you change the default font, probably.
 private _topCoefficient    = 0.50; // (0.9032)
 private _bottomCoefficient = 0.65; // (1.0645)
 

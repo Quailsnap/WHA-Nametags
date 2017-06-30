@@ -30,8 +30,7 @@ WH_NT_NIGHT = true;				// Whether night will affect tag visibility.	(true)
 WH_NT_SHOW_GROUP 		= true;		// Draw group name under unit's name. 		(true)
 WH_NT_SHOW_ROLE			= true; 	// Draw unit's role (rifleman, driver). 	(true)
 WH_NT_SHOW_DISTANCE 	= false;	// Draw distance to unit.					(false)
-WH_NT_SHOW_INVEHICLE 	= true;		// Draw unit names of those in vehicles.	(true)
-WH_NT_SHOW_VEHICLEINFO 	= true;		// Draw vehicle info. Needs "INVEHICLE".	(true)
+WH_NT_SHOW_VEHICLEINFO 	= true;		// Draw vehicle info.						(true)
 
 // Draw Distances
 WH_NT_DRAWDISTANCE_ONE  = 20; 		// Distance to draw nametags when pointing at a unit.	(20)
@@ -71,7 +70,7 @@ WH_NT_FONT_HEIGHT_ONHEAD = false;	// Attaches nametags to head (like ACE) (false
 WH_NT_FONT_HEIGHT_STANDING =  1.30;	// ...Standing.							(1.30)
 WH_NT_FONT_HEIGHT_CROUCHING = 0.75;	// ...Crouching.						(0.75)
 WH_NT_FONT_HEIGHT_PRONE =     0.30;	// ...Prone.							(0.30)
-WH_NT_FONT_HEIGHT_VEHICLE   = 0.30;	// ...For crew in a vehicle.			(0.30)
+WH_NT_FONT_HEIGHT_VEHICLE   = 0.40;	// ...For crew in a vehicle.			(0.40)
 WH_NT_FONT_HEIGHT_VEHICLE_INFO = 1; // Font height for vehicle info.		(1)
 		
 // Colorblind Mode
