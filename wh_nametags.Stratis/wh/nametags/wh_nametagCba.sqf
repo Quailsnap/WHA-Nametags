@@ -48,8 +48,8 @@ if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
 		"Font Color (Main)", 		// Name shown in menu.
 		"WH Nametags", 				// Category shown in menu.
 		[
-			[[0.68,0.90,0.36,0.85],[0.77, 0.51, 0.08, 0.85],[0.15,0.70,0.90,0.85],[0.90,0.10,0.10,0.85]],
-			["WH Green *","ACE Rust","TMTM Blue","COAL Crimson"],
+			[WH_NT_FONT_COLOR_DEFAULT,[0.68,0.90,0.36,0.85],[0.77, 0.51, 0.08, 0.85],[0.15,0.70,0.90,0.85],[0.90,0.10,0.10,0.85],[0.90,0.90,0.90,0.85],[0.90,0.75,0,0.85]],
+			["Default *","WH Green","ACE Rust","TMTM Blue","COAL Crimson","FA White","ST Sand"],
 			0
 		] 							// Setting type-specific data.
 	] call CBA_Settings_fnc_init;

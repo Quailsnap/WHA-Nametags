@@ -81,24 +81,14 @@ _entities = _entities select
 	//	....If the entity is a man...
 	if( _x isKindOf "Man" ) then 
 	{
-		//	Get the man's position.
+		//	Get the man's position. Add the height from their stance.
 		//	If the option that places tags above target heads is enabled, get the
 		//	position of the man's head.
 		_targetPositionASL = 
 		if !WH_NT_FONT_HEIGHT_ONHEAD
-		then { getPosASLVisual _x } 
-		else { eyePos _x };
+		then { (getPosASLVisual _x) vectorAdd [0,0,(_x call wh_nt_fnc_getHeight)] } 
+		else { AGLtoASL ( _x modelToWorldVisual ((_x selectionPosition "head")   vectorAdd [0,0,0.5])) };
 		
-		//	Get the height the tag will be above the target's position depending
-		//	on the target man's stance.
-		//	If the option to place tags on head is enabled this will be a fixed value.
-		_height = 
-		if !WH_NT_FONT_HEIGHT_ONHEAD
-		then { _x call wh_nt_fnc_getHeight }
-		else { 0.35 };
-
-		//	Add the height to the position.
-		_targetPositionASL set [2,(_targetPositionASL select 2)+(_height)];
 		_targetPositionAGL = ASLToAGL _targetPositionASL;
 
 		//	And if that man can be seen...
@@ -132,17 +122,9 @@ _entities = _entities select
 			//	The target's position is his real position.
 			_targetPositionAGL = 
 			if !WH_NT_FONT_HEIGHT_ONHEAD
-			then { ASLtoAGL getPosASLVisual _x } 
-			else { ASLtoAGL eyePos _x };
-			
-			//	Get the height and modify that position.
-			_height = 
-			if !WH_NT_FONT_HEIGHT_ONHEAD
-			then { WH_NT_FONT_HEIGHT_VEHICLE }
-			else { 0.35 };
-	
-			_targetPositionAGL set [2,(_targetPositionAGL select 2)+(_height)];
-			
+			then { ASLtoAGL (getPosASLVisual _x) vectorAdd [0,0,(_x call wh_nt_fnc_getHeight)]  } 
+			else { AGLtoASL ( _x modelToWorldVisual ((_x selectionPosition "head")   vectorAdd [0,0,0.5]))};
+
 			//	...If they are on-screen...
 			if ( !(worldToScreen _targetPositionAGL isEqualTo []) ) then
 			{
@@ -161,7 +143,7 @@ _entities = _entities select
 				};
 
 				//	Only display the driver, commander, and members of the players group unless the player is up close.
-				if (effectiveCommander _vehicle isEqualTo _x || {_sameGroup} || {(player distance _x) <= WH_NT_DRAWDISTANCE_ALL}) then
+				if (effectiveCommander _vehicle isEqualTo _x || {_sameGroup} || {(_cameraPositionAGL distance _targetPositionAGL) <= WH_NT_DRAWDISTANCE_ALL}) then
 				{
 					//	If the unit is the commander, pass the vehicle he's driving and draw the tag.
 					if (effectiveCommander _vehicle isEqualTo _x) then 
