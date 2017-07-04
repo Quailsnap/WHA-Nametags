@@ -7,12 +7,11 @@ class CfgFunctions
 //	Also note that if there is already an ACE_settings header
 //	in your description.ext, place the ace_nametags class
 //	stuff inside there.
-//class ACE_settings 
-//{
-//	class ace_nametags_showPlayerNames 
-//	{
-//		value = 0;
-//		typeName = "SCALAR";
-//		force = 1;
-//	};
-//};
+class ACE_settings 
+{
+	class ace_nametags_showPlayerNames 
+	{
+		value = 0;
+		typeName = "SCALAR";
+	};
+};

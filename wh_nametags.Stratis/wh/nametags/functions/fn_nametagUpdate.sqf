@@ -3,7 +3,9 @@
 //	fn_nametagUpdate.sqf - Updates values for WH nametags (heavily based on F3 and ST)
 //						   Intended to be run each frame.
 //
-//	> call wh_nt_fnc_nametagUpdate; <
+//	> 	WH_NT_EVENTHANDLER = addMissionEventHandler 
+//		["Draw3D", { call wh_nt_fnc_nametagUpdate }]; <
+//
 //	@ /u/Whalen207 | Whale #5963
 //
 //====================================================================================
@@ -49,15 +51,15 @@ else { [] };
 //	Make sure cursorTarget is in the entity array.
 if !WH_NT_VAR_PLAYER_INVEHICLE then
 {
-	if ((_player distance cursorObject) <= (((WH_NT_DRAWDISTANCE_ONE) * WH_NT_VAR_NIGHT) * _zoom))
-	then { _entities pushBackUnique cursorObject; };
+	if ((_player distance cursorTarget) <= (((WH_NT_DRAWDISTANCE_ONE) * WH_NT_VAR_NIGHT) * _zoom))
+	then { _entities pushBackUnique cursorTarget; };
 }
 //	If the player is in a vehicle, use cursorObject.
 //	cursorObject can look through windows.
 else
 {
-	if ((_player distance cursorTarget) <= (((WH_NT_DRAWDISTANCE_ONE) * WH_NT_VAR_NIGHT) * _zoom))
-	then { _entities pushBackUnique cursorTarget; };
+	if ((_player distance cursorObject) <= (((WH_NT_DRAWDISTANCE_ONE) * WH_NT_VAR_NIGHT) * _zoom))
+	then { _entities pushBackUnique cursorObject; };
 };
 
 //	Sort entities. Keep only the ones that are on the unit's side, or in their group,
@@ -106,7 +108,7 @@ _entities = _entities select
 		//		so the draw function will get a non-crew role (ie: 'Autorifleman').
 		then 
 		{
-			[_player,_cameraPositionAGL,(group _x == group player),_x,_targetPositionAGL,_zoom,""]
+			[_player,_cameraPositionAGL,(group _x isEqualTo group player),_x,_targetPositionAGL,_zoom,""]
 			call wh_nt_fnc_nametagDraw;
 		};
 	}
@@ -129,7 +131,7 @@ _entities = _entities select
 			if ( !(worldToScreen _targetPositionAGL isEqualTo []) ) then
 			{
 				//	Check if the player and target are in the same group.
-				private _sameGroup = (group _x == group player);
+				private _sameGroup = (group _x isEqualTo group player);
 				
 				//	Get the crew's role, if present.
 				private _role = call
