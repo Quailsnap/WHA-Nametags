@@ -13,8 +13,9 @@ class WH_NT
 	{
 		file = "wh\nametags\functions";
 		class nametagUpdate {};
-		class nametagDraw {};
-		class nametagSetFontSpread {};
+		class nametagDrawNear {};
+		class nametagDrawCursor {};
+		class nametagResetFont {};
 		class getHeight {};
 		class getZoom {};
 	};

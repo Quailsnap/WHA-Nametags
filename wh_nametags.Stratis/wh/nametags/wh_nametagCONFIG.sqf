@@ -17,7 +17,7 @@
 //	Main Values																	(Default values)
 WH_NT_DRAWCURSORONLY = false;	//	Only draw nametags on mouse cursor. 		(Default: false)
 								//	Can save FPS in crowded areas.
-								
+
 WH_NT_ACTIONKEY = "timeInc"; 	//	Key that can be pressed to toggle tags.		("timeInc")
 								//	Default is "timeInc", which is normally
 								//	the (=) key. Other keys available here:
@@ -33,10 +33,10 @@ WH_NT_SHOW_DISTANCE 	= false;//	Draw distance to unit.						(false)
 WH_NT_SHOW_VEHICLEINFO 	= true;	//	Draw vehicle info.							(true)
 
 // Draw Distances
-WH_NT_DRAWDISTANCE_ONE = 20; 	//	Distance to draw nametags when pointing at a unit.	(20)
+WH_NT_DRAWDISTANCE_CURSOR = 20; 	//	Distance to draw nametags when pointing at a unit.	(20)
 								//	Should be greater than DISTANCE_ALL.
 								//	May be increased SIGNIFICANTLY if FOV is enabled.
-WH_NT_DRAWDISTANCE_ALL = 10; 	//	Distance within which all nametags will be drawn.	(10)
+WH_NT_DRAWDISTANCE_NEAR = 10; 	//	Distance within which all nametags will be drawn.	(10)
 								//	Increasing this will cost performance.
 								//	Due to a bug this will seem ~3m shorter in third person.
 
@@ -46,14 +46,16 @@ WH_NT_FONT_FACE_SEC = "RobotoCondensed";	//	Font for unit groups and roles.		("R
 WH_NT_FONT_SHADOW = 2;						//	Shadow to outline all text.			(2)
 
 // Text Configuration: Size
-WH_NT_FONT_SIZE_MAIN =	0.036;	//	Font size (modifier) used for names.	(0.036)
-WH_NT_FONT_SIZE_VEH =	0.044;	//	Size used for vehicle names.			(0.044)
-WH_NT_FONT_SIZE_SEC =	0.031;	//	Size used for groups and roles.			(0.031)
-WH_NT_FONT_SIZE_MULTI =	1;		//	A simple multiplier used to scale font.	(1)
-
+WH_NT_FONT_SIZE_RAW = 0.036;		//	Default raw font size.					(0.036)
+									//	Used directly for names, and used with
+									//	below modifiers for all else.
+WH_NT_FONT_SIZE_SEC_MULTI =	0.861;	//	Multiplier for group and role tags.		(0.861)
+WH_NT_FONT_SIZE_MULTI = 1;			//	A general multiplier that can be used	(1)
+									//	if you don't like the other ones.
 // Text Configuration: Spacing
-WH_NT_FONT_SPREAD_MULTI = 1;	//	Multiplier for vertical font spacing.	(1)
-
+WH_NT_FONT_SPREAD_MULTI = 1;	//	Multiplier for vertical font spacing.		(1)
+								//	may be overriden by CBA settings.
+								
 // Text Configuration: Color
 WH_NT_FONT_COLOR_DEFAULT= [0.68,0.90,0.36,0.85];	//	Default color.			([0.68,0.90,0.36,0.85])
 													//	May be overridden by CBA settings.
@@ -68,12 +70,6 @@ WH_NT_FONT_COLOR_OTHER	= [0.90,0.90,0.90,0.85];	//	Everything but names.	([0.90,
 
 // Text Configuration: Position			Font height difference from torso when...
 WH_NT_FONT_HEIGHT_ONHEAD = false;		//	Attaches nametags to head (like ACE)(false)
-										//	ignoring most of below values.
-WH_NT_FONT_HEIGHT_STANDING =	1.30;	//	...Standing.						(1.30)
-WH_NT_FONT_HEIGHT_CROUCHING =	0.75;	//	...Crouching.						(0.75)
-WH_NT_FONT_HEIGHT_PRONE =		0.30;	//	...Prone.							(0.30)
-WH_NT_FONT_HEIGHT_VEHICLE =		0.40;	//	...For crew in a vehicle.			(0.40)
-WH_NT_FONT_HEIGHT_VEHICLE_INFO =1.2;	//	Font height for vehicle info.		(1.2)
 		
 // Colorblind Mode
-WH_NT_FONT_COLORBLIND = false;			// Will remove colors and instead describe.	(false)
+WH_NT_FONT_COLORBLIND = false;			//	Will remove colors and instead describe.	(false)

@@ -41,13 +41,13 @@ sleep 0.2;
 
 //	Reveal all players (on same side) so cursorTarget won't act up.
 { 
-	if ( (side _x == side player) || {(side _x == civilian)} )
+	if ( (side _x getFriend side player) > 0.6 )
 	then { player reveal [_x,4]; }
 } forEach allPlayers;
 
-//	Determine proper text spacing depending on font size.
-call wh_nt_fnc_nametagSetFontSpread;
-					  
+//	Reset font spacing and size to (possibly) new conditions.
+call wh_nt_fnc_nametagResetFont;
+				  
 //	Wait for player to get ingame.
 waitUntil {!isNull (findDisplay 46)};
 
@@ -70,4 +70,8 @@ WH_NT_NAMETAGS_ON = true;
 //------------------------------------------------------------------------------------
 
 WH_NT_EVENTHANDLER = addMissionEventHandler 
-["Draw3D", { call wh_nt_fnc_nametagUpdate }];
+["Draw3D", 
+{
+	if WH_NT_NAMETAGS_ON then
+	{	call wh_nt_fnc_nametagUpdate	};
+}];
