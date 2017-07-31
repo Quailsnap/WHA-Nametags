@@ -1,6 +1,6 @@
  ==========================================================================================
 
-	WHALE'S NAMETAGS (V0.8.1 Beta) 
+	WHALE'S NAMETAGS (V0.8.3 Beta) 
 	SCRIPT FOR ARMA 3
 	
 	( https://github.com/Whalen207/WH )
