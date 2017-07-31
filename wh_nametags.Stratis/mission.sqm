@@ -22,7 +22,6 @@ binarizationWanted=0;
 addons[]=
 {
 	"A3_Characters_F",
-	"ace_explosives",
 	"A3_Modules_F_Curator_Curator",
 	"A3_Soft_F_MRAP_01"
 };
@@ -30,7 +29,7 @@ class AddonsMetaData
 {
 	class List
 	{
-		items=4;
+		items=3;
 		class Item0
 		{
 			className="A3_Characters_F";
@@ -40,19 +39,12 @@ class AddonsMetaData
 		};
 		class Item1
 		{
-			className="ace_explosives";
-			name="ACE3 - Explosives";
-			author="ACE-Team";
-			url="http://ace3mod.com/";
-		};
-		class Item2
-		{
 			className="A3_Modules_F_Curator";
 			name="Arma 3 Zeus Update - Scripted Modules";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item3
+		class Item2
 		{
 			className="A3_Soft_F";
 			name="Arma 3 Alpha - Unarmored Land Vehicles";
