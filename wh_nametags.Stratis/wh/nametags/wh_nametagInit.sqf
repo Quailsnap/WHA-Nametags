@@ -14,9 +14,8 @@
 //	Make sure this isn't a dedicated server or headless client.
 if (!hasInterface) exitWith {};
 
-//	Let the player initialize properly.
-waitUntil{!isNull player && {player == player}};
-sleep 0.2;
+//	Global variable that will be flipped on and off using the disableKey and CBA.
+WH_NT_NAMETAGS_ON = true; 
 
 
 //------------------------------------------------------------------------------------
@@ -39,6 +38,10 @@ sleep 0.2;
 //	Final steps of preparation.
 //------------------------------------------------------------------------------------
 
+//	Let the player initialize properly.
+waitUntil{!isNull player && {player == player}};
+sleep 0.2;
+
 //	Reveal all players (on same side) so cursorTarget won't act up.
 { 
 	if ( (side _x getFriend side player) > 0.6 )
@@ -51,8 +54,7 @@ call wh_nt_fnc_nametagResetFont;
 //	Wait for player to get ingame.
 waitUntil {!isNull (findDisplay 46)};
 
-//	Global variable that will be flipped on and off using the disableKey.
-WH_NT_NAMETAGS_ON = true; 	
+	
 
 //	Setting up our disableKey (Default '+')
 #include "wh_nametagDisableKey.sqf"

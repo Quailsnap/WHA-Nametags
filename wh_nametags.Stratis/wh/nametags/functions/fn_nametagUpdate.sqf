@@ -87,10 +87,11 @@ _entities = _entities select
 {
 	!(_x isEqualTo _player) &&
 	{(
-		((side _x getFriend side _player) > 0.6) 
+		(side group _x isEqualTo side group player)
+		//((side _x getFriend side _player) > 0.6) 
 		//|| {(group _x isEqualTo group _player)}
 	)} 
-};
+};	
 
 
 //------------------------------------------------------------------------------------

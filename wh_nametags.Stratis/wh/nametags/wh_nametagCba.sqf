@@ -22,9 +22,9 @@ if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
 		"Font Face (Names)", 		// Name shown in menu.
 		"WH Nametags", 				// Category shown in menu.
 		[
-			["PuristaBold","PuristaSemiBold","PuristaMedium","PuristaLight","EtelkaNarrowMediumPro","RobotoCondensed","RobotoCondensedBold","RobotoCondensedLight","TahomaB"],
-			["Purista (Bold)","Purista (Semibold)","Purista (Medium)","Purista (Light)","Etelka Pro Narrow","Roboto Condensed","Roboto Condensed (Bold) *","Roboto Condensed (Light)","Tahoma (Bold)"],
-			6
+			[WH_NT_FONT_FACE_MAIN,"PuristaBold","PuristaSemiBold","PuristaMedium","PuristaLight","EtelkaNarrowMediumPro","RobotoCondensed","RobotoCondensedBold","RobotoCondensedLight","TahomaB"],
+			["Default","Purista (Bold)","Purista (Semibold)","Purista (Medium)","Purista (Light)","Etelka Pro Narrow","Roboto Condensed","Roboto Condensed (Bold) *","Roboto Condensed (Light)","Tahoma (Bold)"],
+			0
 		] 							// Setting type-specific data.
 	] call CBA_Settings_fnc_init;
 
@@ -35,9 +35,9 @@ if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
 		"Font Face (Other)", 		// Name shown in menu.
 		"WH Nametags", 				// Category shown in menu.
 		[
-			["PuristaBold","PuristaSemiBold","PuristaMedium","PuristaLight","EtelkaNarrowMediumPro","RobotoCondensed","RobotoCondensedBold","RobotoCondensedLight","TahomaB"],
-			["Purista (Bold)","Purista (Semibold)","Purista (Medium)","Purista (Light)","Etelka Pro Narrow","Roboto Condensed *","Roboto Condensed (Bold)","Roboto Condensed (Light)","Tahoma (Bold)"],
-			5
+			[WH_NT_FONT_FACE_SEC,"PuristaBold","PuristaSemiBold","PuristaMedium","PuristaLight","EtelkaNarrowMediumPro","RobotoCondensed","RobotoCondensedBold","RobotoCondensedLight","TahomaB"],
+			["Default","Purista (Bold)","Purista (Semibold)","Purista (Medium)","Purista (Light)","Etelka Pro Narrow","Roboto Condensed *","Roboto Condensed (Bold)","Roboto Condensed (Light)","Tahoma (Bold)"],
+			0
 		] 							// Setting type-specific data.
 	] call CBA_Settings_fnc_init;
 
@@ -49,7 +49,7 @@ if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
 		"WH Nametags", 				// Category shown in menu.
 		[
 			[WH_NT_FONT_COLOR_DEFAULT,[0.68,0.90,0.36,0.85],[0.77, 0.51, 0.08, 0.85],[0.15,0.70,0.90,0.85],[0.90,0.10,0.10,0.85],[0.90,0.90,0.90,0.85],[0.90,0.75,0,0.85],[0.85,0.50,0.90,0.85]],
-			["Default *","WH Green","ACE Rust","TMTM Blue","COAL Crimson","FA White","ST Sand","BromA Purple"],
+			["Default","WH Green *","ACE Rust","TMTM Blue","COAL Crimson","FA White","ST Sand","BromA Purple"],
 			0
 		] 							// Setting type-specific data.
 	] call CBA_Settings_fnc_init;
