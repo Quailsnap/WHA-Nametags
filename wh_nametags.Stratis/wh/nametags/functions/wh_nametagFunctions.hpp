@@ -16,7 +16,6 @@ class WH_NT
 		class nametagDrawNear {};
 		class nametagDrawCursor {};
 		class nametagResetFont {};
-		class getHeight {};
 		class getZoom {};
 	};
 };

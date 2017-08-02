@@ -4,3 +4,5 @@
 // For testing purposes
 setViewDistance 50;
 setObjectViewDistance [50,0];
+
+{ player reveal [_x,4] } forEach allUnits;

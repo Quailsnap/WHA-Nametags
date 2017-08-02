@@ -6,7 +6,7 @@
 //	@ /u/Whalen207 | Whale #5963
 //
 //	Things to Check:
-//	- WH_NT_VAR_PLAYER_INVEHICLE = (bool) whether player is in vehicle
+//	- WH_NT_VAR_INVEHICLE = (bool) whether player is in vehicle
 //	- WH_NT_VAR_NIGHT = (number 0-1) outside brightness level
 //
 // ====================================================================================
@@ -19,7 +19,7 @@
 WH_NT_VAR_NIGHT = 1;
 
 //	...and one for whether the player is in a vehicle.
-WH_NT_VAR_PLAYER_INVEHICLE = false;
+WH_NT_VAR_INVEHICLE = false;
 
 //	Spawn a new script that can run parallel to others.
 _null = [] spawn
@@ -38,7 +38,7 @@ _null = [] spawn
 		{ linearConversion [0, 1, sunOrMoon, 0.25+0.5*(currentVisionMode player),1,true]; } else { 1 };
 		
 		//	...check if the player is in a vehicle...
-		WH_NT_VAR_PLAYER_INVEHICLE = !(isNull objectParent player);
+		WH_NT_VAR_INVEHICLE = !(isNull objectParent player);
 		
 		//	...and then wait for the delay before doing it again.
 		sleep _delay;

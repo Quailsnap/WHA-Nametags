@@ -38,6 +38,9 @@ WH_NT_DRAWDISTANCE_NEAR = 10; 	//	Distance within which all nametags will be dra
 								//	Increasing this will cost performance.
 								//	Due to a bug this will seem ~3m shorter in third person.
 
+//	Font Fade
+WH_NT_FADETIME = 1;				// How long cursor tags persist before fading.	(1)
+
 //	Text Configuration: Typeface				
 //	Try "EtelkaNarrowMediumPro" for an Arma 2 throwback.
 //	See (https://community.bistudio.com/wiki/FXY_File_Format#Arma3) for more typeface choices.

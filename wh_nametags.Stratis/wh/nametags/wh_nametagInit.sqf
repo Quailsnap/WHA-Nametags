@@ -27,24 +27,25 @@ WH_NT_NAMETAGS_ON = true;
 
 
 //------------------------------------------------------------------------------------
-//	Setting up CBA_Settings box.
+//	Setting up CBA settings box.
 //------------------------------------------------------------------------------------
 
 //	Allows for player (client) configuration of other settings.
-#include "wh_nametagCba.sqf"
+#include "wh_nametagSettings.sqf"
 
 
 //------------------------------------------------------------------------------------
-//	Final steps of preparation.
+//	More preparation.
 //------------------------------------------------------------------------------------
 
 //	Let the player initialize properly.
-waitUntil{!isNull player && {player == player}};
+waitUntil{!isNull player};
+waitUntil{player == player};
 sleep 0.2;
 
 //	Reveal all players (on same side) so cursorTarget won't act up.
 { 
-	if ( (side _x getFriend side player) > 0.6 )
+	if ( (side _x getFriend playerSide) > 0.6 )
 	then { player reveal [_x,4]; }
 } forEach allPlayers;
 
@@ -54,10 +55,13 @@ call wh_nt_fnc_nametagResetFont;
 //	Wait for player to get ingame.
 waitUntil {!isNull (findDisplay 46)};
 
-	
-
 //	Setting up our disableKey (Default '+')
 #include "wh_nametagDisableKey.sqf"
+
+//	Setting up cursor cache.
+WH_NT_CACHE_TARGET = objNull;
+WH_NT_CACHE_NAMES = [];
+WH_NT_CACHE_IDS = [];
 
 
 //------------------------------------------------------------------------------------

@@ -1,6 +1,6 @@
  ==========================================================================================
 
-	WHALE'S NAMETAGS (V0.8.3 Beta) 
+	WHALE'S NAMETAGS (V0.9.0 Beta) 
 	SCRIPT FOR ARMA 3
 	
 	( https://github.com/Whalen207/WH )
@@ -25,6 +25,7 @@
 	-	Tags will fade out after a certain distance.
 	-	Lighting conditions (day, night, NVGs) can affect visible distance.
 	-	Player zoom level can affect visible distance and font size.
+	-	Nametags fade out after player mouses away.
 	-	Colorblind mode.
 
 	How to Implement:
