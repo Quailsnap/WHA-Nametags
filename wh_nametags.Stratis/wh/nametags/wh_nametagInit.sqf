@@ -51,28 +51,28 @@ sleep 0.2;
 
 //	Reset font spacing and size to (possibly) new conditions.
 call wh_nt_fnc_nametagResetFont;
-				  
+
+//	Setting up cursor fading cache.
+WH_NT_FADE_TARGET = objNull;
+WH_NT_FADE_NAMES = [];
+WH_NT_FADE_IDS = [];
+
 //	Wait for player to get ingame.
 waitUntil {!isNull (findDisplay 46)};
 
 //	Setting up our disableKey (Default '+')
 #include "wh_nametagDisableKey.sqf"
 
-//	Setting up cursor cache.
-WH_NT_CACHE_TARGET = objNull;
-WH_NT_CACHE_NAMES = [];
-WH_NT_CACHE_IDS = [];
+
+//------------------------------------------------------------------------------------
+//	Set player to keep an updated cache of all tags to draw.
+//------------------------------------------------------------------------------------
+
+#include "wh_nametagCache.sqf"
 
 
 //------------------------------------------------------------------------------------
-//	Initiate a slow loop that will routinely check common values.
-//------------------------------------------------------------------------------------
-
-#include "wh_nametagCheck.sqf"
-
-
-//------------------------------------------------------------------------------------
-//	Set player to run main update loop each frame, unscheduled.
+//	Set player to render nametags from the cache every frame.
 //------------------------------------------------------------------------------------
 
 WH_NT_EVENTHANDLER = addMissionEventHandler 

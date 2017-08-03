@@ -101,20 +101,55 @@ if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
 	] call CBA_Settings_fnc_init;
 	};
 
-	//	Option to not show role and group tags.
-	[
-		"WH_NT_SHOW_ROLEANDGROUP",	// Internal setting name and value set.
-		"CHECKBOX", 				// Setting type.
-		"Show Role and Group",			// Name shown in menu.
-		"WH Nametags", 				// Category shown in menu.
-		true, 						// Setting type-specific data.
-		nil, 						// Nil or 0 for changeable, 1 to reset to default, 2 to lock.
-		{ 	
-			if WH_NT_SHOW_ROLEANDGROUP 
-			then { WH_NT_SHOW_ROLE = true; WH_NT_SHOW_GROUP = true; } 
-			else { WH_NT_SHOW_ROLE = false; WH_NT_SHOW_GROUP = false; };
-		}
-	] call CBA_Settings_fnc_init;
+	if (WH_NT_SHOW_ROLE || {WH_NT_SHOW_GROUP}) then 
+	{
+		switch true do
+		{
+			case (WH_NT_SHOW_ROLE && WH_NT_SHOW_GROUP):
+			{
+				//	Option to not show role and group tags.
+				[
+					"WH_NT_SHOW_ROLEANDGROUP",	// Internal setting name and value set.
+					"CHECKBOX", 				// Setting type.
+					"Show Role and Group",		// Name shown in menu.
+					"WH Nametags", 				// Category shown in menu.
+					true, 						// Setting type-specific data.
+					nil, 						// Nil or 0 for changeable.
+					{
+						if WH_NT_SHOW_ROLEANDGROUP 
+						then { WH_NT_SHOW_ROLE = true; WH_NT_SHOW_GROUP = true; } 
+						else { WH_NT_SHOW_ROLE = false; WH_NT_SHOW_GROUP = false; };
+					}
+				] call CBA_Settings_fnc_init;
+			};
+			case (!WH_NT_SHOW_ROLE&& WH_NT_SHOW_GROUP):
+			{
+				//	Option to not show group tags.
+				[
+					"WH_NT_SHOW_GROUP",			// Internal setting name and value set.
+					"CHECKBOX", 				// Setting type.
+					"Show Group Names",			// Name shown in menu.
+					"WH Nametags", 				// Category shown in menu.
+					true, 						// Setting type-specific data.
+					nil, 						// Nil or 0 for changeable.
+					{}
+				] call CBA_Settings_fnc_init;
+			};
+			case (WH_NT_SHOW_ROLE &&!WH_NT_SHOW_GROUP):
+			{
+				//	Option to not show role tags.
+				[
+					"WH_NT_SHOW_ROLE",			// Internal setting name and value set.
+					"CHECKBOX", 				// Setting type.
+					"Show Unit Roles",			// Name shown in menu.
+					"WH Nametags", 				// Category shown in menu.
+					true, 						// Setting type-specific data.
+					nil, 						// Nil or 0 for changeable.
+					{}
+				] call CBA_Settings_fnc_init;
+			};
+		};
+	};
 	
 	//	Colorblind mode.
 	[

@@ -25,10 +25,10 @@ WH_NT_ACTIONKEY = "timeInc"; 	//	Key that can be pressed to toggle tags.		("time
 WH_NT_NIGHT = true;				//	Whether night will affect tag visibility.	(true)
 
 //	Information Shown
-WH_NT_SHOW_GROUP 		= true;	//	Draw group name under unit's name. 			(true)
-WH_NT_SHOW_ROLE			= true; //	Draw unit's role (rifleman, driver). 		(true)
-WH_NT_SHOW_DISTANCE 	= false;//	Draw distance to unit.						(false)
-WH_NT_SHOW_VEHICLEINFO 	= true;	//	Draw vehicle info.							(true)
+WH_NT_SHOW_GROUP 		= true;	//	Show group name under unit's name. 			(true)
+WH_NT_SHOW_ROLE			= true; //	Show unit's role (rifleman, driver). 		(true)
+WH_NT_SHOW_DISTANCE 	= false;//	Show distance to unit.						(false)
+WH_NT_SHOW_VEHICLEINFO 	= true;	//	Show vehicle info. Requires SHOW_ROLE.		(true)
 
 //	Draw Distances
 WH_NT_DRAWDISTANCE_CURSOR = 20; //	Distance to draw nametags when pointing at a unit.	(20)
@@ -39,7 +39,7 @@ WH_NT_DRAWDISTANCE_NEAR = 10; 	//	Distance within which all nametags will be dra
 								//	Due to a bug this will seem ~3m shorter in third person.
 
 //	Font Fade
-WH_NT_FADETIME = 1;				// How long cursor tags persist before fading.	(1)
+WH_NT_FADETIME = 1;				//	Fade time for cursor tags after player mouses away.	(1)
 
 //	Text Configuration: Typeface				
 //	Try "EtelkaNarrowMediumPro" for an Arma 2 throwback.

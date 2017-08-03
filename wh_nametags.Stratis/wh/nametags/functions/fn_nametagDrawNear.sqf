@@ -42,8 +42,7 @@ params["_sameGroup","_target","_targetPositionAGL","_alpha","_role"];
 //	In many mods (ACE), unconscious and dead units are moved to side civilian, which
 //	will stop rendering nametags all-together.
 
-private _name = if (alive _target) then { name _target } else { "Unknown" };
-//private _distance = _cameraPositionAGL distance _targetPositionAGL;
+private _name = name _target; //if (alive _target) then { name _target } else { "Unknown" };
 
 
 //--------------------------------------------------------------------------------
