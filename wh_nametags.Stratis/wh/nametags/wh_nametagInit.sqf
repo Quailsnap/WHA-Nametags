@@ -55,7 +55,8 @@ call wh_nt_fnc_nametagResetFont;
 //	Setting up cursor fading cache.
 WH_NT_FADE_TARGET = objNull;
 WH_NT_FADE_NAMES = [];
-WH_NT_FADE_IDS = [];
+//WH_NT_FADE_IDS = [];
+WH_NT_FADE_DATA  = [];
 
 //	Wait for player to get ingame.
 waitUntil {!isNull (findDisplay 46)};
