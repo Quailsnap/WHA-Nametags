@@ -2,7 +2,7 @@
 //
 //	wh_nametagInit.sqf - Initializes values for WH nametags.
 //
-//	> [] execVM "wh\nametags\wh_nametagInit.sqf"; <
+//	[] execVM "wh\nametags\wh_nametagInit.sqf";
 //	@ /u/Whalen207 | Whale #5963
 //
 //====================================================================================
@@ -41,7 +41,6 @@ WH_NT_NAMETAGS_ON = true;
 //	Let the player initialize properly.
 waitUntil{!isNull player};
 waitUntil{player == player};
-sleep 0.2;
 
 //	Reveal all players (on same side) so cursorTarget won't act up.
 { 
@@ -52,11 +51,10 @@ sleep 0.2;
 //	Reset font spacing and size to (possibly) new conditions.
 call wh_nt_fnc_nametagResetFont;
 
-//	Setting up cursor fading cache.
-WH_NT_FADE_TARGET = objNull;
-WH_NT_FADE_NAMES = [];
-//WH_NT_FADE_IDS = [];
-WH_NT_FADE_DATA  = [];
+//	Setting up cursor cache and fader.
+WH_NT_CACHE_CURSOR = objNull;
+WH_NT_CACHE_CURSOR_DATA = [];
+WH_NT_CACHE_FADE = [[],[],[]];
 
 //	Wait for player to get ingame.
 waitUntil {!isNull (findDisplay 46)};
@@ -66,14 +64,14 @@ waitUntil {!isNull (findDisplay 46)};
 
 
 //------------------------------------------------------------------------------------
-//	Set player to keep an updated cache of all tags to draw.
+//	Keep an updated cache of all tags to draw.
 //------------------------------------------------------------------------------------
 
-#include "wh_nametagCache.sqf"
+#include "wh_nametagCacheLoop.sqf"
 
 
 //------------------------------------------------------------------------------------
-//	Set player to render nametags from the cache every frame.
+//	Render nametags from the cache every frame.
 //------------------------------------------------------------------------------------
 
 WH_NT_EVENTHANDLER = addMissionEventHandler 

@@ -6,6 +6,8 @@
 //	Adapted from code by Killzone Kid.
 //	http://killzonekid.com/arma-scripting-tutorials-get-zoom/
 //
+//	@ /u/Whalen207 | Whale #5963
+//
 //====================================================================================
 
 (

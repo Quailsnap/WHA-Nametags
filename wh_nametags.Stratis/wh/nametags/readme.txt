@@ -1,9 +1,9 @@
- ==========================================================================================
+==========================================================================================
 
-	WHALE'S NAMETAGS (V0.9.2 Beta) 
+	WHALE'S NAMETAGS (V0.9.3 Beta) 
 	SCRIPT FOR ARMA 3
 	
-	( https://github.com/Whalen207/WH )
+	( https://github.com/Whalen207/WH-NT )
 	Contact @ /u/Whalen207 | Whale #5963
 	
 	Special Thanks To:
@@ -16,20 +16,15 @@
 	Features:
 	-	Most features configurable by missionmaker.
 	-	Many features configurable by clients using CBA.
-	-	Does not render nametags if offscreen or out of sight.
-	-	Can display player name, group, distance, and role.
-	-	Custom roles can be set using setVariable.
-	-	Can display vehicle information including available seats.
+	-	Displays player name, group, and role.
+	-	Missionmakers can set custom roles on the fly.
+	-	Displays vehicle information including available seats.
 	-	Nametags can be toggled on or off with a button press.
-	-	Nametags are rendered in 3D, but appear 2D and follow players.
 	-	Tags will fade out after a certain distance.
-	-	Lighting conditions (day, night, NVGs) can affect visible distance.
-	-	Player zoom level can affect visible distance and font size.
-	-	Nametags fade out after player mouses away.
-	-	Colorblind mode.
+	-	Lighting conditions and zoom level can affect visible distance.
 
 	How to Implement:
-	-	Move the WH folder (with \nametags) into the root mission folder.
+	-	Move the wh folder (with \nametags) into your root mission folder.
 	-	Configure your settings inside wh_nametagCONFIG.sqf (Optional)
 	-	Make a file called 'initPlayerLocal.sqf' or 'init.sqf' in the root mission folder.
 	-	Put this code in 'initPlayerLocal.sqf' OR 'init.sqf': 

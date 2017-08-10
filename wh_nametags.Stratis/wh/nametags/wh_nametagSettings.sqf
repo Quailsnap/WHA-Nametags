@@ -1,8 +1,9 @@
-// ====================================================================================
+//====================================================================================
 //
 //	wh_nametagSettings.sqf - Contains optional CBA addon settings.
+//	@ /u/Whalen207 | Whale #5963
 //
-// ====================================================================================
+//====================================================================================
 
 if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
 {
@@ -81,26 +82,28 @@ if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
 	//	Setting to flip drawcursoronly.
 	if (!WH_NT_DRAWCURSORONLY) then
 	{
-	[
-		"WH_NT_DRAWCURSORONLY",		// Internal setting name and value set.
-		"CHECKBOX", 				// Setting type.
-		"Cursor Only (Saves FPS)",	// Name shown in menu.
-		"WH Nametags", 				// Category shown in menu.
-		false 						// Setting type-specific data.
-	] call CBA_Settings_fnc_init;
+		[
+			"WH_NT_DRAWCURSORONLY",		// Internal setting name and value set.
+			"CHECKBOX", 				// Setting type.
+			"Cursor Only (Saves FPS)",	// Name shown in menu.
+			"WH Nametags", 				// Category shown in menu.
+			false 						// Setting type-specific data.
+		] call CBA_Settings_fnc_init;
 	}
 	//	Changes the default if the missionmaker changes it.
 	else
 	{
-	[
-		"WH_NT_DRAWCURSORONLY",		// Internal setting name and value set.
-		"CHECKBOX", 				// Setting type.
-		"Cursor Only (Saves FPS)",	// Name shown in menu.
-		"WH Nametags", 				// Category shown in menu.
-		true 						// Setting type-specific data.
-	] call CBA_Settings_fnc_init;
+		[
+			"WH_NT_DRAWCURSORONLY",		// Internal setting name and value set.
+			"CHECKBOX", 				// Setting type.
+			"Cursor Only (Saves FPS)",	// Name shown in menu.
+			"WH Nametags", 				// Category shown in menu.
+			true 						// Setting type-specific data.
+		] call CBA_Settings_fnc_init;
 	};
 
+	//	Changes whether nametags draw the role and group when under cursor.
+	//	Missionmaker can force these off in nametagCONFIG.
 	if (WH_NT_SHOW_ROLE || {WH_NT_SHOW_GROUP}) then 
 	{
 		switch true do
@@ -151,21 +154,26 @@ if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
 		};
 	};
 	
-	//	Colorblind mode.
-	[
-		"WH_NT_FONT_COLORBLIND",	// Internal setting name and value set.
-		"CHECKBOX", 				// Setting type.
-		"Colorblind Mode",			// Name shown in menu.
-		"WH Nametags", 				// Category shown in menu.
-		false 						// Setting type-specific data.
-	] call CBA_Settings_fnc_init;
-	
-	//	Attach nametags to player heads, like ACE.
-	[
+	//	Attaches nametags to player heads, like ACE.
+	//	Missionmaker can change the default setting.
+	if !WH_NT_FONT_HEIGHT_ONHEAD then
+	{
+		[
 		"WH_NT_FONT_HEIGHT_ONHEAD",	// Internal setting name and value set.
 		"CHECKBOX", 				// Setting type.
 		"Show Above Head",			// Name shown in menu.
 		"WH Nametags", 				// Category shown in menu.
 		false 						// Setting type-specific data.
-	] call CBA_Settings_fnc_init;
+		] call CBA_Settings_fnc_init;
+	}
+	else
+	{
+		[
+		"WH_NT_FONT_HEIGHT_ONHEAD",	// Internal setting name and value set.
+		"CHECKBOX", 				// Setting type.
+		"Show Above Head",			// Name shown in menu.
+		"WH Nametags", 				// Category shown in menu.
+		true 						// Setting type-specific data.
+		] call CBA_Settings_fnc_init;
+	};
 };
