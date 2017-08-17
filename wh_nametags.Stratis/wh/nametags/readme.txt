@@ -1,6 +1,7 @@
 ==========================================================================================
 
 	WHALE'S NAMETAGS (V0.9.4 Beta) 
+	> SPECIAL CBA OPTIONAL VERSION <
 	SCRIPT FOR ARMA 3
 	
 	( https://github.com/Whalen207/WH-NT )
