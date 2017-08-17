@@ -31,7 +31,7 @@ _zoom = call wh_nt_fnc_getZoom;
 //	Interface with global data cache.
 //------------------------------------------------------------------------------------
 
-//	Update cache every 0.5 seconds.
+//	Update cache every 2 seconds.
 if ((round time % 2) isEqualTo 0) then
 { call wh_nt_fnc_nametagCache };
 
