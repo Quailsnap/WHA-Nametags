@@ -26,15 +26,6 @@ _cameraPositionASL = AGLtoASL _cameraPositionAGL;
 //	Get zoom, which will be used to adjust size and spacing of text.
 _zoom = call wh_nt_fnc_getZoom;
 
-
-//------------------------------------------------------------------------------------
-//	Interface with global data cache.
-//------------------------------------------------------------------------------------
-
-//	Update cache every 2 seconds.
-if ((round time % 2) isEqualTo 0) then
-{ call wh_nt_fnc_nametagCache };
-
 //	Make a copy of the global cache containing nearby entities and their data.
 _toDraw =+ WH_NT_CACHE;
 
