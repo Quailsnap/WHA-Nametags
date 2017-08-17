@@ -80,6 +80,7 @@ switch WH_NT_FONT_COLOR do
 	[0.45,0.45,0.90,0.85],[0.90,0.90,0.30,0.85]]};
 };
 
+//	Distribute colors from data array to global color settings.
 WH_NT_FONT_COLOR_DEFAULT= (_colorData select 0);
 WH_NT_FONT_COLOR_OTHER	= (_colorData select 1);
 WH_NT_FONT_COLOR_CREW	= (_colorData select 2);

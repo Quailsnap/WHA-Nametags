@@ -42,12 +42,6 @@ WH_NT_NAMETAGS_ON = true;
 waitUntil{!isNull player};
 waitUntil{player == player};
 
-//	Reveal all players (on same side) so cursorTarget won't act up.
-{ 
-	if ( (side _x getFriend playerSide) > 0.6 )
-	then { player reveal [_x,4]; }
-} forEach allPlayers;
-
 //	Reset font spacing and size to (possibly) new conditions.
 call wh_nt_fnc_nametagResetFont;
 
