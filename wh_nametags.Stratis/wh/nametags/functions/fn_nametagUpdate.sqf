@@ -15,8 +15,8 @@
 //------------------------------------------------------------------------------------
 // TODO: how does st do dead
 //	Store the player and the player's group.
-_player = player;
-_playerGroup = group player;
+_player = WH_NT_PLAYER;
+_playerGroup = group _player;
 
 //	Find player camera's position.
 //	TODO: and the direction their head is facing.
@@ -115,7 +115,11 @@ if !( isNull _cursorObject ) then
 
 {
 	_unitData =+ ( (_toDraw select 1) select _forEachIndex );
+	
+	//	Pass in the player's camera and zoom level.
 	_unitData append [_cameraPositionAGL,_zoom,nil,nil];
+	
+	//	Call the draw function with the above parameters.
 	_unitData call wh_nt_fnc_nametagDraw;
 } forEach (_toDraw select 0);
 
@@ -162,6 +166,8 @@ if (
 	&& {!(_cursorObject isEqualTo WH_NT_CACHE_CURSOR)}
 	) then
 {
+	//	Prevent the fade system from fading more than four tags
+	//	at a time. Give priority to new fades.
 	if ( count (WH_NT_CACHE_FADE select 0) > 4) then
 	{
 		_index = (count (WH_NT_CACHE_FADE select 0)) - 4;
@@ -174,6 +180,7 @@ if (
 		};
 	};
 	
+	//	Prevent the fade system from fading the same tag twice.
 	if (((WH_NT_CACHE_CURSOR_DATA select 0) select 0) in (WH_NT_CACHE_FADE select 0)) then
 	{
 		{

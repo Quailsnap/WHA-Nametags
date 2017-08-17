@@ -31,12 +31,16 @@ params ["_vehicle","_name","_nameColor","_locationData","_role","_groupName",
 // _startTime (OPTIONAL, decimal): For fading tags -- time tag was originally rendered.
 // _time (OPTIONAL, decimal): For fading tags -- current time.
 
+//	Get player from global player setting.
+//	This is necessary for Zeus remote control support.
+_player = WH_NT_PLAYER;
+
 //	Find position tag will be rendered at using location data.
 _targetPositionAGL = call _locationData;
 
 //	Find the distance from the player camera to this location.
 _camDistance = _cameraPositionAGL distance _targetPositionAGL;
-_distance = player distance _targetPositionAGL;
+_distance = _player distance _targetPositionAGL;
 
 
 //------------------------------------------------------------------------------------
@@ -109,7 +113,7 @@ if (_drawRoleAndGroup && {!(_isPassenger)}) then
 	//	TODO: Simplify this code if possible.
 	//	If not possible, cache what you can (vectorUp player vectorCrossProduct _vectorDir)
 	//	in nametagUpdate.
-	_vectorDiff = (vectorNormalized (((_vectorDir) vectorCrossProduct (vectorUp player)) vectorCrossProduct (_targetPositionAGL vectorDiff _cameraPositionAGL)));
+	_vectorDiff = (vectorNormalized (((_vectorDir) vectorCrossProduct (vectorUp _player)) vectorCrossProduct (_targetPositionAGL vectorDiff _cameraPositionAGL)));
 
 	//	Take that new normal vector and multiply it by the distance, then divide it by the zoom.
 	_targetPositionAGLTop =    _targetPositionAGL vectorAdd (_vectorDiff vectorMultiply (WH_NT_FONT_SPREAD_TOP_MULTI * _camDistance / _zoom));
