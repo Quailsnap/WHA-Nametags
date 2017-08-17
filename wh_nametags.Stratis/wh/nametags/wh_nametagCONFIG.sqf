@@ -43,12 +43,16 @@ WH_NT_DRAWDISTANCE_NEAR = 10; 	//	Distance within which all nametags will be dra
 //	Font Fade
 WH_NT_FADETIME = 1;				//	Fade time for cursor tags after player mouses away.	(1)
 
-//	Text Configuration: Typeface				
-//	Try "EtelkaNarrowMediumPro" for an Arma 2 throwback.
-//	See (https://community.bistudio.com/wiki/FXY_File_Format#Arma3) for more typeface choices.
-WH_NT_FONT_FACE_MAIN ="RobotoCondensedBold";//	Font for unit and vehicle names.	("RobotoCondensedBold")
-WH_NT_FONT_FACE_SEC = "RobotoCondensed";	//	Font for unit groups and roles.		("RobotoCondensed")
-WH_NT_FONT_SHADOW = 2;						//	Shadow to outline all text.			(2)
+//	Text Configuration: Typeface
+//	To manually alter these options, see functions\nametagResetFont.sqf.		
+//	Options:
+//	- "Roboto" (DEFAULT)
+//	- "RobotoLight"
+//	- "Purista"
+//	- "PuristaLight"
+//	- "Etelka"
+//	- "Tahoma"
+WH_NT_FONT_FACE = "Roboto";			//	Typeface set for nametag system.			("Roboto")
 
 //	Text Configuration: Size
 WH_NT_FONT_SIZE_RAW = 0.036;		//	Default raw font size.						(0.036)
@@ -63,16 +67,16 @@ WH_NT_FONT_SPREAD_MULTI = 1;		//	Multiplier for vertical font spacing.		(1)
 									//	may be overriden by CBA settings.
 								
 //	Text Configuration: Color
-WH_NT_FONT_COLOR_DEFAULT= [0.68,0.90,0.36,0.85];	//	Default color.			([0.68,0.90,0.36,0.85])
-													//	May be overridden by CBA settings.
-
-WH_NT_FONT_COLOR_GROUP	= [0.90,0.90,0.90,0.85];	//	Same group.				([0.90,0.90,0.90,0.85])
-WH_NT_FONT_COLOR_GROUPR = [0.90,0.25,0.25,0.85];	//	Team red.				([0.90,0.25,0.25,0.85])
-WH_NT_FONT_COLOR_GROUPG = [0.50,0.90,0.40,0.85];	//	Team green.				([0.50,0.90,0.40,0.85])
-WH_NT_FONT_COLOR_GROUPB = [0.45,0.45,0.90,0.85];	//	Team blue.				([0.45,0.45,0.90,0.85])
-WH_NT_FONT_COLOR_GROUPY = [0.90,0.90,0.30,0.85];	//	Team yellow.			([0.90,0.90,0.30,0.85])
-WH_NT_FONT_COLOR_CREW	= [0.95,0.80,0.10,0.85];	//	Vehicle crew.			([0.95,0.80,0.10,0.85])
-WH_NT_FONT_COLOR_OTHER	= [0.90,0.90,0.90,0.85];	//	Everything but names.	([0.90,0.90,0.90,0.85])
+//	To manually alter these options, see functions\nametagResetFont.sqf.
+//	Options:
+//	- WHGreen
+//	- ACERust
+//	- TMTMTeal
+//	- COALCrimson
+//	- FAWhite
+//	- STSand
+//	- BromaPurple
+WH_NT_FONT_COLOR = "WHGreen";		//	Font color set for nametag system.			("WHGreen")
 
 //	Text Configuration: Position
-WH_NT_FONT_HEIGHT_ONHEAD = false;		//	Attaches nametags to head (like ACE)		(false)
+WH_NT_FONT_HEIGHT_ONHEAD = false;	//	Attaches nametags to head (like ACE)		(false)

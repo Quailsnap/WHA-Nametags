@@ -13,7 +13,7 @@
 //------------------------------------------------------------------------------------
 //	Initializing variables.
 //------------------------------------------------------------------------------------
-
+// TODO: how does st do dead
 //	Store the player and the player's group.
 _player = player;
 _playerGroup = group player;

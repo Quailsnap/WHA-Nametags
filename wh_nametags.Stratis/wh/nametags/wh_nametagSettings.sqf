@@ -18,41 +18,34 @@ if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
 
 	//	Setting for changing the typeface.
 	[
-		"WH_NT_FONT_FACE_MAIN",		// Internal setting name and value set.
+		"WH_NT_FONT_FACE",			// Internal setting name and value set.
 		"LIST", 					// Setting type.
-		"Font Face (Names)", 		// Name shown in menu.
+		"Font Face", 				// Name shown in menu.
 		"WH Nametags", 				// Category shown in menu.
 		[
-			[WH_NT_FONT_FACE_MAIN,"PuristaBold","PuristaSemiBold","PuristaMedium","PuristaLight","EtelkaNarrowMediumPro","RobotoCondensed","RobotoCondensedBold","RobotoCondensedLight","TahomaB"],
-			["Default","Purista (Bold)","Purista (Semibold)","Purista (Medium)","Purista (Light)","Etelka Pro Narrow","Roboto Condensed","Roboto Condensed (Bold) *","Roboto Condensed (Light)","Tahoma (Bold)"],
+			[WH_NT_FONT_FACE,"Roboto","RobotoLight","Purista","PuristaLight","Etelka","Tahoma"],
+			["Default","Roboto (Bold) *","Roboto (Light)","Purista (Bold)","Purista (Light)","Etelka Narrow","Tahoma (Bold)"],
 			0
-		] 							// Setting type-specific data.
-	] call CBA_Settings_fnc_init;
-
-	//	Setting for changing the secondary typeface.
-	[
-		"WH_NT_FONT_FACE_SEC",		// Internal setting name and value set.
-		"LIST", 					// Setting type.
-		"Font Face (Other)", 		// Name shown in menu.
-		"WH Nametags", 				// Category shown in menu.
-		[
-			[WH_NT_FONT_FACE_SEC,"PuristaBold","PuristaSemiBold","PuristaMedium","PuristaLight","EtelkaNarrowMediumPro","RobotoCondensed","RobotoCondensedBold","RobotoCondensedLight","TahomaB"],
-			["Default","Purista (Bold)","Purista (Semibold)","Purista (Medium)","Purista (Light)","Etelka Pro Narrow","Roboto Condensed *","Roboto Condensed (Bold)","Roboto Condensed (Light)","Tahoma (Bold)"],
-			0
-		] 							// Setting type-specific data.
+		], 							// Setting type-specific data.
+		nil,
+		{ call wh_nt_fnc_nametagResetFont; }
+									// Executed at mission start and every change.
 	] call CBA_Settings_fnc_init;
 
 	//	Setting for changing typeface color.
 	[
-		"WH_NT_FONT_COLOR_DEFAULT",	// Internal setting name and value set.
+		"WH_NT_FONT_COLOR",			// Internal setting name and value set.
 		"LIST", 					// Setting type.
-		"Font Color (Main)", 		// Name shown in menu.
+		"Font Color", 				// Name shown in menu.
 		"WH Nametags", 				// Category shown in menu.
 		[
-			[WH_NT_FONT_COLOR_DEFAULT,[0.68,0.90,0.36,0.85],[0.77, 0.51, 0.08, 0.85],[0.15,0.70,0.90,0.85],[0.90,0.10,0.10,0.85],[0.90,0.90,0.90,0.85],[0.90,0.75,0,0.85],[0.85,0.50,0.90,0.85]],
-			["Default","WH Green *","ACE Rust","TMTM Blue","COAL Crimson","FA White","ST Sand","BromA Purple"],
+			[WH_NT_FONT_COLOR,"WHGreen","ACERust","TMTMTeal","COALCrimson","FAWhite","STSand","BromaPurple"],
+			["Default","WH Green *","ACE Rust","TMTM Teal","COAL Crimson","FA White","ST Sand","BromA Purple"],
 			0
-		] 							// Setting type-specific data.
+		],							// Setting type-specific data.
+		nil,
+		{ call wh_nt_fnc_nametagResetFont; }
+									// Executed at mission start and every change.
 	] call CBA_Settings_fnc_init;
 	
 	//	Setting to dynamically alter font size.

@@ -14,7 +14,7 @@
 //------------------------------------------------------------------------------------
 
 params ["_vehicle","_name","_nameColor","_locationData","_role","_groupName",
-		"_drawRoleAndGroup","_isCommander","_cameraPositionAGL",
+		"_drawRoleAndGroup","_isPassenger","_isCommander","_cameraPositionAGL",
 		"_zoom","_startTime","_time"];
 
 // _name (string): Friendly name of tag to be rendered.
@@ -36,7 +36,7 @@ _targetPositionAGL = call _locationData;
 
 //	Find the distance from the player camera to this location.
 _camDistance = _cameraPositionAGL distance _targetPositionAGL;
-_distance = player distance _vehicle;
+_distance = player distance _targetPositionAGL;
 
 
 //------------------------------------------------------------------------------------
@@ -71,7 +71,7 @@ _sizeVehicle 	= WH_NT_FONT_SIZE_VEH * _zmin;
 //	If the tag being drawn is on cursor, render the role and group.
 //------------------------------------------------------------------------------------
 
-if _drawRoleAndGroup then
+if (_drawRoleAndGroup && {!(_isPassenger)}) then
 {
 	//	Set the color for secondary tags.
 	_color =+ WH_NT_FONT_COLOR_OTHER;

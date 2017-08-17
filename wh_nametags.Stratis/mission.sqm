@@ -12,16 +12,17 @@ class EditorData
 	};
 	class Camera
 	{
-		pos[]={1639.5211,10.143931,5676.6396};
-		dir[]={0.21474905,-0.51916331,0.82725817};
-		up[]={0.13044712,0.85467517,0.50250912};
-		aside[]={0.96791983,-2.3283064e-009,-0.25126371};
+		pos[]={1646.5377,16.923941,5687.9189};
+		dir[]={-0.71963722,-0.62111372,0.31042197};
+		up[]={-0.57031816,0.78371793,0.2460124};
+		aside[]={0.39608419,1.3719546e-007,0.91822302};
 	};
 };
 binarizationWanted=0;
 addons[]=
 {
 	"A3_Characters_F",
+	"ace_explosives",
 	"A3_Modules_F_Curator_Curator",
 	"A3_Soft_F_MRAP_01"
 };
@@ -29,7 +30,7 @@ class AddonsMetaData
 {
 	class List
 	{
-		items=3;
+		items=4;
 		class Item0
 		{
 			className="A3_Characters_F";
@@ -39,12 +40,19 @@ class AddonsMetaData
 		};
 		class Item1
 		{
+			className="ace_explosives";
+			name="ACE3 - Explosives";
+			author="ACE-Team";
+			url="http://ace3mod.com/";
+		};
+		class Item2
+		{
 			className="A3_Modules_F_Curator";
 			name="Arma 3 Zeus Update - Scripted Modules";
 			author="Bohemia Interactive";
 			url="https://www.arma3.com";
 		};
-		class Item2
+		class Item3
 		{
 			className="A3_Soft_F";
 			name="Arma 3 Alpha - Unarmored Land Vehicles";
