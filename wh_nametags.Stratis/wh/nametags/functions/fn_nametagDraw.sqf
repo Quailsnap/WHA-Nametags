@@ -33,7 +33,7 @@ params ["_vehicle","_name","_nameColor","_locationData","_role","_groupName",
 
 //	Get player from global player setting.
 //	This is necessary for Zeus remote control support.
-_player = WH_NT_PLAYER;
+_player = player;
 
 //	Find position tag will be rendered at using location data.
 _targetPositionAGL = call _locationData;

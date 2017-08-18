@@ -15,7 +15,7 @@
 //------------------------------------------------------------------------------------
 // TODO: how does st do dead
 //	Store the player and the player's group.
-_player = WH_NT_PLAYER;
+_player = player;
 _playerGroup = group _player;
 
 //	Find player camera's position.
