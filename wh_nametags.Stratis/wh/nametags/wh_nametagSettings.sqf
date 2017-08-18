@@ -5,7 +5,7 @@
 //
 //====================================================================================
 
-//	Check if CBA is event present.
+//	Check if CBA is present.
 if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
 {
 	//	Setting for disabling the entire system.

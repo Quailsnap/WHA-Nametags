@@ -20,18 +20,31 @@ WH_NT_VAR_NIGHT = 1;
 //	Loops every second as long as the scheduler complies.
 //------------------------------------------------------------------------------------
 
-WH_NT_CACHE_LOOP = [] spawn
+//	Check if CBA is present.
+if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
 {
-	_delay = 0.5;
-	WH_NT_CACHE_LOOP_RUN = true;
-	
-	//	While the above variable is true, run the loop.
-	while {WH_NT_CACHE_LOOP_RUN} do
+	WH_NT_CACHE_LOOP =
+	[
+		{ call wh_nt_fnc_nametagCache },
+		0.5,
+		[]
+	] call CBA_fnc_addPerFrameHandler;
+}
+else
+{
+	WH_NT_CACHE_LOOP = [] spawn
 	{
-		//	...Cache all nearby units and their data...
-		call wh_nt_fnc_nametagCache;
+		_delay = 0.5;
+		WH_NT_CACHE_LOOP_RUN = true;
 		
-		//	...and then wait for the delay before doing it again.
-		sleep _delay;
+		//	While the above variable is true, run the loop.
+		while {WH_NT_CACHE_LOOP_RUN} do
+		{
+			//	...Cache all nearby units and their data...
+			call wh_nt_fnc_nametagCache;
+			
+			//	...and then wait for the delay before doing it again.
+			sleep _delay;
+		};
 	};
 };
