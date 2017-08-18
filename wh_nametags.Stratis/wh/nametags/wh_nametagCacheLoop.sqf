@@ -28,10 +28,6 @@ WH_NT_CACHE_LOOP = [] spawn
 	//	While the above variable is true, run the loop.
 	while {WH_NT_CACHE_LOOP_RUN} do
 	{
-		//	Check the day-night cycle...
-		WH_NT_VAR_NIGHT = if ( !(sunOrMoon isEqualTo 1) && {WH_NT_NIGHT} ) then
-		{ linearConversion [0, 1, sunOrMoon, 0.25+0.5*(currentVisionMode player),1,true]; } else { 1 };
-		
 		//	...Cache all nearby units and their data...
 		call wh_nt_fnc_nametagCache;
 		
