@@ -22,7 +22,7 @@ WH_NT_VAR_NIGHT = 1;
 
 WH_NT_CACHE_LOOP = [] spawn
 {
-	_delay = 1;
+	_delay = 0.5;
 	WH_NT_CACHE_LOOP_RUN = true;
 	
 	//	While the above variable is true, run the loop.

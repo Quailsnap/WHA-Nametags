@@ -15,8 +15,7 @@
 if WH_NT_NAMETAGS_ON then
 {
 	//	Collect the current player.
-	WH_NT_PLAYER = call CBA_fnc_currentUnit;
-	_player = WH_NT_PLAYER;
+	_player = player;
 		
 	//	Check the day night cycle...
 	WH_NT_VAR_NIGHT = if WH_NT_NIGHT then
