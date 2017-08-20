@@ -22,7 +22,10 @@ WH_NT_VAR_NIGHT = 1;
 
 WH_NT_CACHE_LOOP =
 [
-	{ call wh_nt_fnc_nametagCache },
+	{ 
+		if WH_NT_NAMETAGS_ON then
+		{	call wh_nt_fnc_nametagCache	};
+	},
 	0.5,
 	[]
 ] call CBA_fnc_addPerFrameHandler;
