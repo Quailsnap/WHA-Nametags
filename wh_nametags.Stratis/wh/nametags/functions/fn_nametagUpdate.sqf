@@ -65,7 +65,7 @@ if !( isNull _cursorObject ) then
 			_unitData =+ ((_toDraw select 1) select _index);
 			
 			//	...adjust it so it knows it's the cursor target...
-			_unitData set [6,true];
+			_unitData set [7,true];
 			
 			//	...take it out of the copy of the global cache...
 			(_toDraw select 0) deleteAt _index;

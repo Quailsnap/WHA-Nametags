@@ -13,7 +13,7 @@
 //	Declare variables.
 //------------------------------------------------------------------------------------
 
-params ["_vehicle","_name","_nameColor","_locationData","_role","_groupName",
+params ["_unit","_vehicle","_name","_nameColor","_locationData","_role","_groupName",
 		"_drawRoleAndGroup","_isPassenger","_isCommander","_cameraPositionAGL",
 		"_zoom","_time","_startTime"];
 
@@ -54,7 +54,7 @@ _distance = _player distance _targetPositionAGL;
 
 //	If the unit is speaking, apply little carets around their name.
 //	TODO: move up a few scopes. GetData? Will stick on cursor
-if (_x call wh_nt_fnc_isTalking) then
+if (_unit getVariable ["wh_nt_isTalking",false] && {(alive _unit)}) then
 {
 	_timeEven = ((round time) % 2 == 0);
 	_nameColor set [3,0.90];

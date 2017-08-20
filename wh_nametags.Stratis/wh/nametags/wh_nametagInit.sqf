@@ -17,18 +17,16 @@ if (!hasInterface) exitWith {};
 //	Global variable that will be flipped on and off using the disableKey and CBA.
 WH_NT_NAMETAGS_ON = true; 
 
+//	Determine which mods are active.
+#include "wh_nametagCheckMods.sqf";
+
 
 //------------------------------------------------------------------------------------
-//	Configuration import.
+//	Configuration and settings import and setup.
 //------------------------------------------------------------------------------------
 
 //	Allows for missionmaker configuration of important settings.
 #include "wh_nametagCONFIG.sqf"
-
-
-//------------------------------------------------------------------------------------
-//	Setting up CBA settings box.
-//------------------------------------------------------------------------------------
 
 //	Allows for player (client) configuration of other settings.
 #include "wh_nametagSettings.sqf"
