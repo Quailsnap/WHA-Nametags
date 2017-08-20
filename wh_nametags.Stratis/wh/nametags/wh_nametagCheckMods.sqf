@@ -10,11 +10,5 @@
 //	Checking for mods.
 //------------------------------------------------------------------------------------
 
-//	ACE
-//	TBD, May integrate some ACE stuff (dead nametags) later.
-
-//	TFAR
-WH_NT_MOD_TFAR = (isClass (configFile >> "CfgPatches" >> "task_force_radio"));
-
-//	ACRE
-WH_NT_MOD_ACRE = (isClass (configFile >> "CfgPatches" >> "acre_api"));
+//	CBA
+WH_NT_MOD_CBA = isClass(configFile >> "CfgPatches" >> "cba_settings");

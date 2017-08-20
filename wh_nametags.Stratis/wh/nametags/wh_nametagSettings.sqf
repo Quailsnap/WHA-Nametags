@@ -6,7 +6,7 @@
 //====================================================================================
 
 //	Check if CBA is present.
-if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
+if WH_NT_MOD_CBA then
 {
 	//	Setting for disabling the entire system.
 	[

@@ -21,7 +21,7 @@ WH_NT_VAR_NIGHT = 1;
 //------------------------------------------------------------------------------------
 
 //	Check if CBA is present.
-if ( isClass(configFile >> "CfgPatches" >> "cba_settings") ) then
+if WH_NT_MOD_CBA then
 {
 	WH_NT_CACHE_LOOP =
 	[
