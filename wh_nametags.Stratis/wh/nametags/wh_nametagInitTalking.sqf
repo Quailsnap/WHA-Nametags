@@ -20,15 +20,40 @@
 if WH_NT_MOD_CBA then
 {
 	[{
-		private ["_old", "_new"];
-		_old = player getVariable ["wh_nt_isSpeaking", false];
-		_new = (!(isNull findDisplay 55));
-		if (!(_oldSetting isEqualTo _newSetting)) then {
-			ACE_player setVariable ["wh_nt_isSpeaking", _newSetting, true];
-		};
-	} , 0.1, []] call CBA_fnc_addPerFrameHandler;
-};
+		//	Change setting only if new isn't equal to old.
+		private _old = player getVariable ["wh_nt_isSpeaking", false];
+		private _new = (!(isNull findDisplay 55));
+		
+		//	Broadcast variable across server.
+		if (!(_oldSetting isEqualTo _newSetting)) then 
+		{ player setVariable ["wh_nt_isSpeaking", _newSetting, true] };
+	} , 0.25, []] call CBA_fnc_addPerFrameHandler;
+}
 
 //------------------------------------------------------------------------------------
 //	Scheduled version, if CBA is not present.
 //------------------------------------------------------------------------------------
+
+else
+{
+	WH_NT_TALKING_LOOP = [] spawn
+	{
+		_delay = 0.25;
+		WH_NT_TALKING_LOOP_RUN = true;
+		
+		//	While the above variable is true, run the loop.
+		while {WH_NT_TALKING_LOOP_RUN} do
+		{
+			//	Change setting only if new isn't equal to old.
+			private _old = player getVariable ["wh_nt_isSpeaking", false];
+			private _new = (!(isNull findDisplay 55));
+			
+			//	Broadcast variable across server.
+			if (!(_oldSetting isEqualTo _newSetting)) then 
+			{ player setVariable ["wh_nt_isSpeaking", _newSetting, true] };
+			
+			//	...and then wait for the delay before doing it again.
+			sleep _delay;
+		};
+	};
+};

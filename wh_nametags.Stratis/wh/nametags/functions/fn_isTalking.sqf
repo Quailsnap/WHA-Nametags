@@ -26,9 +26,8 @@ if !(alive _unit) exitWith {false};
 //	Switch between checks depending on which radio mod(s) are present.
 //------------------------------------------------------------------------------------
 
-_isSpeaking = 
-if (_unit getVariable ["wh_isSpeaking",false])
-then { true }
-else { false };
+//	Get variable broadcast across server.
+_isSpeaking = _unit getVariable ["wh_isSpeaking",false]
 
+//	Return value.
 _isSpeaking
