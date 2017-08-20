@@ -13,13 +13,13 @@
 //------------------------------------------------------------------------------------
 //	Initializing variables.
 //------------------------------------------------------------------------------------
-// TODO: how does st do dead
+
 //	Store the player and the player's group.
 _player = WH_NT_PLAYER;
 _playerGroup = group _player;
+//	TODO: Maybe just use playerSide?
 
 //	Find player camera's position.
-//	TODO: and the direction their head is facing.
 _cameraPositionAGL = positionCameraToWorld[0,0,0];
 _cameraPositionASL = AGLtoASL _cameraPositionAGL;
 
@@ -49,6 +49,7 @@ else { objNull };
 //	If the cursor target fits above criteria, get the data for it.
 //------------------------------------------------------------------------------------
 
+//	Only worry about the cursorObject at all if it's not null.
 if !( isNull _cursorObject ) then
 {
 	//	Clean out any previous data.
@@ -117,7 +118,7 @@ if !( isNull _cursorObject ) then
 	_unitData =+ ( (_toDraw select 1) select _forEachIndex );
 	
 	//	Pass in the player's camera and zoom level.
-	_unitData append [_cameraPositionAGL,_zoom,nil,nil];
+	_unitData append [_cameraPositionAGL,_zoom,_time,nil];
 	
 	//	Call the draw function with the above parameters.
 	_unitData call wh_nt_fnc_nametagDraw;
@@ -137,7 +138,7 @@ if !( isNull _cursorObject ) then
 	if ( _time < _startTime + WH_NT_FADETIME) then
 	{
 		_unitData =+ ( (WH_NT_CACHE_FADE select 1) select _forEachIndex );
-		_unitData append [_cameraPositionAGL,_zoom,_startTime,_time];
+		_unitData append [_cameraPositionAGL,_zoom,_time,_startTime];
 		_unitData call wh_nt_fnc_nametagDraw;
 	}
 	//	If it has been that long, delete it.
@@ -199,8 +200,5 @@ if (
 	{ (WH_NT_CACHE_FADE select 2) pushBack time } forEach (WH_NT_CACHE_CURSOR_DATA select 0);
 };
 
-//------------------------------------------------------------------------------------
 //	For the next frame, set the cache of the cursor to the current cursor.
-//------------------------------------------------------------------------------------
-
 WH_NT_CACHE_CURSOR = _cursorObject;

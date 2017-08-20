@@ -15,7 +15,7 @@
 
 params ["_vehicle","_name","_nameColor","_locationData","_role","_groupName",
 		"_drawRoleAndGroup","_isPassenger","_isCommander","_cameraPositionAGL",
-		"_zoom","_startTime","_time"];
+		"_zoom","_time","_startTime"];
 
 // _name (string): Friendly name of tag to be rendered.
 // _nameColor (color array [[],[],[],]): Original color of center nametag.
@@ -28,12 +28,17 @@ params ["_vehicle","_name","_nameColor","_locationData","_role","_groupName",
 //							them from being rendered as far as vehicle commanders.
 // _cameraPositionAGL (positionAGL array [[],[],[]]): Current position of player camera.
 // _zoom (decimal): Current zoom level of player camera.
+// _time (decimal): For fading tags and displaying voice comms -- current time.
 // _startTime (OPTIONAL, decimal): For fading tags -- time tag was originally rendered.
-// _time (OPTIONAL, decimal): For fading tags -- current time.
 
 //	Get player from global player setting.
 //	This is necessary for Zeus remote control support.
 _player = WH_NT_PLAYER;
+
+
+//------------------------------------------------------------------------------------
+//	Get distance from player to target.
+//------------------------------------------------------------------------------------
 
 //	Find position tag will be rendered at using location data.
 _targetPositionAGL = call _locationData;
@@ -43,6 +48,24 @@ _camDistance = _cameraPositionAGL distance _targetPositionAGL;
 _distance = _player distance _targetPositionAGL;
 
 
+//------------------------------------------------------------------------------------
+//	Change the nametag if the target is speaking.
+//------------------------------------------------------------------------------------
+
+//	If the unit is speaking, apply little carets around their name.
+//	TODO: move up a few scopes. GetData? Will stick on cursor
+if (_x call wh_nt_fnc_isTalking) then
+{
+	_timeEven = ((round time) % 2 == 0);
+	_nameColor set [3,0.90];
+	_name =
+	if _timeEven then
+	{ "> " + _name + " <" }
+	else
+	{ ">" + _name + "<" };
+};
+					
+					
 //------------------------------------------------------------------------------------
 //	Applying initial transparency to tag depending on distance and time of day.
 //------------------------------------------------------------------------------------
@@ -62,6 +85,7 @@ _nameColor set [3, (_nameColor select 3) * _alpha];
 //	Adjust font size depending on player current zoom level.
 //------------------------------------------------------------------------------------
 
+//	TODO: Move up to Update scope.
 //	Max out zoom at 1.67 regardless to avoid HUGE text.
 _zmin = _zoom min 1.67;
 
@@ -100,6 +124,7 @@ if (_drawRoleAndGroup && {!(_isPassenger)}) then
 	//--------------------------------------------------------------------------------
 
 	//	First, get vector pointing directly forward from the player's view, wherever it is.
+	//	TODO: Move up to update scope.
 	_vectorDir = _cameraPositionAGL vectorFromTo (positionCameraToWorld[0,0,1]);
 
 	//	Second, and the biggest step, get the normal (magnitude 1) vector going upwards 
@@ -116,10 +141,11 @@ if (_drawRoleAndGroup && {!(_isPassenger)}) then
 	_vectorDiff = (vectorNormalized (((_vectorDir) vectorCrossProduct (vectorUp _player)) vectorCrossProduct (_targetPositionAGL vectorDiff _cameraPositionAGL)));
 
 	//	Take that new normal vector and multiply it by the distance, then divide it by the zoom.
+	
 	_targetPositionAGLTop =    _targetPositionAGL vectorAdd (_vectorDiff vectorMultiply (WH_NT_FONT_SPREAD_TOP_MULTI * _camDistance / _zoom));
 	_targetPositionAGLBottom = _targetPositionAGL vectorAdd ((_vectorDiff vectorMultiply (WH_NT_FONT_SPREAD_BOTTOM_MULTI * _camDistance / _zoom)) vectorMultiply -1);
 
-
+	
 	//--------------------------------------------------------------------------------
 	//	Render the nametags.
 	//--------------------------------------------------------------------------------
@@ -138,6 +164,11 @@ if (_drawRoleAndGroup && {!(_isPassenger)}) then
 		0, 0, 0, _groupName,WH_NT_FONT_SHADOW,_sizeSecondary,WH_NT_FONT_FACE_SEC];
 	};
 };
+	
+//	TODO: Remove this testing thing
+//	Name tag (middle).
+//drawIcon3D ["\A3\ui_f\data\map\markers\flags\AAF_ca.paa", [0,0,0,1], _targetPositionAGL, 1, 1, 0, "",0,(_sizeMain+(_sizeMain*0.2)),WH_NT_FONT_FACE_MAIN];
 
 //	Name tag (middle).
-drawIcon3D ["a3\ui_f\data\gui\Rsc\RscDisplayArsenal\radio_ca.paa", _nameColor, _targetPositionAGL, 0, 0, 0, _name,WH_NT_FONT_SHADOW,_sizeMain,WH_NT_FONT_FACE_MAIN];
+drawIcon3D ["", _nameColor, _targetPositionAGL, 0,0,0, _name,WH_NT_FONT_SHADOW,_sizeMain,WH_NT_FONT_FACE_MAIN];
+

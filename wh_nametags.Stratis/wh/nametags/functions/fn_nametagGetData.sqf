@@ -255,7 +255,7 @@ private _zoom = 1;
 							default			{	+WH_NT_FONT_COLOR_GROUP		};
 						};
 					};
-					
+						
 					//	Huck all this data into an array...
 					_unitData = [];
 					_unitData pushBack _entity;				// Index 0
