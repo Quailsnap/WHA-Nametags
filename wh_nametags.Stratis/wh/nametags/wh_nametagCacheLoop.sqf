@@ -25,7 +25,10 @@ if WH_NT_MOD_CBA then
 {
 	WH_NT_CACHE_LOOP =
 	[
-		{ call wh_nt_fnc_nametagCache },
+		{
+			if WH_NT_NAMETAGS_ON then
+			{ call wh_nt_fnc_nametagCache };
+		},
 		0.5,
 		[]
 	] call CBA_fnc_addPerFrameHandler;
@@ -41,7 +44,8 @@ else
 		while {WH_NT_CACHE_LOOP_RUN} do
 		{
 			//	...Cache all nearby units and their data...
-			call wh_nt_fnc_nametagCache;
+			if WH_NT_NAMETAGS_ON then
+			{ call wh_nt_fnc_nametagCache };
 			
 			//	...and then wait for the delay before doing it again.
 			sleep _delay;
