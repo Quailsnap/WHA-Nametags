@@ -45,7 +45,7 @@ if !WH_NT_DRAWCURSORONLY then
 	{
 		!(_x isEqualTo _player) &&
 		{(
-			(side group _x isEqualTo side group _player) 	// 0.0018ms
+			(side group _x isEqualTo side _playerGroup) 	// 0.0018ms
 			//((side _x getFriend side player) > 0.6) 		// 0.0024ms
 			//|| {(group _x isEqualTo group player)}
 		)} 
