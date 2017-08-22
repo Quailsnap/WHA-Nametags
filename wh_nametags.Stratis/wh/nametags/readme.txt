@@ -6,6 +6,10 @@
 	( https://github.com/Whalen207/WH-NT )
 	Contact @ /u/Whalen207 | Whale #5963
 	
+	This script requires CBA version v1.08.140725 or newer. 
+	A branch that can be run without any mods is available here:
+	( https://github.com/Whalen207/WH-NT/tree/modless )
+
 	Special Thanks To:
 	-	Wolfenswan, ferstaberinde, headswe of F3 Framework, for code I built off of.
 	-	Dsylexci and Zedx64 of Shacktac, for feature inspiration and some code solutions.
