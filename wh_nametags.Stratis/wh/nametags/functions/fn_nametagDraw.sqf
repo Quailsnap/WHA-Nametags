@@ -57,7 +57,7 @@ _distance = _player distance _targetPositionAGL;
 //	If the unit is speaking, apply little carets around their name.
 //	TODO: move up a few scopes. GetData? Will stick on cursor
 
-if (_unit call wh_nt_fnc_isSpeaking) then
+if (_unit getVariable ["wh_nt_isSpeaking", false]) then
 {
 	_timeEven = ((round time) % 2 == 0);
 	_nameColor set [3,0.90];
