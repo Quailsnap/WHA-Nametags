@@ -17,6 +17,8 @@ params ["_unit","_vehicle","_name","_nameColor","_locationData","_role","_groupN
 		"_drawRoleAndGroup","_isPassenger","_isCommander","_cameraPositionAGL",
 		"_zoom","_time","_startTime"];
 
+// _unit (CAManBase): Unit the tag is being rendered on.
+// _vehicle (Entity): Vehicle the unit is in. Possibly the unit.
 // _name (string): Friendly name of tag to be rendered.
 // _nameColor (color array [[],[],[],]): Original color of center nametag.
 // _locationData {code}: Code that will be used to find the location to draw the tag.
@@ -54,7 +56,8 @@ _distance = _player distance _targetPositionAGL;
 
 //	If the unit is speaking, apply little carets around their name.
 //	TODO: move up a few scopes. GetData? Will stick on cursor
-if (_unit getVariable ["wh_nt_isTalking",false] && {(alive _unit)}) then
+
+if (_unit call wh_nt_fnc_isSpeaking) then
 {
 	_timeEven = ((round time) % 2 == 0);
 	_nameColor set [3,0.90];

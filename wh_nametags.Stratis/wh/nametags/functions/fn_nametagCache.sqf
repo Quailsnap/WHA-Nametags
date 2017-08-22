@@ -22,6 +22,11 @@ if WH_NT_NAMETAGS_ON then
 	{ linearConversion [0, 1, sunOrMoon, 0.25+0.5*(currentVisionMode _player),1,true]; } 
 	else { 1 };
 	
+	//	Check the day night cycle...
+	WH_NT_VAR_NIGHT = if WH_NT_NIGHT then
+	{ linearConversion [0, 1, sunOrMoon, 0.25+0.5*(currentVisionMode _player),1,true]; } 
+	else { 1 };
+
 	//--------------------------------------------------------------------------------
 	//	If not set to only draw the cursor, collect nearEntities.
 	//--------------------------------------------------------------------------------

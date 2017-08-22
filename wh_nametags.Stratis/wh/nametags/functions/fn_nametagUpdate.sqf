@@ -13,7 +13,7 @@
 //------------------------------------------------------------------------------------
 //	Initializing variables.
 //------------------------------------------------------------------------------------
-
+// TODO: all of this only if there's something to draw
 //	Store the player and the player's group.
 _player = player;
 _playerGroup = group _player;
