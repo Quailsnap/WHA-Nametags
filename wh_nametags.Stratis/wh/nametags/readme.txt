@@ -1,6 +1,6 @@
 ==========================================================================================
 
-	WHALE'S NAMETAGS (V0.9.7 Beta) 
+	WHALE'S NAMETAGS (V0.9.7ML Beta) 
 	SCRIPT FOR ARMA 3
 	> SPECIAL CBA OPTIONAL VERSION <
 	
