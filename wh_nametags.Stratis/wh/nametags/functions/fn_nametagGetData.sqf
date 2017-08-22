@@ -258,6 +258,7 @@ private _zoom = 1;
 						
 					//	Huck all this data into an array...
 					_unitData = [];
+					_unitData pushBack _x;
 					_unitData pushBack _entity;				// Index 0
 					_unitData pushBack _name;				// Index 1			
 					_unitData pushBack _nameColor;			// Index 2

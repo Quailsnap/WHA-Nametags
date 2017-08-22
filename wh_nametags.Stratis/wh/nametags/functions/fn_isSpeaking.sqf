@@ -1,7 +1,7 @@
 //====================================================================================
 //
-//	fn_isTalking.sqf - Detect whether player is talking with ACRE/TFAR/Vanilla.
-//	> _isTalking = _unit call wh_nt_fnc_isTalking <
+//	fn_isSpeaking.sqf - Detect whether player is speaking with ACRE/TFAR/Vanilla.
+//	> _isSpeaking = _unit call wh_nt_fnc_isSpeaking <
 //
 //	Adapted from code by Killzone Kid, and from ACE3 code.
 //	- http://killzonekid.com/arma-scripting-tutorials-whos-talking/

@@ -13,7 +13,7 @@
 //------------------------------------------------------------------------------------
 //	Initializing variables.
 //------------------------------------------------------------------------------------
-
+// TODO: all of this only if there's something to draw
 //	Store the player and the player's group.
 _player = WH_NT_PLAYER;
 _playerGroup = group _player;
@@ -65,7 +65,7 @@ if !( isNull _cursorObject ) then
 			_unitData =+ ((_toDraw select 1) select _index);
 			
 			//	...adjust it so it knows it's the cursor target...
-			_unitData set [6,true];
+			_unitData set [7,true];
 			
 			//	...take it out of the copy of the global cache...
 			(_toDraw select 0) deleteAt _index;
