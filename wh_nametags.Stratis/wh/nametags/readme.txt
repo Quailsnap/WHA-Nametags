@@ -23,7 +23,8 @@
 	-	Nametags can be toggled on or off with a button press.
 	-	Tags will fade out after a certain distance.
 	-	Lighting conditions and zoom level can affect visible distance.
-
+	-	Changes nametag if target is talking use in-game comms.
+	
 	How to Implement:
 	-	Move the wh folder (with \nametags) into your root mission folder.
 	-	Configure your settings inside wh_nametagCONFIG.sqf (Optional)
