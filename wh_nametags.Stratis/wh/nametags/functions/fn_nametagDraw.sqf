@@ -110,6 +110,7 @@ if (_drawRoleAndGroup && {!(_isPassenger)}) then
 
 	//	If we're working with a fading tag, fade it out according to the difference
 	//	between the start time and now.
+	//	TODO: make the fade 'hang' a little bit. merge onto modless
 	if (!isNil "_startTime") then
 	{
 		_alphaCoef = (((_startTime + WH_NT_FADETIME) - _time)/WH_NT_FADETIME);
