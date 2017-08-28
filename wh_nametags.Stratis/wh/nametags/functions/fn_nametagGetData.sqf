@@ -74,7 +74,7 @@ private _zoom = 1;
 					if !WH_NT_FONT_HEIGHT_ONHEAD
 					then { {_x modelToWorldVisual (_x selectionPosition "spine3")} }
 					else { {_x modelToWorldVisual (_x selectionPosition "pilot")
-							vectorAdd [0,0,((0.2 + (((_player distance _x) * 1.5 * 
+							vectorAdd [0,0,((0.2 + (((_cameraPositionAGL distance _x) * 1.5 * 
 							WH_NT_FONT_SPREAD_BOTTOM_MULTI)/_zoom)))]} };
 					
 					_isCommander = true;
