@@ -72,3 +72,10 @@ WH_NT_EVENTHANDLER = addMissionEventHandler
 	if WH_NT_NAMETAGS_ON then
 	{	call wh_nt_fnc_nametagUpdate	};
 }];
+
+
+//------------------------------------------------------------------------------------
+//	Add briefing with configurable options.
+//------------------------------------------------------------------------------------
+
+#include "wh_nametagBrief.sqf"
