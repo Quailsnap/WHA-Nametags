@@ -19,6 +19,7 @@ class wh_nt
 		class nametagGetData {};
 		class nametagCache {};
 		class nametagResetFont {};
+		class isSpeaking {};
 		class getZoom {};
 	};
 };
