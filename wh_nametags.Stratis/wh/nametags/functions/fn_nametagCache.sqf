@@ -50,7 +50,7 @@ if !WH_NT_DRAWCURSORONLY then
 	{
 		!(_x isEqualTo _player)
 		&& {(side group _x) isEqualTo (side _playerGroup)}
-		&& {!WH_NT_VAR_VEHICLETPP}// 0.0018ms  || {(objectParent _x != objectParent _player)}
+		&& {!WH_NT_VAR_VEHICLETPP || {(vehicle _x != vehicle _player)}}// 0.0018ms  || {(objectParent _x != objectParent _player)}
 			//((side _x getFriend side player) > 0.6) 		// 0.0024ms
 			//|| {(group _x isEqualTo group player)} // TODO - REIMPLEMENT ABOVE OBJARENT
 	
