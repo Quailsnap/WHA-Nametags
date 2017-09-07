@@ -1,6 +1,7 @@
 //====================================================================================
 //
 //	wh_nametagBrief.sqf - Gives non-CBA players options in briefing to config nametags.
+//							Idea and credit to ferstaberinde and his F3 Framework.
 //	@ /u/Whalen207 | Whale #5963
 //
 //====================================================================================
@@ -44,12 +45,7 @@ if !WH_NT_MOD_CBA then
 			_bstr = _bstr + "<br/><br/><execute expression=""
 			if (WH_NT_SHOW_VEHICLEINFO) then [{hintsilent 'Vehicle type display deactivated!';WH_NT_SHOW_VEHICLEINFO= false},{WH_NT_SHOW_VEHICLEINFO = true;hintsilent 'Vehicle type display activated!'}];"">TOGGLE VEHICLE TYPE DISPLAY</execute><br/>Displays the vehicle type with the commander's name. Requires role display.";
 	};
-
-	//_bstr = _bstr + "<br/><br/><font size='18'>COLORS</font><br/>
-	//<font color='#FFFFFF'>Friendly</font><br/>
-	//<font color='#7FFFD4'>Fireteam</font><br/>
-	//<font color='#FF143C'>Vehicle Crew</font>";
-
+	
 	//	Add brief to map screen.
 	player createDiaryRecord ["Diary", ["WH Nametags (Options)",_bstr]];
 };
