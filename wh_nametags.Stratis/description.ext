@@ -9,9 +9,19 @@ class CfgFunctions
 //	stuff inside there.
 //class ACE_settings 
 //{
-//	class ace_nametags_showPlayerNames 
-//	{
+//	class ace_nametags_showPlayerNames {
 //		value = 0;
 //		typeName = "SCALAR";
+//		force = 1;
+//	};
+//	class ace_nametags_showVehicleCrewInfo {
+//		value = 0;
+//		typeName = "BOOL";
+//		force = 1;
+//	};
+//	class ace_nametags_showNamesForAI {
+//		value = 0;
+//		typeName = "BOOL";
+//		force = 1;
 //	};
 //};
