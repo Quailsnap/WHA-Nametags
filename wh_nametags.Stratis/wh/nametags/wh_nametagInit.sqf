@@ -18,7 +18,7 @@ if (!hasInterface) exitWith {};
 WH_NT_NAMETAGS_ON = true; 
 
 //	Determine which mods are active.
-#include "wh_nametagCheckMods.sqf";
+#include "include\wh_nametagCheckMods.sqf";
 
 
 //------------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ WH_NT_NAMETAGS_ON = true;
 #include "wh_nametagCONFIG.sqf"
 
 //	Allows for player (client) configuration of other settings.
-#include "wh_nametagSettings.sqf"
+#include "include\wh_nametagSettings.sqf"
 
 
 //------------------------------------------------------------------------------------
@@ -52,14 +52,14 @@ WH_NT_CACHE_FADE = [[],[],[]];
 waitUntil {!isNull (findDisplay 46)};
 
 //	Setting up our disableKey (Default '+')
-#include "wh_nametagDisableKey.sqf"
+#include "include\wh_nametagDisableKey.sqf"
 
 
 //------------------------------------------------------------------------------------
 //	Keep an updated cache of all tags to draw.
 //------------------------------------------------------------------------------------
 
-#include "wh_nametagCacheLoop.sqf"
+#include "include\wh_nametagCacheLoop.sqf"
 
 
 //------------------------------------------------------------------------------------
