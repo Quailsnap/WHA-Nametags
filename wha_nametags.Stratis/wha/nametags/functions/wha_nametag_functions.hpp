@@ -1,24 +1,24 @@
 // ====================================================================================
 //
-//	wh_nametag_functions.hpp - Contains functions for Whale's nametag scripts.
+//	wha_nametag_functions.hpp - Contains functions for Whale's nametag scripts.
 //
 //	To implement, place the following code under your description.ext function header:
-//		#include "wh\nametags\functions\wh_nametag_functions.hpp"
+//		#include "wha\nametags\functions\wha_nametag_functions.hpp"
 //
 //	@ /u/Whalen207 | Whale #5963
 //
 // ====================================================================================
 
-class wh_nt
+class wha_nametag
 {
 	class main
 	{
-		file = "wh\nametags\functions";
-		class nametagUpdate {};
-		class nametagDraw {};
-		class nametagGetData {};
-		class nametagCache {};
-		class nametagResetFont {};
+		file = "wha\nametags\functions";
+		class update {};
+		class draw {};
+		class getData {};
+		class cache {};
+		class resetFont {};
 		class isSpeaking {};
 		class getZoom {};
 	};

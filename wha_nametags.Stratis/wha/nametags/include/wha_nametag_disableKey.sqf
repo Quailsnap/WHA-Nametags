@@ -1,6 +1,6 @@
 //====================================================================================
 //
-//	wh_nametagDisableKey.sqf - Sets up a key that can be used to flip the nametag
+//	wha_nametag_disableKey.sqf - Sets up a key that can be used to flip the nametag
 //							   system on and off with a press.
 //
 //	@ /u/Whalen207 | Whale #5963
@@ -12,30 +12,30 @@
 //------------------------------------------------------------------------------------
 
 //	None of this will execute if the actionkey line in CONFIG is commented out.
-if (!isNil "WH_NT_ACTIONKEY") then
+if (!isNil "WHA_NAMETAG_ACTIONKEY") then
 {
-	WH_NT_ACTIONKEY_KEY = (actionKeys WH_NT_ACTIONKEY) select 0;// This key, a global variable.
-	WH_NT_ACTIONKEY_KEYNAME = actionKeysNames WH_NT_ACTIONKEY;	// Which is named this...
+	WHA_NAMETAG_ACTIONKEY_ID = (actionKeys WHA_NAMETAG_ACTIONKEY) select 0;// This key, a global variable.
+	WHA_NAMETAG_ACTIONKEY_NAME = actionKeysNames WHA_NAMETAG_ACTIONKEY;	// Which is named this...
 	
 	//	Function that will determine when the disableKey is depressed.
-	WH_NT_KEYDOWN = 
+	WHA_NAMETAG_KEYDOWN = 
 	{
 		_key = _this select 1;
 		_handled = false;
-		if(_key == WH_NT_ACTIONKEY_KEY) then
+		if(_key == WHA_NAMETAG_ACTIONKEY_ID) then
 		{
-			WH_NT_NAMETAGS_ON = !WH_NT_NAMETAGS_ON;
+			WHA_NAMETAG_ON = !WHA_NAMETAG_ON;
 			_handled = true;
 		};
 		_handled;
 	};
 
 	//	Function that will determine when the disableKey is released.
-	WH_NT_KEYUP = 
+	WHA_NAMETAG_KEYUP = 
 	{
 		_key = _this select 1;
 		_handled = false;
-		if(_key == WH_NT_ACTIONKEY_KEY) then
+		if(_key == WHA_NAMETAG_ACTIONKEY_ID) then
 		{
 			_handled = true;
 		};
@@ -43,6 +43,6 @@ if (!isNil "WH_NT_ACTIONKEY") then
 	};
 	
 	//	Add eventhandlers (functions above).
-	(findDisplay 46) displayAddEventHandler   ["keydown", "_this call WH_NT_KEYDOWN"];
-	(findDisplay 46) displayAddEventHandler   ["keyup", "_this call WH_NT_KEYUP"];
+	(findDisplay 46) displayAddEventHandler   ["keydown", "_this call WHA_NAMETAG_KEYDOWN"];
+	(findDisplay 46) displayAddEventHandler   ["keyup", "_this call WHA_NAMETAG_KEYUP"];
 };

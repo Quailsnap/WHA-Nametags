@@ -1,10 +1,10 @@
 //====================================================================================
 //
-//	fn_nametagUpdate.sqf - Updates values for WH nametags (heavily based on F3 and ST)
+//	fn_update.sqf - Updates values for WHA nametags (heavily based on F3 and ST)
 //							Intended to be run each frame.
 //
 //	> 	_data = [_player,_playerGroup,_cameraPositionAGL,_cameraPositionASL,_entities,
-//		false] call wh_nt_fnc_nametagGetData;	<
+//		false] call wha_nametag_fnc_getData;	<
 //
 //		Returns [_names,_data].
 //		Names is an array of references to units (CAManBase).
@@ -71,11 +71,11 @@ private _zoom = 1;
 					//	Get the data that will be processed (later) to determine where
 					//	to draw the nametag. Either their chest, or above their head.
 					_locationData = 
-					if !WH_NT_FONT_HEIGHT_ONHEAD
+					if !WHA_NAMETAG_FONT_HEIGHT_ONHEAD
 					then { {_x modelToWorldVisual (_x selectionPosition "spine3")} }
 					else { {_x modelToWorldVisual (_x selectionPosition "pilot")
 							vectorAdd [0,0,((0.2 + (((_player distance _x) * 1.5 * 
-							WH_NT_FONT_SPREAD_BOTTOM_MULTI)/_zoom)))]} };
+							WHA_NAMETAG_FONT_SPREAD_BOTTOM_MULTI)/_zoom)))]} };
 					
 					_isCommander = true;
 					
@@ -146,7 +146,7 @@ private _zoom = 1;
 							
 							//	Also, if the missionmaker has configured vehicle information
 							//	to be shown, store that for later.
-							if WH_NT_SHOW_VEHICLEINFO then
+							if WHA_NAMETAG_SHOW_VEHICLEINFO then
 							{
 								//	Get the vehicle's friendly name from configs.
 								_vehicleName = format ["%1",getText (configFile >> "CfgVehicles" >> typeOf _vehicle >> "displayname")];
@@ -221,7 +221,7 @@ private _zoom = 1;
 					_name = name _x;
 					
 					//	Default the unit's nametag color to the mission default.
-					_nameColor =+ WH_NT_FONT_COLOR_DEFAULT;
+					_nameColor =+ WHA_NAMETAG_FONT_COLOR_DEFAULT;
 					
 					//	Get the unit's group.
 					_unitGroup = group _x;
@@ -240,7 +240,7 @@ private _zoom = 1;
 								getText (configFile >> "CfgVehicles" >> typeOf _x >> "displayname")]);
 					}
 					//	...and for vehicle crew, where a role is already present.
-					else { _nameColor =+ WH_NT_FONT_COLOR_CREW };
+					else { _nameColor =+ WHA_NAMETAG_FONT_COLOR_CREW };
 
 					//	For units in the same group as the player, set their color according to color team.
 					if _sameGroup then 
@@ -248,11 +248,11 @@ private _zoom = 1;
 						_team = assignedTeam _x;
 						_nameColor = switch _team do 
 						{
-							case "RED": 	{	+WH_NT_FONT_COLOR_GROUPR	};
-							case "GREEN": 	{	+WH_NT_FONT_COLOR_GROUPG	};
-							case "BLUE": 	{	+WH_NT_FONT_COLOR_GROUPB	};
-							case "YELLOW": 	{	+WH_NT_FONT_COLOR_GROUPY	};
-							default			{	+WH_NT_FONT_COLOR_GROUP		};
+							case "RED": 	{	+WHA_NAMETAG_FONT_COLOR_GROUPR	};
+							case "GREEN": 	{	+WHA_NAMETAG_FONT_COLOR_GROUPG	};
+							case "BLUE": 	{	+WHA_NAMETAG_FONT_COLOR_GROUPB	};
+							case "YELLOW": 	{	+WHA_NAMETAG_FONT_COLOR_GROUPY	};
+							default			{	+WHA_NAMETAG_FONT_COLOR_GROUP	};
 						};
 					};
 						
