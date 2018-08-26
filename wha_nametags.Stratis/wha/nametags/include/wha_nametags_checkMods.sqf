@@ -1,6 +1,6 @@
 //====================================================================================
 //
-//	wha_nametag_checkMods.sqf - Checks for ACE, ACRE, and/or TFAR presence.
+//	wha_nametags_checkMods.sqf - Checks for ACE, ACRE, and/or TFAR presence.
 //
 //	@ /u/Whalen207 | Whale #5963
 //
@@ -14,7 +14,7 @@
 //	TBD, May integrate some ACE stuff (dead nametags) later.
 
 //	TFAR
-WHA_NAMETAG_MOD_TFAR = (isClass (configFile >> "CfgPatches" >> "task_force_radio"));
+WHA_NAMETAGS_MOD_TFAR = (isClass (configFile >> "CfgPatches" >> "task_force_radio"));
 
 //	ACRE
-WHA_NAMETAG_MOD_ACRE = (isClass (configFile >> "CfgPatches" >> "acre_api"));
+WHA_NAMETAGS_MOD_ACRE = (isClass (configFile >> "CfgPatches" >> "acre_api"));

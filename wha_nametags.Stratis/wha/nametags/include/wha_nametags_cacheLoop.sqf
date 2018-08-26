@@ -1,6 +1,6 @@
 //====================================================================================
 //
-//	wha_nametag_cacheLoop.sqf - Checks near entities and processes them for tag data.
+//	wha_nametags_cacheLoop.sqf - Checks near entities and processes them for tag data.
 //	@ /u/Whalen207 | Whale #5963
 //
 //====================================================================================
@@ -10,21 +10,21 @@
 //------------------------------------------------------------------------------------
 
 //	Array that will hold all cache data.
-WHA_NAMETAG_CACHE = [];
+WHA_NAMETAGS_CACHE = [];
 
 //	Variable that will be used to keep track of Arma's day/night cycle.
-WHA_NAMETAG_VAR_NIGHT = 1;
+WHA_NAMETAGS_VAR_NIGHT = 1;
 
 
 //------------------------------------------------------------------------------------
 //	Loops every 0.5 seconds using CBA PFH.
 //------------------------------------------------------------------------------------
 
-WHA_NAMETAG_CACHE_LOOP =
+WHA_NAMETAGS_CACHE_LOOP =
 [
 	{ 
-		if WHA_NAMETAG_ON then
-		{	call wha_nametag_fnc_cache	};
+		if WHA_NAMETAGS_ON then
+		{ call wha_nametags_fnc_cache };
 	},
 	0.5,
 	[]

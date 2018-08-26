@@ -4,7 +4,7 @@
 //                              Updates font size and spread depending on a dynamic 
 //                              spread coefficient and possible CBA setting alterations.
 //                      
-//  > call wha_nametag_fnc_resetFont; <
+//  > call wha_nametags_fnc_resetFont; <
 //  @ /u/Whalen207 | Whale #5963
 //
 //====================================================================================
@@ -15,8 +15,8 @@
 
 //  Spacing may very between fonts greatly. Etelka is especially broken.
 //  Format: [Primary font, secondary font, spacing top, spacing bottom, shadow]
-_fontData =
-switch WHA_NAMETAG_FONT_FACE do
+private _fontData =
+switch WHA_NAMETAGS_FONT_FACE do
 {
     case "Roboto":       {["RobotoCondensedBold","RobotoCondensed",0.50,0.65,2]};
     case "RobotoLight":  {["RobotoCondensed","RobotoCondensedLight",0.50,0.65,2]};
@@ -27,9 +27,9 @@ switch WHA_NAMETAG_FONT_FACE do
     default             {["RobotoCondensedBold","RobotoCondensed",0.50,0.65,2]};
 };
 
-WHA_NAMETAG_FONT_FACE_MAIN = (_fontData select 0);
-WHA_NAMETAG_FONT_FACE_SEC = (_fontData select 1);
-WHA_NAMETAG_FONT_SHADOW = (_fontData select 4);
+WHA_NAMETAGS_FONT_FACE_MAIN = (_fontData select 0);
+WHA_NAMETAGS_FONT_FACE_SEC = (_fontData select 1);
+WHA_NAMETAGS_FONT_SHADOW = (_fontData select 4);
 
 
 //------------------------------------------------------------------------------------
@@ -39,8 +39,8 @@ WHA_NAMETAG_FONT_SHADOW = (_fontData select 4);
 //  Spacing may very between fonts greatly. Etelka is especially broken.
 //  Format: [Main color, secondary color, crew color, same group team white color,
 //          team red color, team green color, team blue color, team yellow color]
-_colorData =
-switch WHA_NAMETAG_FONT_COLOR do
+private _colorData =
+switch WHA_NAMETAGS_FONT_COLOR do
 {
     case "WHGreen":         
     {[[0.68,0.90,0.36,0.85],[0.90,0.90,0.90,0.85],[0.95,0.80,0.10,0.85],
@@ -81,35 +81,35 @@ switch WHA_NAMETAG_FONT_COLOR do
 };
 
 //  Distribute colors from data array to global color settings.
-WHA_NAMETAG_FONT_COLOR_DEFAULT = (_colorData select 0);
-WHA_NAMETAG_FONT_COLOR_OTHER = (_colorData select 1);
-WHA_NAMETAG_FONT_COLOR_CREW = (_colorData select 2);
+WHA_NAMETAGS_FONT_COLOR_DEFAULT = (_colorData select 0);
+WHA_NAMETAGS_FONT_COLOR_OTHER = (_colorData select 1);
+WHA_NAMETAGS_FONT_COLOR_CREW = (_colorData select 2);
 
-WHA_NAMETAG_FONT_COLOR_GROUP = (_colorData select 3);
-WHA_NAMETAG_FONT_COLOR_GROUPR = (_colorData select 4);
-WHA_NAMETAG_FONT_COLOR_GROUPG = (_colorData select 5);
-WHA_NAMETAG_FONT_COLOR_GROUPB = (_colorData select 6);
-WHA_NAMETAG_FONT_COLOR_GROUPY = (_colorData select 7);
+WHA_NAMETAGS_FONT_COLOR_GROUP = (_colorData select 3);
+WHA_NAMETAGS_FONT_COLOR_GROUPR = (_colorData select 4);
+WHA_NAMETAGS_FONT_COLOR_GROUPG = (_colorData select 5);
+WHA_NAMETAGS_FONT_COLOR_GROUPB = (_colorData select 6);
+WHA_NAMETAGS_FONT_COLOR_GROUPY = (_colorData select 7);
 
 
 //------------------------------------------------------------------------------------
 //  Update global font sizes.
 //------------------------------------------------------------------------------------
 
-WHA_NAMETAG_FONT_SIZE_MAIN = WHA_NAMETAG_FONT_SIZE_RAW * WHA_NAMETAG_FONT_SIZE_MULTI;
-WHA_NAMETAG_FONT_SIZE_SEC = WHA_NAMETAG_FONT_SIZE_MAIN * WHA_NAMETAG_FONT_SIZE_SEC_MULTI;
+WHA_NAMETAGS_FONT_SIZE_MAIN = WHA_NAMETAGS_FONT_SIZE_RAW * WHA_NAMETAGS_FONT_SIZE_MULTI;
+WHA_NAMETAGS_FONT_SIZE_SEC = WHA_NAMETAGS_FONT_SIZE_MAIN * WHA_NAMETAGS_FONT_SIZE_SEC_MULTI;
 
 
 //------------------------------------------------------------------------------------
 //  Update global font spread.
 //------------------------------------------------------------------------------------
 
-_spacingMultiplier = WHA_NAMETAG_FONT_SPREAD_MULTI * WHA_NAMETAG_FONT_SIZE_SEC;
+private _spacingMultiplier = WHA_NAMETAGS_FONT_SPREAD_MULTI * WHA_NAMETAGS_FONT_SIZE_SEC;
 
 //  Coefficients are used. Should be changed if you change the default font, probably.
-_topMultiplier    = (_fontData select 2); // Default: (0.50)
-_bottomMultiplier = (_fontData select 3); // Default: (0.65)
+private _topMultiplier    = (_fontData select 2); // Default: (0.50)
+private _bottomMultiplier = (_fontData select 3); // Default: (0.65)
 
 // Top and bottom are separate to avoid a wonky appearance.
-WHA_NAMETAG_FONT_SPREAD_TOP_MULTI = _spacingMultiplier * _topMultiplier;
-WHA_NAMETAG_FONT_SPREAD_BOTTOM_MULTI = _spacingMultiplier * _bottomMultiplier;
+WHA_NAMETAGS_FONT_SPREAD_TOP_MULTI = _spacingMultiplier * _topMultiplier;
+WHA_NAMETAGS_FONT_SPREAD_BOTTOM_MULTI = _spacingMultiplier * _bottomMultiplier;

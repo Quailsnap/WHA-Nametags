@@ -1,11 +1,9 @@
 // NAMETAGS
-[] execVM "wha\nametags\wha_nametag_init.sqf";
+[] execVM "wha\nametags\wha_nametags_init.sqf";
 
-WHA_NAMETAG_TESTLOOP =
+WHA_NAMETAGS_TESTLOOP =
 [
-	{
-		{ WHA_NAMETAG_PLAYER reveal [_x,4] } forEach allUnits;
-	},
+	{ { WHA_NAMETAGS_PLAYER reveal [_x,4] } forEach allUnits; },
 	10,
 	[]
 ] call CBA_fnc_addPerFrameHandler;

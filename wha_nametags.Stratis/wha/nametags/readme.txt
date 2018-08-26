@@ -1,6 +1,6 @@
 ==========================================================================================
 
-	WHALE'S NAMETAGS (V0.10.0 Beta) 
+	WHALE'S NAMETAGS (V0.10.1 Beta) 
 	SCRIPT FOR ARMA 3
 	
 	( https://github.com/Quailsnap/WHA-Nametags )
@@ -11,11 +11,12 @@
 	( https://github.com/Quailsnap/WHA-Nametags/tree/modless )
 
 	Special Thanks To:
-	-	Wolfenswan, ferstaberinde, headswe of F3 Framework, for code I built off of.
+	-	Wolfenswan, ferstaberinde, and headswe of F3 Framework, for code I built off of.
 	-	Dsylexci and Zedx64 of Shacktac, for feature inspiration and some code solutions.
 	-	Dedmen, commy2, and Quiksilver for advice in the Arma 3 Discord.
 	-	Cptnnick for wonderful advice on vector math that helped me immensely.
-	-	eraser1 of COALITION for some optimization advice.
+	-	eraser1 of COALITION for help with optimization.
+	-	shadow-fa from Folk ARPs and the FA community overall for testing and improvements.
 
 	Features:
 	-	Most features configurable by missionmaker.
@@ -30,13 +31,13 @@
 	
 	How to Implement:
 	-	Move the wha folder (with \nametags) into your root mission folder.
-	-	Configure your settings inside wha_nametag_CONFIG.sqf (Optional)
+	-	Configure your settings inside wha_nametags_CONFIG.sqf (Optional)
 	-	Make a file called 'initPlayerLocal.sqf' or 'init.sqf' in the root mission folder.
 	-	Put this code in 'initPlayerLocal.sqf' OR 'init.sqf': 
-		[] execVM "wha\nametags\wha_nametag_init.sqf";
+		[] execVM "wha\nametags\wha_nametags_init.sqf";
 	-	Make a file called 'description.ext' in the root mission folder.
 	-	Put this code in the 'description.ext' function header (CfgFunctions):
-		#include "wha\nametags\functions\wha_nametag_functions.hpp"
+		#include "wha\nametags\functions\wha_nametags_functions.hpp"
 	-	If you have ACE and want to disable ACE nametags just for your mission,
 		the code for that is available in the description.ext of the Stratis
 		mission provided with this script.

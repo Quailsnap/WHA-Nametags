@@ -1,10 +1,10 @@
 //====================================================================================
 //
-//	fn_update.sqf - Updates values for WHA nametags (heavily based on F3 and ST)
+//	fn_getData.sqf - Updates values for WHA nametags (heavily based on F3 and ST)
 //							Intended to be run each frame.
 //
 //	> 	_data = [_player,_playerGroup,_cameraPositionAGL,_cameraPositionASL,_entities,
-//		false] call wha_nametag_fnc_getData;	<
+//		false] call wha_nametags_fnc_getData;	<
 //
 //		Returns [_names,_data].
 //		Names is an array of references to units (CAManBase).
@@ -28,16 +28,15 @@ params ["_player","_playerGroup","_cameraPositionAGL","_cameraPositionASL",
 // _entities (array of objects CAManBase or vehicle): Entities tags will be processed for.
 // _isCursor (boolean): Flag signaling that said entities are under cursor.
 
-
+		
 //------------------------------------------------------------------------------------
 //	Establishing arrays to be filled with unit names and unit data, respectively.
 //------------------------------------------------------------------------------------
 
-// TODO: Do these need to be private?
 private _names= [];
 private _data = [];
 
-//	Temporary fix for zoom not being in here.
+// TODO: Temporary fix for zoom not being in here.
 private _zoom = 1;
 
 
@@ -50,32 +49,34 @@ private _zoom = 1;
 	//	Store said entity. It may be a vehicle (with multiple people inside), and it
 	//	may just be a single unit. We do not know, so we will just process data for
 	//	each of the "vehicles" (or units) "crew" (or self).
-	_entity = _x;
+	private _entity = _x;
 	
-	if !(_entity in allUnitsUAV) then // TODO: Find a better solution for this.
+	//	If entity is not null and not a UAV . . .
+	if (! (isNil "_entity" || {_entity in allUnitsUAV} ) ) then // TODO: Find a better solution for this.
 	{
+		//	For each member of the entity's crew (which would just be the entity, if it's a unit...)
 		{
-			//	Reset variables used for each unit.
-			_locationData = {};
-			_role = "";
-			_show = false;
-			_drawRoleAndGroup = false;
-			_isCommander = false;
-			_isPassenger = false; // TODO : Find a smoother solution for this.
-			
-			if !(_x isEqualTo _player) then
+			if ( ! (isNil "_x" || {_x isEqualTo _player} ) ) then
 			{
+				//	Reset variables used for each unit.
+				private _locationData = {};
+				private _role = "";
+				private _show = false;
+				private _drawRoleAndGroup = false;
+				private _isCommander = false;
+				private _isPassenger = false; // TODO : Find a smoother solution for this.
+				
 				//	If the unit is NOT in a vehicle...
 				if (isNull objectParent _x) then
 				{
 					//	Get the data that will be processed (later) to determine where
 					//	to draw the nametag. Either their chest, or above their head.
 					_locationData = 
-					if !WHA_NAMETAG_FONT_HEIGHT_ONHEAD
+					if !WHA_NAMETAGS_FONT_HEIGHT_ONHEAD
 					then { {_x modelToWorldVisual (_x selectionPosition "spine3")} }
 					else { {_x modelToWorldVisual (_x selectionPosition "pilot")
 							vectorAdd [0,0,((0.2 + (((_player distance _x) * 1.5 * 
-							WHA_NAMETAG_FONT_SPREAD_BOTTOM_MULTI)/_zoom)))]} };
+							WHA_NAMETAGS_FONT_SPREAD_BOTTOM_MULTI)/_zoom)))]} };
 					
 					_isCommander = true;
 					
@@ -83,8 +84,8 @@ private _zoom = 1;
 					if !_isCursor then
 					{
 						//	Get the location of that unit...
-						_targetPositionAGL = call _locationData;
-						_targetPositionASL = AGLtoASL _targetPositionAGL;
+						private _targetPositionAGL = call _locationData;
+						private _targetPositionASL = AGLtoASL _targetPositionAGL;
 						
 						//	...and check...
 						if
@@ -111,7 +112,7 @@ private _zoom = 1;
 				else
 				{
 					//	The vehicle is the thing we're processing the crew for.
-					_vehicle = vehicle _x; //objectParent _x
+					private _vehicle = vehicle _x; //objectParent _x
 					
 					//	Depending on where the unit is in a vehicle, store it's 'role.'
 					_role = call
@@ -130,8 +131,8 @@ private _zoom = 1;
 					{ ASLtoAGL (getPosASLVisual _x) vectorAdd [0,0,(0.4)] };
 					
 					//	Use the above location data to get the unit's location.
-					_targetPositionAGL = call _locationData;
-					_targetPositionASL = AGLtoASL _targetPositionAGL;
+					private _targetPositionAGL = call _locationData;
+					private _targetPositionASL = AGLtoASL _targetPositionAGL;
 					
 					//	If the unit has a role (isn't a passenger) then...
 					if !(_role isEqualTo "") then
@@ -146,16 +147,16 @@ private _zoom = 1;
 							
 							//	Also, if the missionmaker has configured vehicle information
 							//	to be shown, store that for later.
-							if WHA_NAMETAG_SHOW_VEHICLEINFO then
+							if WHA_NAMETAGS_SHOW_VEHICLEINFO then
 							{
 								//	Get the vehicle's friendly name from configs.
-								_vehicleName = format ["%1",getText (configFile >> "CfgVehicles" >> typeOf _vehicle >> "displayname")];
+								private _vehicleName = format ["%1",getText (configFile >> "CfgVehicles" >> typeOf _vehicle >> "displayname")];
 								
 								//	Get the maximum number of (passenger) seats from configs.
-								_maxSlots = getNumber(configfile >> "CfgVehicles" >> typeof _vehicle >> "transportSoldier") + (count allTurrets [_vehicle, true] - count allTurrets _vehicle);
+								private _maxSlots = getNumber(configfile >> "CfgVehicles" >> typeof _vehicle >> "transportSoldier") + (count allTurrets [_vehicle, true] - count allTurrets _vehicle);
 								
 								//	Get the number of empty seats.
-								_freeSlots = _vehicle emptyPositions "cargo";
+								private _freeSlots = _vehicle emptyPositions "cargo";
 
 								//	If meaningful, append vehicle name.
 								if !(_vehicleName isEqualTo "") then
@@ -165,8 +166,6 @@ private _zoom = 1;
 								if (_maxSlots > 0) then 
 								{ _role = format["%1 [%2/%3]",_role,(_maxSlots-_freeSlots),_maxSlots]; };
 							};
-							
-							
 						};
 						
 						//	If the unit is the gunner and is uncomfortably close to the driver (many Arma APCs
@@ -218,18 +217,20 @@ private _zoom = 1;
 				if _show then
 				{
 					//	Get the unit's name.
-					_name = name _x;
+					private _name = name _x;
+					if ( isNil "_name" || {_name == "Error: No unit"} )
+					then { _name = "" };
 					
 					//	Default the unit's nametag color to the mission default.
-					_nameColor =+ WHA_NAMETAG_FONT_COLOR_DEFAULT;
+					private _nameColor =+ WHA_NAMETAGS_FONT_COLOR_DEFAULT;
 					
 					//	Get the unit's group.
-					_unitGroup = group _x;
+					private _unitGroup = group _x;
 					
 					//	If the unit is in the same group as the player,
 					//	then erase the group tag. It does not need to be shown.
-					_sameGroup = (_unitGroup isEqualTo _playerGroup);
-					_groupName = if !_sameGroup then { groupID _unitGroup } else { "" };
+					private _sameGroup = ( _unitGroup isEqualTo _playerGroup );
+					private _groupName = if !_sameGroup then { groupID _unitGroup } else { "" };
 
 					//	...For normal people...
 					if (_role isEqualTo "") then 							
@@ -240,24 +241,23 @@ private _zoom = 1;
 								getText (configFile >> "CfgVehicles" >> typeOf _x >> "displayname")]);
 					}
 					//	...and for vehicle crew, where a role is already present.
-					else { _nameColor =+ WHA_NAMETAG_FONT_COLOR_CREW };
+					else { _nameColor =+ WHA_NAMETAGS_FONT_COLOR_CREW };
 
 					//	For units in the same group as the player, set their color according to color team.
 					if _sameGroup then 
 					{
-						_team = assignedTeam _x;
-						_nameColor = switch _team do 
+						_nameColor = switch (assignedTeam _x) do 
 						{
-							case "RED": 	{	+WHA_NAMETAG_FONT_COLOR_GROUPR	};
-							case "GREEN": 	{	+WHA_NAMETAG_FONT_COLOR_GROUPG	};
-							case "BLUE": 	{	+WHA_NAMETAG_FONT_COLOR_GROUPB	};
-							case "YELLOW": 	{	+WHA_NAMETAG_FONT_COLOR_GROUPY	};
-							default			{	+WHA_NAMETAG_FONT_COLOR_GROUP	};
+							case "RED": 	{ +WHA_NAMETAGS_FONT_COLOR_GROUPR };
+							case "GREEN": 	{ +WHA_NAMETAGS_FONT_COLOR_GROUPG };
+							case "BLUE": 	{ +WHA_NAMETAGS_FONT_COLOR_GROUPB };
+							case "YELLOW": 	{ +WHA_NAMETAGS_FONT_COLOR_GROUPY };
+							default			{ +WHA_NAMETAGS_FONT_COLOR_GROUP };
 						};
 					};
 						
 					//	Huck all this data into an array...
-					_unitData = [];
+					private _unitData = [];
 					_unitData pushBack _x;
 					_unitData pushBack _entity;				// Index 0
 					_unitData pushBack _name;				// Index 1			

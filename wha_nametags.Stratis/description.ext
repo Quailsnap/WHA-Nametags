@@ -1,6 +1,6 @@
 class CfgFunctions
 {
-	#include "wha\nametags\functions\wha_nametag_functions.hpp"
+	#include "wha\nametags\functions\wha_nametags_functions.hpp"
 };
 
 //	Code to disable ACE nametags. Remember to uncomment.

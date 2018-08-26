@@ -1,7 +1,7 @@
 //====================================================================================
 //
 //	fn_getZoom.sqf - Gets player zoom, where default is 1.0
-//	> _zoom = call wha_nametag_fnc_getZoom; <
+//	> _zoom = call wha_nametags_fnc_getZoom; <
 //
 //	Adapted from code by Killzone Kid.
 //	http://killzonekid.com/arma-scripting-tutorials-get-zoom/

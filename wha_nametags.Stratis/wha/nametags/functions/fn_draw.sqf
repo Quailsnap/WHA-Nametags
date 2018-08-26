@@ -3,7 +3,7 @@
 //	fn_draw.sqf - Initializes values for WHA nametags (heavily based on F3 and ST)
 //
 //	[_name,_nameColor,_locationData,_role,_groupName,_drawRoleAndGroup,_isCommander,
-//	_cameraPositionAGL,_zoom] call wha_nametag_fnc_draw;
+//	_cameraPositionAGL,_zoom] call wha_nametags_fnc_draw;
 //
 //	@ /u/Whalen207 | Whale #5963
 //
@@ -35,7 +35,7 @@ params ["_unit","_vehicle","_name","_nameColor","_locationData","_role","_groupN
 
 //	Get player from global player setting.
 //	This is necessary for Zeus remote control support.
-_player = WHA_NAMETAG_PLAYER;
+private _player = WHA_NAMETAGS_PLAYER;
 
 
 //------------------------------------------------------------------------------------
@@ -43,11 +43,11 @@ _player = WHA_NAMETAG_PLAYER;
 //------------------------------------------------------------------------------------
 
 //	Find position tag will be rendered at using location data.
-_targetPositionAGL = call _locationData;
+private _targetPositionAGL = call _locationData;
 
 //	Find the distance from the player camera to this location.
-_camDistance = _cameraPositionAGL distance _targetPositionAGL;
-_distance = _player distance _targetPositionAGL;
+private _camDistance = _cameraPositionAGL distance _targetPositionAGL;
+private _distance = _player distance _targetPositionAGL;
 
 
 //------------------------------------------------------------------------------------
@@ -57,9 +57,9 @@ _distance = _player distance _targetPositionAGL;
 //	If the unit is speaking, apply little carets around their name.
 //	TODO: move up a few scopes. GetData? Will stick on cursor
 //	TODO: changes from mission we played
-if (_unit call wha_nametag_fnc_isSpeaking) then
+if (_unit call wha_nametags_fnc_isSpeaking) then
 {
-	_timeEven = ((round time) % 2 == 0);
+	private _timeEven = ((round time) % 2 == 0);
 	_nameColor set [3,0.90];
 	_name =
 	if _timeEven then
@@ -73,12 +73,12 @@ if (_unit call wha_nametag_fnc_isSpeaking) then
 //	Applying initial transparency to tag depending on distance and time of day.
 //------------------------------------------------------------------------------------
 
-_alpha =
+private _alpha =
 if (!_drawRoleAndGroup || {!(_isCommander)})
-then { 	linearConversion[WHA_NAMETAG_DRAWDISTANCE_NEAR/1.3,WHA_NAMETAG_DRAWDISTANCE_NEAR,
-		(_distance / WHA_NAMETAG_VAR_NIGHT),1,0,true] }
-else { 	linearConversion[(((WHA_NAMETAG_DRAWDISTANCE_CURSOR)*(_zoom))/1.3),
-		(WHA_NAMETAG_DRAWDISTANCE_CURSOR*_zoom),(((_distance) / WHA_NAMETAG_VAR_NIGHT)),1,0,true] };
+then { 	linearConversion[WHA_NAMETAGS_DRAWDISTANCE_NEAR/1.3,WHA_NAMETAGS_DRAWDISTANCE_NEAR,
+		(_distance / WHA_NAMETAGS_VAR_NIGHT),1,0,true] }
+else { 	linearConversion[(((WHA_NAMETAGS_DRAWDISTANCE_CURSOR)*(_zoom))/1.3),
+		(WHA_NAMETAGS_DRAWDISTANCE_CURSOR*_zoom),(((_distance) / WHA_NAMETAGS_VAR_NIGHT)),1,0,true] };
 
 //	Apply the alpha coating to each color's transparency.
 _nameColor set [3, (_nameColor select 3) * _alpha];
@@ -90,12 +90,12 @@ _nameColor set [3, (_nameColor select 3) * _alpha];
 
 //	TODO: Move up to Update scope.
 //	Max out zoom at 1.67 regardless to avoid HUGE text.
-_zmin = _zoom min 1.67;
+private _zmin = _zoom min 1.67;
 
 //	Adjust font sizes.
-_sizeMain 		= WHA_NAMETAG_FONT_SIZE_MAIN* _zmin;
-_sizeSecondary 	= WHA_NAMETAG_FONT_SIZE_SEC * _zmin;
-_sizeVehicle 	= WHA_NAMETAG_FONT_SIZE_VEH * _zmin;
+private _sizeMain 		= WHA_NAMETAGS_FONT_SIZE_MAIN* _zmin;
+private _sizeSecondary 	= WHA_NAMETAGS_FONT_SIZE_SEC * _zmin;
+private _sizeVehicle 	= WHA_NAMETAGS_FONT_SIZE_VEH * _zmin;
 
 
 //------------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ _sizeVehicle 	= WHA_NAMETAG_FONT_SIZE_VEH * _zmin;
 if (_drawRoleAndGroup && {!(_isPassenger)}) then
 {
 	//	Set the color for secondary tags.
-	_color =+ WHA_NAMETAG_FONT_COLOR_OTHER;
+	private _color =+ WHA_NAMETAGS_FONT_COLOR_OTHER;
 	_color set [3, (_color select 3) * _alpha];
 
 	//	If we're working with a fading tag, fade it out according to the difference
@@ -113,7 +113,7 @@ if (_drawRoleAndGroup && {!(_isPassenger)}) then
 	//	TODO: make the fade 'hang' a little bit. merge onto modless
 	if (!isNil "_startTime") then
 	{
-		_alphaCoef = (((_startTime + WHA_NAMETAG_FADETIME) - _time)/WHA_NAMETAG_FADETIME);
+		private _alphaCoef = (((_startTime + WHA_NAMETAGS_FADETIME) - _time)/WHA_NAMETAGS_FADETIME);
 		_nameColor set [3, (_namecolor select 3) * _alphaCoef];
 		_color     set [3, (_color select 3)     * _alphaCoef];
 	};
@@ -142,12 +142,12 @@ if (_drawRoleAndGroup && {!(_isPassenger)}) then
 	//	TODO: Simplify this code if possible.
 	//	If not possible, cache what you can (vectorUp player vectorCrossProduct _vectorDir)
 	//	in nametagUpdate.
-	_vectorDiff = (vectorNormalized (((_vectorDir) vectorCrossProduct (vectorUp _player)) vectorCrossProduct (_targetPositionAGL vectorDiff _cameraPositionAGL)));
+	private _vectorDiff = (vectorNormalized (((_vectorDir) vectorCrossProduct (vectorUp _player)) vectorCrossProduct (_targetPositionAGL vectorDiff _cameraPositionAGL)));
 
 	//	Take that new normal vector and multiply it by the distance, then divide it by the zoom.
 	
-	_targetPositionAGLTop =    _targetPositionAGL vectorAdd (_vectorDiff vectorMultiply (WHA_NAMETAG_FONT_SPREAD_TOP_MULTI * _camDistance / _zoom));
-	_targetPositionAGLBottom = _targetPositionAGL vectorAdd ((_vectorDiff vectorMultiply (WHA_NAMETAG_FONT_SPREAD_BOTTOM_MULTI * _camDistance / _zoom)) vectorMultiply -1);
+	private _targetPositionAGLTop =    _targetPositionAGL vectorAdd (_vectorDiff vectorMultiply (WHA_NAMETAGS_FONT_SPREAD_TOP_MULTI * _camDistance / _zoom));
+	private _targetPositionAGLBottom = _targetPositionAGL vectorAdd ((_vectorDiff vectorMultiply (WHA_NAMETAGS_FONT_SPREAD_BOTTOM_MULTI * _camDistance / _zoom)) vectorMultiply -1);
 
 	
 	//--------------------------------------------------------------------------------
@@ -155,24 +155,24 @@ if (_drawRoleAndGroup && {!(_isPassenger)}) then
 	//--------------------------------------------------------------------------------
 
 	//	Role tag (top).
-	if ( !(_role isEqualTo "") && {WHA_NAMETAG_SHOW_ROLE} ) then
+	if ( !(_role isEqualTo "") && {WHA_NAMETAGS_SHOW_ROLE} ) then
 	{
 		drawIcon3D ["", _color, _targetPositionAGLTop, 
-		0, 0, 0, _role,WHA_NAMETAG_FONT_SHADOW,_sizeSecondary,WHA_NAMETAG_FONT_FACE_SEC];
+		0, 0, 0, _role,WHA_NAMETAGS_FONT_SHADOW,_sizeSecondary,WHA_NAMETAGS_FONT_FACE_SEC];
 	};
 
 	//	Group tag (bottom).
-	if ( !(_groupName isEqualTo "") && {WHA_NAMETAG_SHOW_GROUP} ) then
+	if ( !(_groupName isEqualTo "") && {WHA_NAMETAGS_SHOW_GROUP} ) then
 	{
 		drawIcon3D ["", _color, _targetPositionAGLBottom, 
-		0, 0, 0, _groupName,WHA_NAMETAG_FONT_SHADOW,_sizeSecondary,WHA_NAMETAG_FONT_FACE_SEC];
+		0, 0, 0, _groupName,WHA_NAMETAGS_FONT_SHADOW,_sizeSecondary,WHA_NAMETAGS_FONT_FACE_SEC];
 	};
 };
 	
 //	TODO: Remove this testing thing
 //	Name tag (middle).
-//drawIcon3D ["\A3\ui_f\data\map\markers\flags\AAF_ca.paa", [0,0,0,1], _targetPositionAGL, 1, 1, 0, "",0,(_sizeMain+(_sizeMain*0.2)),WHA_NAMETAG_FONT_FACE_MAIN];
+//drawIcon3D ["\A3\ui_f\data\map\markers\flags\AAF_ca.paa", [0,0,0,1], _targetPositionAGL, 1, 1, 0, "",0,(_sizeMain+(_sizeMain*0.2)),WHA_NAMETAGS_FONT_FACE_MAIN];
 
 //	Name tag (middle).
-drawIcon3D ["", _nameColor, _targetPositionAGL, 0,0,0, _name,WHA_NAMETAG_FONT_SHADOW,_sizeMain,WHA_NAMETAG_FONT_FACE_MAIN];
+drawIcon3D ["", _nameColor, _targetPositionAGL, 0,0,0, _name,WHA_NAMETAGS_FONT_SHADOW,_sizeMain,WHA_NAMETAGS_FONT_FACE_MAIN];
 

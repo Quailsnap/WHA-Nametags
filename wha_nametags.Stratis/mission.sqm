@@ -8,14 +8,14 @@ class EditorData
 	toggles=129;
 	class ItemIDProvider
 	{
-		nextID=71;
+		nextID=74;
 	};
 	class Camera
 	{
-		pos[]={1632.7549,8.6774864,5693.4834};
-		dir[]={0.66272742,-0.69629455,-0.27569473};
-		up[]={0.64290893,0.71773326,-0.26744995};
-		aside[]={-0.38409871,1.6111881e-007,-0.92331386};
+		pos[]={1631.7557,6.1972961,5693.6704};
+		dir[]={0.83345956,-0.46542683,-0.29794753};
+		up[]={0.43830392,0.88506514,-0.1566859};
+		aside[]={-0.33662859,9.3481503e-008,-0.94166356};
 	};
 };
 binarizationWanted=0;
@@ -93,51 +93,14 @@ class Mission
 					dataType="Object";
 					class PositionInfo
 					{
-						position[]={1641.1205,1.1552657,5692.9912};
-						angles[]={0,4.8814945,0};
+						position[]={1636.6949,0.47733518,5691.979};
+						angles[]={0.084788091,1.9039273,0.17081536};
 					};
 					side="West";
-					flags=7;
+					flags=6;
 					class Attributes
 					{
-						init="this disableAI ""ALL""; this enableSimulation false";
-						aiRadarUsage=-536867070;
-					};
-					id=3;
-					type="B_soldier_AR_F";
-					atlOffset=2.3841858e-007;
-				};
-				class Item1
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={1639.5187,1.2643383,5688.708};
-						angles[]={0,4.8814945,0};
-					};
-					side="West";
-					flags=5;
-					class Attributes
-					{
-						init="this disableAI ""ALL""; this enableSimulation false";
-						aiRadarUsage=-536867070;
-					};
-					id=39;
-					type="B_soldier_AR_F";
-					atlOffset=0.021874905;
-				};
-				class Item2
-				{
-					dataType="Object";
-					class PositionInfo
-					{
-						position[]={1636.6946,0.477272,5691.979};
-						angles[]={0.084796004,1.9039196,0.17081876};
-					};
-					side="West";
-					flags=4;
-					class Attributes
-					{
+						rank="SERGEANT";
 						isPlayer=1;
 					};
 					id=70;
@@ -185,12 +148,49 @@ class Mission
 						nAttributes=2;
 					};
 				};
+				class Item1
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={1641.1205,1.1552657,5692.9912};
+						angles[]={0,4.8814945,0};
+					};
+					side="West";
+					flags=5;
+					class Attributes
+					{
+						init="this disableAI ""ALL""; this enableSimulation false";
+						aiRadarUsage=-536867070;
+					};
+					id=3;
+					type="B_soldier_AR_F";
+					atlOffset=2.3841858e-007;
+				};
+				class Item2
+				{
+					dataType="Object";
+					class PositionInfo
+					{
+						position[]={1639.5187,1.2643383,5688.708};
+						angles[]={0,4.8814945,0};
+					};
+					side="West";
+					flags=5;
+					class Attributes
+					{
+						init="this disableAI ""ALL""; this enableSimulation false";
+						aiRadarUsage=-536867070;
+					};
+					id=39;
+					type="B_soldier_AR_F";
+					atlOffset=0.021874905;
+				};
 			};
 			class Attributes
 			{
 			};
 			id=0;
-			atlOffset=2.3841858e-007;
 		};
 		class Item1
 		{

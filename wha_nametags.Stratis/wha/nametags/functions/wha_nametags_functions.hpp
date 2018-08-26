@@ -1,15 +1,15 @@
 // ====================================================================================
 //
-//	wha_nametag_functions.hpp - Contains functions for Whale's nametag scripts.
+//	wha_nametags_functions.hpp - Contains functions for Whale's nametag scripts.
 //
 //	To implement, place the following code under your description.ext function header:
-//		#include "wha\nametags\functions\wha_nametag_functions.hpp"
+//		#include "wha\nametags\functions\wha_nametags_functions.hpp"
 //
 //	@ /u/Whalen207 | Whale #5963
 //
 // ====================================================================================
 
-class wha_nametag
+class wha_nametags
 {
 	class main
 	{
