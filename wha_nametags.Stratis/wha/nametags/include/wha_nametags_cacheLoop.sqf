@@ -12,9 +12,6 @@
 //	Array that will hold all cache data.
 WHA_NAMETAGS_CACHE = [];
 
-//	Variable that will be used to keep track of Arma's day/night cycle.
-WHA_NAMETAGS_VAR_NIGHT = 1;
-
 
 //------------------------------------------------------------------------------------
 //	Loops every 0.5 seconds using CBA PFH.

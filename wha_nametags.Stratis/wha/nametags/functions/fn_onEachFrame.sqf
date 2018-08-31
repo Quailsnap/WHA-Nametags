@@ -1,10 +1,10 @@
 //====================================================================================
 //
-//	fn_update.sqf - Updates values for WHA nametags (heavily based on F3 and ST)
+//	fn_onEachFrame.sqf - Updates values for WHA nametags (heavily based on F3 and ST)
 //							Intended to be run each frame.
 //
 //	> 	WHA_NAMETAGS_EVENTHANDLER = addMissionEventHandler 
-//		["Draw3D", { call wha_nametags_fnc_update }];	<
+//		["Draw3D", { call wha_nametags_fnc_onEachFrame }];	<
 //
 //	@ /u/Whalen207 | Whale #5963
 //
@@ -25,12 +25,14 @@ private _cameraPositionASL = AGLtoASL _cameraPositionAGL;
 //	Get zoom, which will be used to adjust size and spacing of text.
 private _zoom = call wha_nametags_fnc_getZoom;
 
-//	Make a copy of the global cache containing nearby entities and their data.
-private _toDraw =+ WHA_NAMETAGS_CACHE;
-
 //	Initialize other variables to be used.
 private _time = time;
 
+//	Make a copy of the global cache containing nearby entities and their data.
+private _toDraw =+ WHA_NAMETAGS_CACHE;
+
+//if (_time > WHA_NAMETAG_CACHE_TIME + 0.5) then
+//{}
 
 //------------------------------------------------------------------------------------
 //	Collect player cursor target for drawing tags.
@@ -121,7 +123,7 @@ if !( isNull _cursorObject ) then
 	_unitData append [_cameraPositionAGL,_zoom,_time,nil];
 	
 	//	Call the draw function with the above parameters.
-	_unitData call wha_nametags_fnc_draw;
+	_unitData call wha_nametags_fnc_drawUnit;
 } forEach (_toDraw select 0);
 
 
@@ -139,7 +141,7 @@ if !( isNull _cursorObject ) then
 	{
 		_unitData =+ ( (WHA_NAMETAGS_CACHE_FADE select 1) select _forEachIndex );
 		_unitData append [_cameraPositionAGL,_zoom,_time,_startTime];
-		_unitData call wha_nametags_fnc_draw;
+		_unitData call wha_nametags_fnc_drawUnit;
 	}
 	//	If it has been that long, delete it.
 	else

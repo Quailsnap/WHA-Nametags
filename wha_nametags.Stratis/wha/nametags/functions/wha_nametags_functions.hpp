@@ -14,8 +14,8 @@ class wha_nametags
 	class main
 	{
 		file = "wha\nametags\functions";
-		class update {};
-		class draw {};
+		class onEachFrame {};
+		class drawUnit {};
 		class getData {};
 		class cache {};
 		class resetFont {};

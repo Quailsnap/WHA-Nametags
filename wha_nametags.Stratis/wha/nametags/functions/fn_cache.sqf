@@ -28,7 +28,7 @@ then { true }
 else { false };
 
 //------------------------------------------------------------------------------------
-//	If not set to only draw the cursor, collect nearEntities.
+//	If not set to only draw the cursor, collect and process nearEntities.
 //------------------------------------------------------------------------------------
 
 if !WHA_NAMETAGS_DRAWCURSORONLY then
@@ -51,10 +51,9 @@ if !WHA_NAMETAGS_DRAWCURSORONLY then
 		&& {!WHA_NAMETAGS_VAR_VEHICLETPP || {(vehicle _x != vehicle _player)}}// 0.0018ms  || {(objectParent _x != objectParent _player)}
 			//((side _x getFriend side player) > 0.6) 		// 0.0024ms
 			//|| {(group _x isEqualTo group player)} // TODO - REIMPLEMENT ABOVE OBJARENT
-	
 	};
 
-	//	Collect each filter entities' data.
+	//	Collect each entities' data.
 	private _data = [_player,_playerGroup,_cameraPositionAGL,_cameraPositionASL,_entities,false]
 	call wha_nametags_fnc_getData;
 	

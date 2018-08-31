@@ -40,6 +40,9 @@ WHA_NAMETAGS_ON = true;
 waitUntil{!isNull player};
 waitUntil{player == player};
 
+//	Variable that will be used to keep track of Arma's day/night cycle.
+WHA_NAMETAGS_VAR_NIGHT = 1;
+
 //	Reset font spacing and size to (possibly) new conditions.
 call wha_nametags_fnc_resetFont;
 
@@ -70,5 +73,5 @@ WHA_NAMETAGS_EVENTHANDLER = addMissionEventHandler
 ["Draw3D", 
 {
 	if WHA_NAMETAGS_ON then
-	{	call wha_nametags_fnc_update	};
+	{	call wha_nametags_fnc_onEachFrame	};
 }];

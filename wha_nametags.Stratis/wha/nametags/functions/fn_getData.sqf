@@ -1,7 +1,6 @@
 //====================================================================================
 //
-//	fn_getData.sqf - Updates values for WHA nametags (heavily based on F3 and ST)
-//							Intended to be run each frame.
+//	fn_getData.sqf - Collects data from units and queues them to be drawn.
 //
 //	> 	_data = [_player,_playerGroup,_cameraPositionAGL,_cameraPositionASL,_entities,
 //		false] call wha_nametags_fnc_getData;	<
@@ -56,7 +55,7 @@ private _zoom = 1;
 	{
 		//	For each member of the entity's crew (which would just be the entity, if it's a unit...)
 		{
-			if ( ! (isNil "_x" || {_x isEqualTo _player} ) ) then
+			if ( !(isNil "_x" || {_x isEqualTo _player}) ) then
 			{
 				//	Reset variables used for each unit.
 				private _locationData = {};
@@ -67,7 +66,7 @@ private _zoom = 1;
 				private _isPassenger = false; // TODO : Find a smoother solution for this.
 				
 				//	If the unit is NOT in a vehicle...
-				if (isNull objectParent _x) then
+				if ( isNull objectParent _x ) then
 				{
 					//	Get the data that will be processed (later) to determine where
 					//	to draw the nametag. Either their chest, or above their head.
@@ -135,7 +134,7 @@ private _zoom = 1;
 					private _targetPositionASL = AGLtoASL _targetPositionAGL;
 					
 					//	If the unit has a role (isn't a passenger) then...
-					if !(_role isEqualTo "") then
+					if !( _role isEqualTo "" ) then
 					{
 						//	...if it's effectively the commander of the vehicle...
 						if ( effectiveCommander _vehicle isEqualTo _x ) then
@@ -195,10 +194,10 @@ private _zoom = 1;
 						if
 						(
 							// ( If the man is within the boundaries of the screen )
-							!(worldToScreen _targetPositionAGL isEqualTo []) &&
+							!( worldToScreen _targetPositionAGL isEqualTo [] ) &&
 							// AND ( If the game can draw a line from the player to the man without hitting anything )
 							{ lineIntersectsSurfaces [_cameraPositionASL, _targetPositionASL, _player, _x] isEqualTo [] } &&
-							{_targetPositionAGL distance (ASLToAGL getPosASLVisual(driver _vehicle)) > 0.5}
+							{ _targetPositionAGL distance (ASLToAGL getPosASLVisual(driver _vehicle)) > 0.5 }
 						)
 						then 
 						{
@@ -233,12 +232,12 @@ private _zoom = 1;
 					private _groupName = if !_sameGroup then { groupID _unitGroup } else { "" };
 
 					//	...For normal people...
-					if (_role isEqualTo "") then 							
+					if ( _role isEqualTo "" ) then 							
 					{
 						//	Grab the variable set in F3 AssignGear, if present.
 						//	If it's not there, grab the possibly-ugly name from configs.
-						_role = (_x getVariable ["f_var_assignGear_friendly",
-								getText (configFile >> "CfgVehicles" >> typeOf _x >> "displayname")]);
+						_role = ( _x getVariable ["f_var_assignGear_friendly",
+								getText (configFile >> "CfgVehicles" >> typeOf _x >> "displayname")] );
 					}
 					//	...and for vehicle crew, where a role is already present.
 					else { _nameColor =+ WHA_NAMETAGS_FONT_COLOR_CREW };
@@ -246,7 +245,7 @@ private _zoom = 1;
 					//	For units in the same group as the player, set their color according to color team.
 					if _sameGroup then 
 					{
-						_nameColor = switch (assignedTeam _x) do 
+						_nameColor = switch ( assignedTeam _x ) do 
 						{
 							case "RED": 	{ +WHA_NAMETAGS_FONT_COLOR_GROUPR };
 							case "GREEN": 	{ +WHA_NAMETAGS_FONT_COLOR_GROUPG };
@@ -257,17 +256,20 @@ private _zoom = 1;
 					};
 						
 					//	Huck all this data into an array...
-					private _unitData = [];
-					_unitData pushBack _x;
-					_unitData pushBack _entity;				// Index 0
-					_unitData pushBack _name;				// Index 1			
-					_unitData pushBack _nameColor;			// Index 2
-					_unitData pushBack _locationData;		// Index 3
-					_unitData pushBack _role;				// Index 4
-					_unitData pushBack _groupName;			// Index 5
-					_unitData pushBack _drawRoleAndGroup;	// Index 6
-					_unitData pushBack _isPassenger;
-					_unitData pushBack _isCommander;
+					//	Implementation from shadow-fa, aka shado
+					private _unitData = 
+					[
+						_x,
+						_entity,
+						_name,
+						_nameColor,
+						_locationData,
+						_role,
+						_groupName,
+						_drawRoleAndGroup,
+						_isPassenger,
+						_isCommander
+					];
 					
 					//	...Then add the unit's name to the name array...
 					_names pushBack _x;
@@ -276,7 +278,7 @@ private _zoom = 1;
 					_data append [_unitData];
 				};
 			};
-		} forEach (crew _entity);
+		} forEach ( crew _entity );
 	};
 } count _entities;
 

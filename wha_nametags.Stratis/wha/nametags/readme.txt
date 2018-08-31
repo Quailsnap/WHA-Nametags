@@ -1,6 +1,6 @@
 ==========================================================================================
 
-	WHALE'S NAMETAGS (V0.10.1 Beta) 
+	WHALE'S NAMETAGS (V0.10.2 Beta) 
 	SCRIPT FOR ARMA 3
 	
 	( https://github.com/Quailsnap/WHA-Nametags )
