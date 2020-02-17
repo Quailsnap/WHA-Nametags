@@ -11,7 +11,7 @@
 //------------------------------------------------------------------------------------
 
 //	ACE
-//	TBD, May integrate some ACE stuff (dead nametags) later.
+WHA_NAMETAGS_MOD_ACE = (isClass(configfile >> "CfgPatches" >> "ace_medical"));
 
 //	TFAR
 WHA_NAMETAGS_MOD_TFAR = (isClass (configFile >> "CfgPatches" >> "task_force_radio"));
